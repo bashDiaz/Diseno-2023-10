@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>UDP Data</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+    integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
+    crossorigin=""/>
+    <link rel="stylesheet" type="text/css" href="index.css">
+  </head>
+  <body>
+    <h1>UDP Data</h1>
+    <ul id="data"></ul>
+<section class="columnas">
+      <div class="columnax2">
+        <div id = "Tit"><h1 id="tit">Feet Traking service</h1></div>
+        <div id="datos"></div>
+        <script src="datos.js"></script>
+          <!--Crate a table with the coordinates-->
+        <table>
+          <tr>
+            <!--Define the headers of the table-->
+            <th>Latitude</th>
+            <th>Longitude</th>
+            <th>Timestamp</th>
+</tr>
+          <tr>
+            <td id="latitude"></td>
+            <td id="Longitude"></td>
+            <td id="timestamp"></td>
+          </tr>
+        </table>
+      </div>
+    </section>
+    <div id="map"></div>
+    <script>
+
+      function updateData() {
+        const req = new XMLHttpRequest();
+        req.onreadystatechange = function() {
+          if (this.readyState === 4 && this.status === 200) {
+            const data = this.responseText.split(';');
+            const ul = document.getElementById('data');
+            ul.innerHTML = '';
+            for (let i = data.length - 1; i >= 0; i--) {
+              const li = document.createElement('li');
+              li.appendChild(document.createTextNode(data[i]));
+              ul.appendChild(li);
+            }
+}
+        };
+        req.open('GET', '/data', true);
+        req.send();
+      }
+      setInterval(updateData, 10000);
+    </script>
+  </body>
+</html>
