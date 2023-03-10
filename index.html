@@ -3,19 +3,20 @@
   <head>
     <title>Fleet Traking</title>
     <meta charset="UTF-8">
+    <!--The leaflet css is imported from the leaflet guide-->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
     integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
     crossorigin=""/>
+    <!--The main css is imported-->
     <link rel="stylesheet" type="text/css" href="index.css">
   </head>
   <body>
-    <div id="center"><div id="tit"><h1>Feet Traking service</h1></div></div>
-    
+    <div id="tit"><h1>Feet Traking service</h1></div>
     <ul id="data"></ul>
-    <section class="columnas">
-      <div class="columnax2">
-        <div id="datos"></div>
+        <1div id="datos"></div>
+        <!--A table thta contains the oordinates is created-->
         <table>
+          <!--The table headers are created-->
           <tr>
             <th>Latitude</th>
             <th>Longitude</th>
@@ -28,12 +29,15 @@
           </tr>
         </table>
       </div>
-    </section>
+    <!--A div that contains the map is created-->
     <div id="map"></div>
+    //The scripts are imported form the leaflet guide
     <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
     integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
     crossorigin=""></script>
+    <!--The script with the map is imported-->
     <script src="maping.js"></script>
+    <!--The script with the udp server is imported-->
     <script src="udp.js"></script>
   </body>
 </html>
