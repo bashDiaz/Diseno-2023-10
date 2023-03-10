@@ -1,0 +1,48 @@
+#tit{
+    position: relative;
+    left: 50%;
+    right: 50%;
+}
+#tit h1{
+    color: lightblue;
+    font-style: italic;
+  }  
+ul{
+    background-color: white;
+    border: solid 1px #ddd;
+    border-radius: 4px;
+    padding-left: 0px;
+    }
+ul li{
+    list-style-type: none;
+    border-bottom: solid 1px #ddd;
+    padding: 15px;
+    padding-right: 0px;
+    }
+table{
+    width: 100%;
+    background-color: white;
+    border-collapse: collapse;
+    }
+table th{
+    background-color: lightblue;
+    COLOR: white;
+    text-align: left;
+    margin: 10px;
+    }
+td{
+    border: solid 1px #ddd;
+    }
+tr:nth-child(even){
+    background-color: #f2f2f2;
+    }
+#map {
+    width: 500px;
+    height: 500px;
+    position: absolute; /* set the position to "absolute" */
+    top: 60%; /* set the top position to 50% */
+    left: 50%; /* set the left position to 50% */
+    transform: translate(-50%, -50%); /* use transform to center the div */
+    padding: 10px;
+    border-radius: 4px;
+    }

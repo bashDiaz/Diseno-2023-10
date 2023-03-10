@@ -14,5 +14,5 @@ function updateData() {
     };
     req.open('GET', '/data', true);
     req.send();
-  }
+}
   setInterval(updateData, 10000);

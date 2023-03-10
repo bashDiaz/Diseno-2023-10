@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8">
-    <title>UDP Data</title>
+    <title>Fleet Traking</title>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
     integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
@@ -10,11 +9,11 @@
     <link rel="stylesheet" type="text/css" href="index.css">
   </head>
   <body>
-    <h1>UDP Data</h1>
+    <div id="center"><div id="tit"><h1>Feet Traking service</h1></div></div>
+    
     <ul id="data"></ul>
     <section class="columnas">
       <div class="columnax2">
-        <div id="Tit"><h1 id="tit">Feet Traking service</h1></div>
         <div id="datos"></div>
         <table>
           <tr>
@@ -23,13 +22,18 @@
             <th>Timestamp</th>
           </tr>
           <tr>
-            <td id="latitude"></td>
+            <td id="Latitude"></td>
             <td id="Longitude"></td>
-            <td id="timestamp"></td>
+            <td id="Timestamp"></td>
           </tr>
         </table>
       </div>
     </section>
+    <div id="map"></div>
+    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
+    integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
+    crossorigin=""></script>
+    <script src="maping.js"></script>
     <script src="udp.js"></script>
   </body>
 </html>
