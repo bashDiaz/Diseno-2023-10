@@ -107,7 +107,7 @@ connection.connect((error) => {
 
 // Define a function to insert data into the MySQL database
 function insertData(data, connection) {
-  // Validate the data object
+  // Validate the data object searching of any type of error
   if (!data || !data.latitud || !data.longitud || !data.fecha || !data.hora) {
     console.log("Error: Invalid data object");
     return;

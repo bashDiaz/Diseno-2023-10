@@ -10,12 +10,8 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 // Add a marker to the map at a specific latitude and longitude
 let marker = L.marker([77, -77]).addTo(mymap);
 
+// Add diferent location for the polyline (please select points to track)
+const coords = datos.map(d => [data.latitud, data.longitud, data.fecha, data.hora]);
+
 // Add a polyline to the map
 const polyline = L.polyline(polylinePoints, {color: 'red'}).addTo(mymap);
-
-// Add diferent location for the polyline (please select points to track)
-const polylinePoints = [
-  [51.505, -0.09],
-  [51.51, -0.1],
-  [51.51, -0.12],
-];
