@@ -122,3 +122,19 @@ function insertData(data) {
     }
   });
 }
+
+function convertToJson(data) {
+  // Create an object with the data
+  const datos_json = {
+    j_latitud: info[0],
+    j_longitud: info[1],
+    j_fecha: info[2],
+    j_hora: info[3]
+  };
+
+  // Convert the object to JSON
+  const json = JSON.stringify(datos_json);
+
+  // Return the JSON string
+  return json;
+}
