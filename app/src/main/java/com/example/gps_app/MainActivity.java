@@ -120,7 +120,7 @@ public class MainActivity<SimpleDateFormat1> extends AppCompatActivity {
                 tv_accuracy.setText(String.valueOf(location.getAccuracy()));
                 tv_speed.setText(String.valueOf(simpleDateFormat.format(calendar.getTime())));
                 tv_speed1.setText(String.valueOf(simpleDateFormat1.format(calendar.getTime())));
-
+ //prueba
 
             SendData sender = new SendData();
             SendData sender2 = new SendData();
