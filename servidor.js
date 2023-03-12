@@ -106,15 +106,10 @@ connection.connect((error) => {
 });
 
 // Define a function to insert data into the MySQL database
-function insertData(data, connection) {
-  // Validate the data object searching of any type of error
-  if (!data || !data.latitud || !data.longitud || !data.fecha || !data.hora) {
-    console.log("Error: Invalid data object");
-    return;
-  }
+function insertData(data) {
 
   // Create an array with the data to insert
-  const datos = [data.latitud, data.longitud, data.fecha, data.hora];
+  const datos = [info[0], info[1], info[2], info[3]];
   
   // Define an SQL query to insert the data
   const sql = "INSERT INTO datos_gps (Latitud, Longitud, Fecha, Hora) VALUES (?, ?, ?, ?)";
@@ -128,27 +123,3 @@ function insertData(data, connection) {
     }
   });
 }
-
-function convertToJson(data) {
-  // Validate the data object
-  if (!data || !data.latitud || !data.longitud || !data.fecha || !data.hora) {
-    console.log("Error: Invalid data object");
-    return;
-  }
-
-  // Create an object with the data
-  const datos_json = {
-    j_latitud: data.latitud,
-    j_longitud: data.longitud,
-    j_fecha: data.fecha,
-    j_hora: data.hora
-  };
-
-  // Convert the object to JSON
-  const json = JSON.stringify(datos_json);
-
-  // Return the JSON string
-  return json;
-}
-
-
