@@ -1,5 +1,5 @@
-// Create a map object and set its view to a specific latitudee, longitudee, and zoom level
-let mymap = L.map('map').setView([77, -77], 50);
+// Create a map object and set its view to a specific latitude, longitude, and zoom level
+let mymap = L.map('map').setView([0, 0], 50);
 
 // Add a tile layer to the map using OpenStreetMap's tile server
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -7,11 +7,13 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   maxZoom: 18, // Set the maximum zoom level
 }).addTo(mymap); // Add the tile layer to the map
 
-// Add a marker to the map at a specific latitudee and longitudee
-let marker = L.marker([77, -77]).addTo(mymap);
-
-// Add diferent location for the polyline (please select points to track)
-const coords = datos.map(d => [data.latitude, data.longitude, data.date, data.time]);
-
-// Add a polyline to the map
-const polyline = L.polyline(polylinePoints, {color: 'red'}).addTo(mymap);
+// Add a marker to the map at a specific latitude and longitude
+function handleUdpData(data) {
+  const [lat, lng] = data.split(';');
+  let newCoords = L.latLng(lat, lng);
+  L.marker(newCoords).addTo(mymap);
+  // Add diferent location for the polyline (please select points to track)
+  polylineCoords.push(L.latLng(lat, lng));
+  // Add a polyline to the map
+  L.polyline(polylineCoords, {color: 'red'}).addTo(mymap);
+}
