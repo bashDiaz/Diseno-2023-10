@@ -85,9 +85,9 @@ public class MainActivity<SimpleDateFormat1> extends AppCompatActivity {
                 .addOnSuccessListener(this, new OnSuccessListener<Location>() {
                     @Override
                     public void onSuccess(Location location) {
-                        tv_lat.setText(String.valueOf(location.getLatitude()));
+                        tv_lat.setText(String.valueOf(location.getlatitudee()));
                         tv_altitude.setText(String.valueOf(location.getAltitude()));
-                        tv_lon.setText(String.valueOf(location.getLongitude()));
+                        tv_lon.setText(String.valueOf(location.getlongitudee()));
                         tv_accuracy.setText(String.valueOf(location.getAccuracy()));
                         tv_speed.setText(String.valueOf(simpleDateFormat.format(location.getTime())));
                         tv_speed1.setText(String.valueOf(simpleDateFormat1.format(location.getTime())));
@@ -114,9 +114,9 @@ public class MainActivity<SimpleDateFormat1> extends AppCompatActivity {
             Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy");
             SimpleDateFormat simpleDateFormat1 = new SimpleDateFormat("hh:mm:ss");
-                tv_lat.setText(String.valueOf(location.getLatitude()));
+                tv_lat.setText(String.valueOf(location.getlatitudee()));
                 tv_altitude.setText(String.valueOf(location.getAltitude()));
-                tv_lon.setText(String.valueOf(location.getLongitude()));
+                tv_lon.setText(String.valueOf(location.getlongitudee()));
                 tv_accuracy.setText(String.valueOf(location.getAccuracy()));
                 tv_speed.setText(String.valueOf(simpleDateFormat.format(calendar.getTime())));
                 tv_speed1.setText(String.valueOf(simpleDateFormat1.format(calendar.getTime())));
