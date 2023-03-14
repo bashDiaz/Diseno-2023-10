@@ -1,15 +1,25 @@
-
 const dgram = require('dgram');
 const server = dgram.createSocket('udp4');
-
+const express = require('express');
+const app = express();
+app.use(express.static('public'));
 let info = [];
-
+function updateMap(lat, lng) {
+  // Code to update the map with the new latitude and longitude
+}
 server.on('message', (msg, rinfo) => {
   const data = msg.toString();
-  const fields = data.split(';');
+const fields = data.split(';');
   info = fields;
 const dataToInsert = [fields[0], fields[1], fields[2], fields[3]];
  insertData(dataToInsert);
+const lat = parseFloat(fields[0]);
+  const lon = parseFloat(fields[1]);
+  updateMap(lat, lon);
+
+});
+app.get('/data', (req, res) => {
+res.json(info);
 });
 
 server.on('listening', () => {
@@ -19,33 +29,14 @@ server.on('listening', () => {
 
 server.bind(1234);
 
-const http = require('http');
-const fs = require('fs');
-
-const serverHttp = http.createServer((req, res) => {
-  if (req.url === '/data') {
-    res.writeHead(200, { 'Content-Type': 'text/plain' });
-    res.write(info.join(';'));
-    res.end();
-;
-  } else {
-    fs.readFile('index.html', (err, data) => {
-      if (err) {
-        res.writeHead(404);
-        res.write('File not found!');
-        res.end();
-      } else {
-        res.writeHead(200, { 'Content-Type': 'text/html' });
-        res.write(data);
-        res.end();
-      }
-    });
-  }
+app.get('/', (req, res) => {
+  res.sendFile(__dirname + '/index.html');
+});
+const port = 80;
+app.listen(port, () => {
+  console.log(`Servidor iniciado en el puerto ${port}`);
 });
 
-serverHttp.listen(80, () => {
-  console.log('HTTP server listening on port 80');
-});
 const mysql = require('mysql');
 
 const connection = mysql.createConnection({
