@@ -1,12 +1,12 @@
-const express = require('express');
-const app = express();
-
-app.use(express.static('public'));
 // Import the dgram module
 const dgram = require('dgram');
 
 // Create a UDP server using the 'udp4' protocol
 const server = dgram.createSocket('udp4');
+
+const express = require('express')
+const app = express()
+app.use(express.static(__dirname + "/static"));
 
 // Initialize an empty array to hold information received from UDP messages
 let info = [];
@@ -42,7 +42,7 @@ server.on('listening', () => {
 server.bind(1234);
 
 // Import the http and fs modules
-const http = require('http');
+/*const http = require('http');
 const fs = require('fs');
 
 // Create an HTTP server
@@ -82,12 +82,16 @@ const serverHttp = http.createServer((req, res) => {
       }
     });
   }
-});
+});*/
 
 // Listen for incoming requests on port 80
-serverHttp.listen(80, () => {
+app.listen(80, () => {
   console.log('HTTP server listening on port 80');
 });
+
+app.get('/', (req, res) => {
+  res.sendFile(__dirname + '/index.html')
+})
 
 // Import the mysql module
 const mysql = require('mysql');

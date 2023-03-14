@@ -19,19 +19,7 @@ function updateData() {
         ul.appendChild(li);
       }
       // Create a table with data
-      const table = document.createElement('table');
-      table.innerHTML = '<tr><th>Dato</th></tr>';
-      for (let i = data.length - 1; i >= 0; i--) {
-      const tr = document.createElement('tr');
-      const td = document.createElement('td');
-      td.appendChild(document.createTextNode(data[i]));
-      tr.appendChild(td);
-      table.appendChild(tr);
-      }
-      // Dates are located by ID data-table
-      const container = document.getElementById('data-table');
-      container.innerHTML = '';
-      container.appendChild(table);
+
     }
   };
   // Open a GET request to the "/data" endpoint on the server
