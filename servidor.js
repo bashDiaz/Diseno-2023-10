@@ -1,3 +1,7 @@
+const express = require('express');
+const app = express();
+
+app.use(express.static('public'));
 // Import the dgram module
 const dgram = require('dgram');
 

@@ -10,7 +10,6 @@ function updateData() {
       const data = this.responseText.split(';');
       // Get a reference to the <ul> element on the page with an ID of "data"
       const ul = document.getElementById('data');
-
       // Clear the <ul> element of any existing child nodes
       ul.innerHTML = '';
       // Loop through the data array in reverse order and create a new <li> element for each string
@@ -19,7 +18,6 @@ function updateData() {
         li.appendChild(document.createTextNode(data[i]));
         ul.appendChild(li);
       }
-
       // Create a table with data
       const table = document.createElement('table');
       table.innerHTML = '<tr><th>Dato</th></tr>';
