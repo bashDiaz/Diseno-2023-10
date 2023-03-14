@@ -35,26 +35,18 @@
         </table>
       </div>
     </section>
-    <div id="map"></div>
-    <script>
-
-      function updateData() {
-  const req = new XMLHttpRequest();
-  req.onreadystatechange = function() {
-    if (this.readyState === 4 && this.status === 200) {
-      const data = this.responseText.split(';');
-      const [Latitud, Longitud, Fecha, Hora] = data; // Reemplaza "otherValue" con el nombre de la cu>      document.getElementById('Latitud').innerHTML = Latitud;
-      document.getElementById('Latitud').innerHTML = Latitud;
-      document.getElementById('Longitud').innerHTML = Longitud;
-      document.getElementById('Fecha').innerHTML = Fecha;
-      document.getElementById('Hora').innerHTML = Hora;
-    }
-  };
-  req.open('GET', '/data', true);
-  req.send();
-}
-
-      setInterval(updateData, 10000);
-    </script>
+<div id="info"></div>
+<script>
+  setInterval(() => {
+    fetch('/data')
+      .then(response => response.json())
+      .then(data => {
+        const infoDiv = document.getElementById('info');
+        infoDiv.textContent = data.join('; ');
+      })
+      .catch(error => console.error(error));
+}, 1000); // Actualiza la información cada segundo
+</script>
   </body>
 </html>
+
