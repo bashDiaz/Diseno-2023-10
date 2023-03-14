@@ -14,21 +14,23 @@
     <ul id="data"></ul>
 <section class="columnas">
       <div class="columnax2">
-        <div id = "Tit"><h1 id="tit">Feet Traking service</h1></div>
+        <div id = "Tit"><h1 id="tit">Grupo 1</h1></div>
         <div id="datos"></div>
         <script src="datos.js"></script>
           <!--Crate a table with the coordinates-->
         <table>
           <tr>
             <!--Define the headers of the table-->
-            <th>Latitude</th>
-            <th>Longitude</th>
-            <th>Timestamp</th>
+            <th>Latitud</th>
+            <th>Longitud</th>
+            <th>Fecha</th>
+            <th>Hora</th>
 </tr>
           <tr>
-            <td id="latitude"></td>
-            <td id="Longitude"></td>
-            <td id="timestamp"></td>
+            <td id="Latitud"></td>
+            <td id="Longitud"></td>
+            <td id="Fecha"></td>
+                <td id="Hora"></td>
           </tr>
         </table>
       </div>
@@ -37,22 +39,21 @@
     <script>
 
       function updateData() {
-        const req = new XMLHttpRequest();
-        req.onreadystatechange = function() {
-          if (this.readyState === 4 && this.status === 200) {
-            const data = this.responseText.split(';');
-            const ul = document.getElementById('data');
-            ul.innerHTML = '';
-            for (let i = data.length - 1; i >= 0; i--) {
-              const li = document.createElement('li');
-              li.appendChild(document.createTextNode(data[i]));
-              ul.appendChild(li);
-            }
+  const req = new XMLHttpRequest();
+  req.onreadystatechange = function() {
+    if (this.readyState === 4 && this.status === 200) {
+      const data = this.responseText.split(';');
+      const [Latitud, Longitud, Fecha, Hora] = data; // Reemplaza "otherValue" con el nombre de la cu>      document.getElementById('Latitud').innerHTML = Latitud;
+      document.getElementById('Latitud').innerHTML = Latitud;
+      document.getElementById('Longitud').innerHTML = Longitud;
+      document.getElementById('Fecha').innerHTML = Fecha;
+      document.getElementById('Hora').innerHTML = Hora;
+    }
+  };
+  req.open('GET', '/data', true);
+  req.send();
 }
-        };
-        req.open('GET', '/data', true);
-        req.send();
-      }
+
       setInterval(updateData, 10000);
     </script>
   </body>
