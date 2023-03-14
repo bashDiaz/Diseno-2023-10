@@ -5,15 +5,30 @@ const app = express()
 const mysql = require('mysql');
 
 app.use(express.static(__dirname + "/static"));
+const express = require('express');
+const app = express();
+app.use(express.static('public'));
 let info = [];
 
 // Listen for incoming messages on the server and adding to a server
+app.use(express.static('public'));
+function updateMap(lat, lng) {
+  // Code to update the map with the new latitude and longitude
+}
 server.on('message', (msg, rinfo) => {
   const data = msg.toString();
-  const fields = data.split(';');
+const fields = data.split(';');
   info = fields;
   const dataToInsert = [fields[0], fields[1], fields[2], fields[3]];
   insertData(dataToInsert);
+ insertData(dataToInsert);
+const lat = parseFloat(fields[0]);
+  const lon = parseFloat(fields[1]);
+  updateMap(lat, lon);
+
+});
+app.get('/data', (req, res) => {
+res.json(info);
 });
 
 // Listen for the server to start listening
@@ -30,6 +45,13 @@ app.listen(80, () => {
 app.get('/', (req, res) => {
   res.sendFile(__dirname + '/index.html')
 })
+app.get('/', (req, res) => {
+  res.sendFile(__dirname + '/index.html');
+});
+const port = 80;
+app.listen(port, () => {
+  console.log(`Servidor iniciado en el puerto ${port}`);
+});
 
 // Create a new MySQL database connection
 const connection = mysql.createConnection({
