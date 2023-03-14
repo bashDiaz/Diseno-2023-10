@@ -1,13 +1,10 @@
 // Import the dgram module
 const dgram = require('dgram');
-
 // Create a UDP server using the 'udp4' protocol
 const server = dgram.createSocket('udp4');
-
 const express = require('express')
 const app = express()
 app.use(express.static(__dirname + "/static"));
-
 // Initialize an empty array to hold information received from UDP messages
 let info = [];
 
