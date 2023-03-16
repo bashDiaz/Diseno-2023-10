@@ -1,8 +1,8 @@
 const express = require("express");
+
+// server is created
 const app = express();
 const path = require("path");
-
-// se crea el servidor
 app.get("/",(req, res) => {
     res.sendFile(path.join(__dirname + "/index.html"));
 });
