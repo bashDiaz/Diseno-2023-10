@@ -52,3 +52,15 @@
     background-color: #f2f2f2; /* Set the background color of even rows to a light gray */
   }
   
+  /* Style for an element with an id of "map" */
+  #map {
+    width: 500px; /* Set the width of the map element to 500 pixels */
+    height: 500px; /* Set the height of the map element to 500 pixels */
+    position: absolute; /* Set the position to "absolute" */
+    top: 60%; /* Set the top position to 60% */
+    left: 50%; /* Set the left position to 50% */
+    transform: translate(-50%, -50%); /* Use transform to center the div */
+    padding: 10px; /* Add padding to the map element */
+    border-radius: 4px; /* Set the border radius to make the edges rounded */
+  }
+  
