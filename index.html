@@ -3,21 +3,24 @@
   <head>
     <meta charset="UTF-8">
     <title>WEBSERVER</title>
-    <link rel="stylesheet" href="estilos.css">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
-     crossorigin=""/>
-    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
-    crossorigin=""></script>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+    integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
+    crossorigin=""/>
   </head>
   <body>
-    <h1>FLEET TRACKING SERVICE</h1>
+    <h1 id="h">FLEET TRACKING SERVICE</h1>
     <ul id="data-list">
       <li>DATA1 <span id="data1"></span></li>
       <li>DATA2 <span id="data2"></span></li>
       <li>DATA3 <span id="data3"></span></li>
       <li>DATA4 <span id="data4"></span></li>
     </ul>
+    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
+    integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
+    crossorigin=""></script>
     <div id="map"></div>
+    <script src="map.js"></script>
   </body>
 </html>
 

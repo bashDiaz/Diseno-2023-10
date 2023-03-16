@@ -37,7 +37,7 @@ app.get('/', (req, res) => {
 });
 
 // Other files that are complement of index are located in static
-app.use(express.static(_dirname + "/static"));
+app.use(express.static(__dirname + "/static"));
 
 // Data is converted in JSON
 app.get('/data', (req, res) => {
@@ -49,7 +49,7 @@ app.get('/data', (req, res) => {
   });
 });
 
-serverHttp.listen(80, () => {
+app.listen(80, () => {
   console.log('HTTP server listening on port 80');
 });
 
