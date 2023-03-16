@@ -1,55 +1,16 @@
 <!DOCTYPE html>
 <html>
   <head>
-<meta charset="UTF-8">
-    <title>UDP Data</title>
-
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.min.css" in><script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha384-7WZ5v5Q13ckhZKOi/QQgu>    <link rel="stylesheet" href="estilo.css">
+    <meta charset="UTF-8">
+    <title>FLEET TRACKING SERVICE</title>
   </head>
   <body>
-    <h1>UDP Data</h1>
-    <ul id="data"></ul>
-<section class="columnas">
-      <div class="columnax2">
-        <div id = "Tit"><h1 id="tit">Grupo 1</h1></div>
-        <div id="datos"></div>
-        <script src="datos.js"></script>
-          <!--Crate a table with the coordinates-->
-        <table>
-          <tr>
-            <!--Define the headers of the table-->
-            <th>Latitud</th>
-            <th>Longitud</th>
-            <th>Fecha</th>
-            <th>Hora</th>
-</tr>
-          <tr>
-            <td id="Latitud"></td>
-            <td id="Longitud"></td>
-            <td id="Fecha"></td>
-                <td id="Hora"></td>
-          </tr>
-        </table>
-      </div>
-    </section>
-<div id="info"></div>
-<script>
-  setInterval(() => {
-    fetch('/data')
-      .then(response => response.json())
-      .then(data => {
-        const infoDiv = document.getElementById('info');
-        infoDiv.textContent = data.join('; ');
-      })
-      .catch(error => console.error(error));
-  }, 1000); // Actualiza la información cada segundo
-</script>
-<div id="map"></div>
-    <!--The scripts are imported form the leaflet guide-->
-    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
-    integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
-    crossorigin=""></script>
-    <!--The script with the map is imported-->
-    <script src="main.js"></script>
+    <h1>Your Fleet is Here</h1>
+    <ul id="data-list">
+      <li>Data1 <span id="data1"></span></li>
+      <li>Data2 <span id="data2"></span></li>
+      <li>Data3 <span id="data3"></span></li>
+      <li>Data4 <span id="data4"></span></li>
+    </ul>
   </body>
 </html>
