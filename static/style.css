@@ -27,31 +27,6 @@
     padding-right: 0px; /* Remove right padding */
   }
   
-  /* Style for a table element */
-  table {
-    width: 100%; /* Set the width of the table to 100% */
-    background-color: white; /* Set the background color to white */
-    border-collapse: collapse; /* Collapse the borders of the table cells */
-  }
-  
-  /* Style for the table header cells */
-  table th {
-    background-color: lightblue; /* Set the background color of the header to light blue */
-    COLOR: white; /* Set the font color of the header to white */
-    text-align: left; /* Align text to the left */
-    margin: 10px; /* Add margin to the header cells */
-  }
-  
-  /* Style for the table data cells */
-  td {
-    border: solid 1px #ddd; /* Add a gray border to each table cell */
-  }
-  
-  /* Style for every other row of a table */
-  tr:nth-child(even) {
-    background-color: #f2f2f2; /* Set the background color of even rows to a light gray */
-  }
-  
   /* Style for an element with an id of "map" */
   #map {
     width: 500px; /* Set the width of the map element to 500 pixels */
