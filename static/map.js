@@ -6,6 +6,15 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   maxZoom: 18,
 }).addTo(mymap); 
 
+// Create a marker and update dataSocket
+var marker = L.marker([data1, data2]).addTo(mymap);
+function updateMarker(data1, data2) {
+  marker.setLatLng([data1, data2]);
+}
+
+
+
+
 // const markers = {};
 // function handleUdpData(data) {
 //   // Add a marker to the map at a specific latitude and longitude

@@ -11,15 +11,15 @@ let data2 = null;
 let data3 = null;
 let data4 = null;
 
-// The server is on and it receive messages that are separated into splits
+// The server is on and it receive messages that are separated into splits.
 server.on('message', (msg, rinfo) => {
   const data = msg.toString().split(';');
   const data1 = parseFloat(data[0]);
   const data2 = parseFloat(data[1]);
-  const data3 = parseFloat(data[2]);
-  const data4 = parseFloat(data[3]);
+  const data3 = data[2];
+  const data4 = data[3];
   console.log(`Data received: ${data1}, ${data2}, ${data3}, ${data4}`);
-  document.getElementById('data').innerHTML = result;
+  document.getElementById('data').innerHTML = "";
 });
 
 // The server is listening and sending information to console
