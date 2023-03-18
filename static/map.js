@@ -1,5 +1,5 @@
 // Create a map object and set its view to a specific latitude, longitude, and zoom level
-let mymap = L.map('map').setView([40.7128, -74.0060], 12);
+let mymap = L.map('map').setView([data1, data2], 12);
 // Add a tile layer to the map using OpenStreetMap's tile server
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',

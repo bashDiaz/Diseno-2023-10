@@ -1,8 +1,31 @@
 #h{
   font-style: initial;
-  color: rgb(7, 38, 239);
 }
 #map { 
   height: 500px;
   width: 500px; 
+}
+#table{
+  top: 200px;
+}
+#logo{
+  width: 200px; 
+  height: 200px;
+  float: inline-start ;
+}
+ul{
+  background-color: white;
+  border: solid 1px #ddd;
+  border-radius: 4px;
+  padding-left: 0px;
+  max-width: 400px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+ul li{
+  list-style-type: none;
+  border-bottom: solid 1px #ddd;
+  padding: 15px;
+  padding-right: 0px;
 }
