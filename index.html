@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
     integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
     crossorigin=""/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
   </head>
   <body>
     <header>
@@ -14,6 +15,7 @@
       <h1 id="h">FLEET TRACKING SERVICE</h1>
     </header>
     <main>
+      <!--Create the table-->
       <div id="table">
         <ul id="data-list">
           <li>LATITUD: <span id="data1"></span></li>
@@ -22,11 +24,23 @@
           <li>HORA: <span id="data4"></span></li>
         </ul>
       </div>
-      <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
-      integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
-      crossorigin=""></script>
-      <div id="map"></div>
-      <script src="map.js"></script>
+      <!--Create the calendar-->
+      <div id="Cal">
+        <h1>Seleccione un intervalo de fechas:</h1>
+        <input type="text" id="start-date" placeholder="Fecha de inicio">
+        <input type="text" id="end-date" placeholder="Fecha de fin">
+        <button id="clear-dates">Limpiar</button>
+        <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+        <script src="calendar.js"></script>
+      </div>
+      <!--Create the map-->
+      <div id="m">      
+        <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
+        integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
+        crossorigin=""></script>
+        <div id="map"></div>
+        <script src="map.js"></script>
+       </div>
     </main>
   </body>
 </html>
