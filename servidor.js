@@ -10,17 +10,25 @@ let data1 = null;
 let data2 = null;
 let data3 = null;
 let data4 = null;
+let info = [];
 
-// The server is on and it receive messages that are separated into splits.
-server.on('message', (msg, rinfo) => {
-  const data = msg.toString().split(';');
-  const data1 = parseFloat(data[0]);
-  const data2 = parseFloat(data[1]);
-  const data3 = data[2];
-  const data4 = data[3];
-  console.log(`Data received: ${data1}, ${data2}, ${data3}, ${data4}`);
-  document.getElementById('data').innerHTML = "";
-});
+// The server is on and it receive messages that are separated into splits. Intervals of 10 seconds
+function refreshData() {
+  server.on('message', (msg, rinfo) => {
+    const data = msg.toString().split(';');
+    const data1 = parseFloat(data[0]);
+    // const lat = parseFloat(data[0]);
+    const data2 = parseFloat(data[1]);
+    // const lng = parseFloat(data[1]);
+    const data3 = data[2];
+    // const fecha = moment(data3).format('MMM DD, YYYY');
+    const data4 = data[3];
+    // const hora = moment(data4, 'HH:mm:ss').format('hh:mm A');
+    console.log(`Data received: ${data1}, ${data2}, ${data3}, ${data4}`);
+    // console.log(`Data received: ${lat}, ${lng}, ${fecha}, ${hora}`);
+    document.getElementById('data').innerHTML = "";
+  });
+} setInterval(refreshData, 10000);
 
 // The server is listening and sending information to console
 server.on('listening', () => {
@@ -52,17 +60,6 @@ app.get('/data', (req, res) => {
 app.listen(80, () => {
   console.log('HTTP server listening on port 80');
 });
-
-// Refresh data every 10 seconds
-setInterval(() => {
-  server.send('refresh', 0, 'refresh'.length, 3333, 'localhost', (err, bytes) => {
-    if (err) {
-      console.log(`Error refreshing data: ${err.message}`);
-    } else {
-      console.log(`Data refreshed`);
-    }
-  });
-}, 10000);
 
 // A connection with mysql is created, with credentials
 const connection = mysql.createConnection({
