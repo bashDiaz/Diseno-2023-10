@@ -4,6 +4,15 @@ const dgram = require('dgram');
 const app = express();
 const server = dgram.createSocket('udp4');
 const mysql = require('mysql');
+const dataElement = document.getElementById('data');
+
+// The changes are inserted in index
+app.get('/', (req, res) => {
+  res.sendFile(__dirname + '/static/index.html');
+});
+
+// Other files that are complement of index are located in static
+app.use(express.static(__dirname + "/static"));
 
 // Variable data empty is inserted 
 let data1 = null;
@@ -26,26 +35,11 @@ function refreshData() {
     // const hora = moment(data4, 'HH:mm:ss').format('hh:mm A');
     console.log(`Data received: ${data1}, ${data2}, ${data3}, ${data4}`);
     // console.log(`Data received: ${lat}, ${lng}, ${fecha}, ${hora}`);
-    document.getElementById('data').innerHTML = "";
+    const dataString = `Data received: ${data1}, ${data2}, ${data3}, ${data4}`;
+    io.emit('data', dataString);
+    console.log('Data displayed');
   });
 } setInterval(refreshData, 10000);
-
-// The server is listening and sending information to console
-server.on('listening', () => {
-  const address = server.address();
-  console.log(`UDP server listening on ${address.address}:${address.port}`);
-});
-
-// A specific port is assigned
-server.bind(1234);
-
-// The changes are inserted in index
-app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/index.html');
-});
-
-// Other files that are complement of index are located in static
-app.use(express.static(__dirname + "/static"));
 
 // Data is converted in JSON
 app.get('/data', (req, res) => {
@@ -56,6 +50,15 @@ app.get('/data', (req, res) => {
     data4: data4
   });
 });
+
+// The server is listening and sending information to console
+server.on('listening', () => {
+  const address = server.address();
+  console.log(`UDP server listening on ${address.address}:${address.port}`);
+});
+
+// A specific port is assigned
+server.bind(1234);
 
 app.listen(80, () => {
   console.log('HTTP server listening on port 80');
