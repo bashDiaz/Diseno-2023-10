@@ -15,18 +15,22 @@ let info = [];
 // The server is on and it receive messages that are separated into splits. Intervals of 10 seconds
 function refreshData() {
   server.on('message', (msg, rinfo) => {
-    const data = msg.toString().split(';');
-    const data1 = parseFloat(data[0]);
+const data = msg.toString();
+const fields = data.split(';');
+  info = fields;
+const dataToInsert = [fields[0], fields[1], fields[2], fields[3]];
+ insertData(dataToInsert);
+    const data1 = parseFloat(fields[0]);
     // const lat = parseFloat(data[0]);
-    const data2 = parseFloat(data[1]);
+    const data2 = parseFloat(fields[1]);
     // const lng = parseFloat(data[1]);
-    const data3 = data[2];
+    const data3 = fields[2];
     // const fecha = moment(data3).format('MMM DD, YYYY');
-    const data4 = data[3];
+    const data4 = fields[3];
     // const hora = moment(data4, 'HH:mm:ss').format('hh:mm A');
     console.log(`Data received: ${data1}, ${data2}, ${data3}, ${data4}`);
     // console.log(`Data received: ${lat}, ${lng}, ${fecha}, ${hora}`);
-    document.getElementById('data').innerHTML = "";
+    //document.getElementById('data').innerHTML = "";
   });
 } setInterval(refreshData, 10000);
 
