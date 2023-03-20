@@ -4,7 +4,7 @@ const dgram = require('dgram');
 const app = express();
 const server = dgram.createSocket('udp4');
 const mysql = require('mysql');
-
+ 
 // Variable data empty is inserted 
 let data1 = null;
 let data2 = null;
