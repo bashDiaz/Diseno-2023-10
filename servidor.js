@@ -12,7 +12,7 @@ let data1, data2, data3, data4;
 app.use(express.static(__dirname + "/static"));
 
 // The server is listening and sending information to console
-server.on('listening', async () => {
+server.on('listening', () => {
   const address = server.address();
   console.log(`UDP server listening on ${address.address}:${address.port}`);
 });
@@ -43,10 +43,10 @@ connection.connect((error) => {
 // The server is on and it receive messages that are separated into splits.
 server.on('message', (msg) => {
   const data = msg.toString('utf-8').split(';');
-  const data1 = parseFloat(data[0]);
-  const data2 = parseFloat(data[1]);
-  const data3 = data[2];
-  const data4 = data[3];
+  data1 = parseFloat(data[0]);
+  data2 = parseFloat(data[1]);
+  data3 = data[2];
+  data4 = data[3];
   console.log(`Data received: ${data1}, ${data2}, ${data3}, ${data4}`);
 
   // insert data to database
@@ -61,14 +61,29 @@ server.on('message', (msg) => {
   });
 });
 
+// The changes are inserted in index
+app.get('/', (req, res) => {
+  res.sendFile(__dirname + '/index.html');
+});
+
+// This endpoint will return the latest values of data1, data2, data3, and data4 as a JSON object
+app.get('/data', (req, res) => {
+  if (data1 && data2 && data3 && data4) {
+    const myData = [data1, data2, data3, data4];
+    res.json(myData);
+  } else {
+    res.status(500).json({ message: 'Error al obtener los datos' });
+  }
+});
+
 app.get('/linea', (req, res) => {
   // Obtiene los valores de fecha y hora del query
-const fechaInicio = '2023-03-20';
+  const fechaInicio = '2023-03-20';
   const horaInicio = '08:33:00';
   const fechaFin = '2023-03-20';
   const horaFin = '08:45:00';
-console.log(fechaInicio);
-console.log(horaInicio);
+  console.log(fechaInicio);
+  console.log(horaInicio);
 
   // Crea la consulta SQL con los parámetros de fecha y hora
   const query = `SELECT Latitud, Longitud FROM datos_gps WHERE Fecha >= '${fechaInicio}' AND Hora >= '${horaInicio}' AND Fecha <= '${fechaFin}' AND Hora <= '${horaFin}' ORDER BY id DESC LIMIT 50`;
@@ -87,16 +102,4 @@ console.log(horaInicio);
       });
     }
   });
-});
-
-
-app.get('/data', (req, res) => {
-  const myData = [data1, data2, data3, data4];
-  // use res.json() to send the data as a JSON response to the client
-  res.json(myData);
-});
-
-// The changes are inserted in index
-app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/index.html');
 });
