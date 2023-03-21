@@ -32,8 +32,11 @@
         <input type="text" id="start-date" placeholder="Fecha de inicio">
         <input type="text" id="end-date" placeholder="Fecha de fin">
         <button id="clear-dates">Limpiar</button>
+        <form method="POST" action="/linea">
+
         <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
         <script src="calendar.js"></script>
+        
       </div>
       <!--Create the map-->
       <div id="m">      
@@ -41,6 +44,7 @@
         integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
         crossorigin=""></script>
         <div id="map"></div>
+        
         <script src="map.js"></script>
        </div>
     </main>

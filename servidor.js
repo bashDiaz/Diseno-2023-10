@@ -4,6 +4,9 @@ const dgram = require('dgram');
 const app = express();
 const server = dgram.createSocket('udp4');
 const mysql = require('mysql');
+const bodyParser = require('body-parser');
+app.use(bodyParser.urlencoded({ extended: true }));
+
 
 // Variable data empty is inserted
 let data1, data2, data3, data4;
@@ -76,12 +79,12 @@ app.get('/data', (req, res) => {
   }
 });
 
-app.get('/linea', (req, res) => {
-  // Obtiene los valores de fecha y hora del query
-  const fechaInicio = document.getElementById('startDatePicker').value;
-  const fechaFin = document.getElementById('endDatePicker').value;
-  const horaInicio = document.getElementById('startDatePicker').value.split(' ')[1];
-  const horaFin = document.getElementById('endDatePicker').value.split(' ')[1];
+app.post('/linea', (req, res) => {
+  // Obtener los valores de fecha y hora del formulario
+  const fechaInicio = req.body.startDate;
+  const fechaFin = req.body.endDate;
+  const horaInicio = req.body.startTime;
+  const horaFin = req.body.endTime;
   console.log(fechaInicio);
   console.log(horaInicio);
 

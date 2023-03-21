@@ -1,5 +1,5 @@
 const startDatePicker = flatpickr("#start-date", {
-    dateFormat: "d-m-Y H:i",
+    dateFormat: "Y-m-d H:i",
     minDate: new Date(2023, 2, 8, 0, 0), // 8 de marzo del 2023 a las 00:00 AM
     maxDate: "today",
     enableTime: true,
@@ -17,7 +17,7 @@ const startDatePicker = flatpickr("#start-date", {
 });
 
 const endDatePicker = flatpickr("#end-date", {
-    dateFormat: "d-m-Y H:i",
+    dateFormat: "Y-m-d H:i",
     minDate: startDatePicker.selectedDates[0],
     maxDate: "today",
     enableTime: true,
