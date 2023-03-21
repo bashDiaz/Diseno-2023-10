@@ -12,7 +12,7 @@ let data1, data2, data3, data4;
 app.use(express.static(__dirname + "/static"));
 
 // The server is listening and sending information to console
-server.on('listening', async () => {
+server.on('listening', () => {
   const address = server.address();
   console.log(`UDP server listening on ${address.address}:${address.port}`);
 });
@@ -27,7 +27,7 @@ app.listen(80, () => {
 // A connection with mysql is created, with credentials
 const connection = mysql.createConnection({
   host: 'mysql1.czemchtiopw1.us-east-1.rds.amazonaws.com',
-  user: 'admin', 
+  user: 'admin',
   password: 'prueba123',
   database: 'mysql1'
 });
@@ -39,14 +39,13 @@ connection.connect((error) => {
   }
   console.log('Connected to MySQL database with id ' + connection.threadId);
 });
-
 // The server is on and it receive messages that are separated into splits.
 server.on('message', (msg) => {
   const data = msg.toString('utf-8').split(';');
-  const data1 = parseFloat(data[0]);
-  const data2 = parseFloat(data[1]);
-  const data3 = data[2];
-  const data4 = data[3];
+  data1 = parseFloat(data[0]);
+  data2 = parseFloat(data[1]);
+  data3 = data[2];
+  data4 = data[3];
   console.log(`Data received: ${data1}, ${data2}, ${data3}, ${data4}`);
 
   // insert data to database
@@ -60,7 +59,6 @@ server.on('message', (msg) => {
     }
   });
 });
-
 app.get('/linea', (req, res) => {
   // Obtiene los valores de fecha y hora del query
   const fechaInicio = req.query.fecha_inicio || '2023-03-20';
@@ -72,7 +70,7 @@ app.get('/linea', (req, res) => {
   console.log(horaInicio);
 
   // Crear la consulta SQL con los parámetros de fecha y hora
-  const query = `SELECT Latitud, Longitud FROM datos_gps WHERE Fecha >= '${fechaInicio}' AND Hora >= '${horaInicio}' AND Fecha <= '${fechaFin}' AND Hora <= '${horaFin}' ORDER BY id DESC LIMIT 50`;
+  const query = `SELECT Latitud, Longitud FROM datos_gps WHERE Fecha >= '${fechaInicio}' AND Hora >= >
 
   connection.query(query, (error, rows) => {
     if (error) {
@@ -89,15 +87,17 @@ app.get('/linea', (req, res) => {
     }
   });
 });
-
-
-app.get('/data', (req, res) => {
-  const myData = [data1, data2, data3, data4];
-  // use res.json() to send the data as a JSON response to the client
-  res.json(myData);
-});
-
 // The changes are inserted in index
 app.get('/', (req, res) => {
   res.sendFile(__dirname + '/index.html');
+});
+
+// This endpoint will return the latest values of data1, data2, data3, and data4 as a JSON object
+app.get('/data', (req, res) => {
+  if (data1 && data2 && data3 && data4) {
+    const myData = [data1, data2, data3, data4];
+    res.json(myData);
+  } else {
+    res.status(500).json({ message: 'Error al obtener los datos' });
+  }
 });
