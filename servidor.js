@@ -62,20 +62,29 @@ server.on('message', (msg) => {
 });
 
 app.get('/linea', (req, res) => {
-  const query = 'SELECT Latitud, Longitud FROM datos_gps ORDER BY id DESC LIMIT 50';
+  // Obtiene los valores de fecha y hora del query
+const fechaInicio = '2023-03-20';
+  const horaInicio = '08:33:00';
+  const fechaFin = '2023-03-20';
+  const horaFin = '08:45:00';
+console.log(fechaInicio);
+console.log(horaInicio);
+
+  // Crea la consulta SQL con los parámetros de fecha y hora
+  const query = `SELECT Latitud, Longitud FROM datos_gps WHERE Fecha >= '${fechaInicio}' AND Hora >= '${horaInicio}' AND Fecha <= '${fechaFin}' AND Hora <= '${horaFin}' ORDER BY id DESC LIMIT 50`;
 
   connection.query(query, (error, rows) => {
     if (error) {
       console.error('Error al hacer el query: ', error);
       res.status(500).send('Error al hacer el query');
     } else {
-    console.log('Resultados del query: ', rows);
+      console.log('Resultados del query: ', rows);
 
-    const values = rows.map(obj => [parseFloat(obj.Latitud), parseFloat(obj.Longitud)]);
+      const values = rows.map(obj => [parseFloat(obj.Latitud), parseFloat(obj.Longitud)]);
 
-    res.json({
-      rows: values
-    });
+      res.json({
+        rows: values
+      });
     }
   });
 });
