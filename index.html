@@ -26,12 +26,18 @@
       </div>
       <!--Create the calendar-->
       <div id="Cal">
-        <h1>Seleccione un intervalo de fechas:</h1>
-        <input type="text" id="start-date" placeholder="Fecha de inicio">
-        <input type="text" id="end-date" placeholder="Fecha de fin">
-        <button id="clear-dates">Limpiar</button>
-        <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-        <script src="calendar.js"></script>
+<form id="formulario-fecha-hora">
+  <label for="fecha-inicio">Fecha inicio:</label>
+  <input type="date" id="fecha-inicio" name="fecha-inicio">
+  <input type="time" id="hora-inicio" name="hora-inicio">
+
+  <label for="fecha-fin">Fecha fin:</label>
+  <input type="date" id="fecha-fin" name="fecha-fin">
+  <input type="time" id="hora-fin" name="hora-fin">
+
+  <button type="submit" id="enviar-solicitud">Enviar solicitud</button>
+</form>
+<script src="calendar.js"></script>
       </div>
       <!--Create the map-->
       <div id="m">      
@@ -39,7 +45,7 @@
         integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
         crossorigin=""></script>
         <div id="map"></div>
-        <script src="servidor.js"></script>
+        <script src="map.js"></script>
        </div>
     </main>
   </body>
