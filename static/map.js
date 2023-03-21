@@ -12,7 +12,7 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 
 // Create a marker and update dataSocket
 var marker = L.marker([data1, data2]).addTo(mymap);
-function updateMarker(data1, data2) {
+function updateMarker([data1, data2]) {
   marker.setLatLng([data1, data2]);
 }
 
