@@ -1,25 +1,18 @@
-app.get('/linea', (req, res) => {
-  // Obtiene los valores de fecha y hora del query
-  const fechaInicio = req.query.fecha_inicio;
-  const horaInicio = req.query.hora_inicio;
-  const fechaFin = req.query.fecha_fin;
-  const horaFin = req.query.hora_fin;
+const formulario = document.querySelector('#formulario');
 
-  // Crea la consulta SQL con los parámetros de fecha y hora
-  const query = `SELECT Latitud, Longitud FROM datos_gps WHERE Fecha >= '${fechaInicio} ${horaInicio}:00' AND Fecha <= '${fechaFin} ${horaFin}:00' ORDER BY id DESC LIMIT 50`;
+formulario.addEventListener('submit', (event) => {
+  event.preventDefault();
+const fechaInicio = document.querySelector('#fecha_inicio').value;
+const horaInicio = document.querySelector('#hora_inicio').value;
+const fechaFin = document.querySelector('#fecha_fin').value;
+const horaFin = document.querySelector('#hora_fin').value;
 
-  connection.query(query, (error, rows) => {
-    if (error) {
-      console.error('Error al hacer el query: ', error);
-      res.status(500).send('Error al hacer el query');
-    } else {
-      console.log('Resultados del query: ', rows);
-
-      const values = rows.map(obj => [parseFloat(obj.Latitud), parseFloat(obj.Longitud)]);
-
-      res.json({
-        rows: values
-      });
-    }
-  });
+fetch(`/linea?fecha_inicio=${fechaInicio}&hora_inicio=${horaInicio}&fecha_fin=${fechaFin}&hora_fin=${horaFin}`)
+  .then(response => response.json())
+  .then(data => {
+    console.log(data);
+    // hacer algo con los datos obtenidos
+  })
+  .catch(error => console.error(error));
+  
 });

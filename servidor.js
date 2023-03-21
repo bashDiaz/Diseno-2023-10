@@ -27,7 +27,7 @@ app.listen(80, () => {
 // A connection with mysql is created, with credentials
 const connection = mysql.createConnection({
   host: 'mysql1.czemchtiopw1.us-east-1.rds.amazonaws.com',
-  user: 'admin', 
+  user: 'admin',
   password: 'prueba123',
   database: 'mysql1'
 });
@@ -61,31 +61,17 @@ server.on('message', (msg) => {
   });
 });
 
-// The changes are inserted in index
-app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/index.html');
-});
-
-// This endpoint will return the latest values of data1, data2, data3, and data4 as a JSON object
-app.get('/data', (req, res) => {
-  if (data1 && data2 && data3 && data4) {
-    const myData = [data1, data2, data3, data4];
-    res.json(myData);
-  } else {
-    res.status(500).json({ message: 'Error al obtener los datos' });
-  }
-});
-
 app.get('/linea', (req, res) => {
   // Obtiene los valores de fecha y hora del query
-  const fechaInicio = '2023-03-20';
-  const horaInicio = '08:33:00';
-  const fechaFin = '2023-03-20';
-  const horaFin = '08:45:00';
+  const fechaInicio = req.query.fecha_inicio || '2023-03-20';
+  const horaInicio = req.query.hora_inicio || '08:33:00';
+  const fechaFin = req.query.fecha_fin || '2023-03-20';
+  const horaFin = req.query.hora_fin || '08:45:00';
+
   console.log(fechaInicio);
   console.log(horaInicio);
 
-  // Crea la consulta SQL con los parámetros de fecha y hora
+  // Crear la consulta SQL con los parámetros de fecha y hora
   const query = `SELECT Latitud, Longitud FROM datos_gps WHERE Fecha >= '${fechaInicio}' AND Hora >= '${horaInicio}' AND Fecha <= '${fechaFin}' AND Hora <= '${horaFin}' ORDER BY id DESC LIMIT 50`;
 
   connection.query(query, (error, rows) => {
@@ -102,4 +88,18 @@ app.get('/linea', (req, res) => {
       });
     }
   });
+});
+// The changes are inserted in index
+app.get('/', (req, res) => {
+  res.sendFile(__dirname + '/index.html');
+});
+
+// This endpoint will return the latest values of data1, data2, data3, and data4 as a JSON object
+app.get('/data', (req, res) => {
+  if (data1 && data2 && data3 && data4) {
+    const myData = [data1, data2, data3, data4];
+    res.json(myData);
+  } else {
+    res.status(500).json({ message: 'Error al obtener los datos' });
+  }
 });
