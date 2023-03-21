@@ -64,7 +64,7 @@ server.on('message', (msg) => {
 app.get('/linea', (req, res) => {
   // Obtiene los valores de fecha y hora del query
   const fechaInicio = req.query.fecha_inicio || '2023-03-20';
-  const horaInicio = req.query.hora_inicio || '08:33:00';
+  const horaInicio = req.query.hora_inicio || '08:35:00';
   const fechaFin = req.query.fecha_fin || '2023-03-20';
   const horaFin = req.query.hora_fin || '08:45:00';
 
