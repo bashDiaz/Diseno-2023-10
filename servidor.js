@@ -78,10 +78,10 @@ app.get('/data', (req, res) => {
 
 app.get('/linea', (req, res) => {
   // Obtiene los valores de fecha y hora del query
-  const fechaInicio = '2023-03-20';
-  const horaInicio = '08:33:00';
-  const fechaFin = '2023-03-20';
-  const horaFin = '08:45:00';
+  const fechaInicio = document.getElementById('startDatePicker').value;
+  const fechaFin = document.getElementById('endDatePicker').value;
+  const horaInicio = document.getElementById('startDatePicker').value.split(' ')[1];
+  const horaFin = document.getElementById('endDatePicker').value.split(' ')[1];
   console.log(fechaInicio);
   console.log(horaInicio);
 
