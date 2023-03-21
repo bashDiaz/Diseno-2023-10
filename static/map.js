@@ -33,4 +33,4 @@ setInterval(() => {
       console.log(data.rows);
       updatePolyline(data.rows);
     });
-}, 1000);
+}, 10000);
