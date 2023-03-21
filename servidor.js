@@ -39,6 +39,7 @@ connection.connect((error) => {
   }
   console.log('Connected to MySQL database with id ' + connection.threadId);
 });
+
 // The server is on and it receive messages that are separated into splits.
 server.on('message', (msg) => {
   const data = msg.toString('utf-8').split(';');
@@ -59,6 +60,7 @@ server.on('message', (msg) => {
     }
   });
 });
+
 app.get('/linea', (req, res) => {
   // Obtiene los valores de fecha y hora del query
   const fechaInicio = req.query.fecha_inicio || '2023-03-20';
@@ -70,7 +72,7 @@ app.get('/linea', (req, res) => {
   console.log(horaInicio);
 
   // Crear la consulta SQL con los parámetros de fecha y hora
-  const query = `SELECT Latitud, Longitud FROM datos_gps WHERE Fecha >= '${fechaInicio}' AND Hora >= >
+  const query = `SELECT Latitud, Longitud FROM datos_gps WHERE Fecha >= '${fechaInicio}' AND Hora >= '${horaInicio}' AND Fecha <= '${fechaFin}' AND Hora <= '${horaFin}' ORDER BY id DESC LIMIT 50`;
 
   connection.query(query, (error, rows) => {
     if (error) {
