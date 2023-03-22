@@ -41,7 +41,7 @@ connection.connect((error) => {
 });
 
 // The server is on and it receive messages that are separated into splits.
-server.on('message', (msg) => {
+  server.on('message', (msg) => {
   const data = msg.toString('utf-8').split(';');
   data1 = parseFloat(data[0]);
   data2 = parseFloat(data[1]);
@@ -59,20 +59,39 @@ server.on('message', (msg) => {
       console.log("Data inserted successfully!");
     }
   });
+
+app.get('/last', (req, res) => {
+  const query = 'SELECT Latitud, Longitud FROM datos_gps ORDER BY id DESC LIMIT 1';
+
+  connection.query(query, (error, rows) => {
+    if (error) {
+      console.error('Error al hacer el query: ', error);
+      res.status(500).send('Error al hacer el query');
+    } else {
+      const values = rows.map(obj => [parseFloat(obj.Latitud), parseFloat(obj.Longitud)]);
+
+      res.json({
+        rows: values
+      });
+    }
+  });
+});
+
+
 });
 
 app.get('/linea', (req, res) => {
   // Obtiene los valores de fecha y hora del query
-  const fechaInicio = req.query.fecha_inicio || '2023-03-20';
-  const horaInicio = req.query.hora_inicio || '08:35:00';
-  const fechaFin = req.query.fecha_fin || '2023-03-20';
-  const horaFin = req.query.hora_fin || '08:45:00';
+  const fechaInicio = req.query.fecha_inicio || '2023-03-21';
+  const horaInicio = req.query.hora_inicio || '10:30:00';
+  const fechaFin = req.query.fecha_fin || '2023-03-21';
+  const horaFin = req.query.hora_fin || '10:50:00';
 
   console.log(fechaInicio);
   console.log(horaInicio);
 
   // Crear la consulta SQL con los parámetros de fecha y hora
-  const query = `SELECT Latitud, Longitud FROM datos_gps WHERE Fecha >= '${fechaInicio}' AND Hora >= '${horaInicio}' AND Fecha <= '${fechaFin}' AND Hora <= '${horaFin}' ORDER BY id DESC LIMIT 50`;
+  const query = `SELECT Latitud, Longitud FROM datos_gps WHERE Fecha >= '${fechaInicio}' AND Hora >= '${horaInicio}' AND Fecha <= '${fechaFin}' AND Hora <= '${horaFin}' ORDER BY id DESC`;
 
   connection.query(query, (error, rows) => {
     if (error) {
