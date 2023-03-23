@@ -51,7 +51,7 @@ setInterval(() => {
       updatePolyline(data.rows);
 updateMarker(data.rows);
 });
-}, 1000);
+}, 2000);
 
 // const markers = {};
 // function handleUdpData(data) {
