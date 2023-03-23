@@ -80,32 +80,39 @@ app.get('/last', (req, res) => {
 
 });
 
-app.get('/linea', (req, res) => {
-  // Obtiene los valores de fecha y hora del query
-  const fechaInicio = req.query.fecha_inicio || '2023-03-21';
-  const horaInicio = req.query.hora_inicio || '10:30:00';
-  const fechaFin = req.query.fecha_fin || '2023-03-21';
-  const horaFin = req.query.hora_fin || '10:50:00';
+let values = []; // variable global para almacenar los valores de la consulta más reciente
 
-  console.log(fechaInicio);
-  console.log(horaInicio);
-
+app.get("/consultar", (req, res) => {
+  const fecha_inicio = req.query.fecha_inicio;
+  const fecha_final = req.query.fecha_final;
+  const hora_inicio = req.query.hora_inicio;
+  const hora_final = req.query.hora_final;
+  const vector = [fecha_inicio, fecha_final, hora_inicio, hora_final];
+  
   // Crear la consulta SQL con los parámetros de fecha y hora
-  const query = `SELECT Latitud, Longitud FROM datos_gps WHERE Fecha >= '${fechaInicio}' AND Hora >= '${horaInicio}' AND Fecha <= '${fechaFin}' AND Hora <= '${horaFin}' ORDER BY id DESC`;
-
+  const query = `SELECT Latitud, Longitud FROM datos_gps WHERE Fecha >= '${fecha_inicio}' AND Hora >= '${hora_inicio}' AND Fecha <= '${fecha_final}' AND Hora <= '${hora_final}' ORDER BY id DESC`;
+  
   connection.query(query, (error, rows) => {
     if (error) {
       console.error('Error al hacer el query: ', error);
       res.status(500).send('Error al hacer el query');
     } else {
-      console.log('Resultados del query: ', rows);
+      values = rows.map(obj => [parseFloat(obj.Latitud), parseFloat(obj.Longitud)]); // actualizar los valores más recientes
 
-      const values = rows.map(obj => [parseFloat(obj.Latitud), parseFloat(obj.Longitud)]);
-
+      console.log(vector);
+      
       res.json({
         rows: values
       });
     }
+  });
+});
+
+// ruta para obtener los valores de la consulta más reciente
+app.get('/linea', (req, res) => {
+  console.log(values);
+  res.json({
+    rows: values
   });
 });
 // The changes are inserted in index
