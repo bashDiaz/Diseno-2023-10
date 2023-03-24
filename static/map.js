@@ -1,4 +1,7 @@
 // Create a map object and set its view to a specific latitude, longitude, and zoom level
+const data1 = 11.02713824366;
+const data2 = -74.82960349742;
+vector = [[data1,data2]];
 let mymap = L.map('map').setView([data1, data2], 12);
 polyline = L.polyline(vector, {color: 'red'}).addTo(mymap);
 // Add a tile layer to the map using OpenStreetMap's tile server
@@ -22,5 +25,13 @@ function updatePolyline(rows) {
     polyline = L.polyline(coordsArray, {color: 'red'}).addTo(mymap);
     console.log('fcn')
   }
-} 
-setInterval(updatePolyline, 10000);
+}
+
+setInterval(() => {
+  fetch('/linea')
+    .then(response => response.json())
+    .then(data => {
+      console.log(data.rows);
+      updatePolyline(data.rows);
+    });
+}, 10000);

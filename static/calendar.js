@@ -1,28 +1,18 @@
-const startDatePicker = flatpickr("#start-date", {
-    dateFormat: "d-m-Y",
-    minDate: "today",
-    maxDate: new Date().fp_incr(14),
-    enableTime: false,
-    onClose: function(selectedDates, dateStr, instance) {
-        if (selectedDates.length === 1) {
-            instance.setDate(selectedDates[0]);
-        }
-    }
-});
+const formulario = document.querySelector('#formulario');
 
-const endDatePicker = flatpickr("#end-date", {
-    dateFormat: "d-m-Y",
-    minDate: "today",
-    maxDate: new Date().fp_incr(14),
-    enableTime: false,
-    onClose: function(selectedDates, dateStr, instance) {
-        if (selectedDates.length === 1) {
-            instance.setDate(selectedDates[0]);
-        }
-    }
-});
+formulario.addEventListener('submit', (event) => {
+  event.preventDefault();
+const fechaInicio = document.querySelector('#fecha_inicio').value;
+const horaInicio = document.querySelector('#hora_inicio').value;
+const fechaFin = document.querySelector('#fecha_fin').value;
+const horaFin = document.querySelector('#hora_fin').value;
 
-document.getElementById("clear-dates").addEventListener("click", function() {
-    startDatePicker.clear();
-    endDatePicker.clear();
+fetch(`/linea?fecha_inicio=${fechaInicio}&hora_inicio=${horaInicio}&fecha_fin=${fechaFin}&hora_fin=${horaFin}`)
+  .then(response => response.json())
+  .then(data => {
+    console.log(data);
+    // hacer algo con los datos obtenidos
+  })
+  .catch(error => console.error(error));
+  
 });
