@@ -6,7 +6,10 @@ const server = dgram.createSocket('udp4');
 const mysql = require('mysql');
 
 // Variable data empty is inserted
-let data1, data2, data3, data4;
+let data1 = 'Waiting to server';
+let data2 = 'Waiting to server';
+let data3 = 'Waiting to server';
+let data4 = 'Waiting to server';
 
 // Other files that are complement of index are located in static
 app.use(express.static(__dirname + "/static"));
@@ -49,7 +52,7 @@ server.on('message', (msg) => {
   data4 = data[3];
   console.log(`Data received: ${data1}, ${data2}, ${data3}, ${data4}`);
 
-  // insert data to database
+  // Insert data to database
   const sql = "INSERT INTO datos_gps (Latitud, Longitud, Fecha, Hora) VALUES (?, ?, ?, ?)";
   const values = [data1, data2, data3, data4];
   connection.query(sql, values, (error, results, fields) => {
@@ -59,32 +62,60 @@ server.on('message', (msg) => {
       console.log("Data inserted successfully!");
     }
   });
+
+  // Selecting last position in lat and lng for maping (of database)
+  app.get('/last', (req, res) => {
+    const query = 'SELECT Latitud, Longitud FROM datos_gps ORDER BY id DESC LIMIT 1';
+
+    connection.query(query, (error, rows) => {
+      if (error) {
+        console.error('Error al hacer el query: ', error);
+        res.status(500).send('Error al hacer el query');
+      } else {
+        const values = rows.map(obj => [parseFloat(obj.Latitud), parseFloat(obj.Longitud)]);
+
+        res.json({
+          rows: values
+        });
+      }
+    });
+  });
 });
 
-app.post('/historico', (req, res) => {
-  const fechaInicio = req.body.fecha_inicio || '2023-03-20';
-  const horaInicio = req.body.hora_inicio || '08:33:00';
-  const fechaFin = req.body.fecha_fin || '2023-03-20';
-  const horaFin = req.body.hora_fin || '08:45:00';
+// Let a global variable for receive data of a new query
+let values = []; 
 
-  console.log(fechaInicio);
-  console.log(horaInicio);
-
-  const query = `SELECT Latitud, Longitud FROM datos_gps WHERE Fecha >= '${fechaInicio}' AND Hora >= '${horaInicio}' AND Fecha <= '${fechaFin}' AND Hora <= '${horaFin}' ORDER BY id DESC LIMIT 50`;
-
+app.get("/consultar", (req, res) => {
+  const fecha_inicio = req.query.fecha_inicio;
+  const fecha_final = req.query.fecha_final;
+  const hora_inicio = req.query.hora_inicio;
+  const hora_final = req.query.hora_final;
+  const vector = [fecha_inicio, fecha_final, hora_inicio, hora_final];
+  
+  // Create a sql query for last date and time, updating last data
+  const query = `SELECT Latitud, Longitud FROM datos_gps WHERE Fecha >= '${fecha_inicio}' AND Hora >= '${hora_inicio}' AND Fecha <= '${fecha_final}' AND Hora <= '${hora_final}' ORDER BY id DESC`;
+  
   connection.query(query, (error, rows) => {
     if (error) {
       console.error('Error al hacer el query: ', error);
       res.status(500).send('Error al hacer el query');
     } else {
-      console.log('Resultados del query: ', rows);
+      values = rows.map(obj => [parseFloat(obj.Latitud), parseFloat(obj.Longitud)]);
 
-      const values = rows.map(obj => [parseFloat(obj.Latitud), parseFloat(obj.Longitud)]);
-
+      console.log(vector);
+      
       res.json({
         rows: values
       });
     }
+  });
+});
+
+// Recent data goes in selected route
+app.get('/linea', (req, res) => {
+  console.log(values);
+  res.json({
+    rows: values
   });
 });
 
