@@ -1,35 +1,23 @@
-const startDatePicker = flatpickr("#start-date", {
-    dateFormat: "Y-m-d H:i",
-    minDate: new Date(2023, 2, 8, 0, 0), // 8 de marzo del 2023 a las 00:00 AM
-    maxDate: "today",
-    enableTime: true,
-    onClose: function(selectedDates, dateStr, instance) {
-        if (selectedDates.length === 1) {
-            instance.setDate(selectedDates[0]);
-        }
-        endDatePicker.set("minDate", dateStr);
-    },
-    onChange: function(selectedDates, dateStr, instance) {
-        if (selectedDates.length === 1) {
-            endDatePicker.set("minDate", dateStr);
-        }
-    }
+const formulario = document.querySelector('#formulario');
+
+// A function that wait for data submitted by client
+formulario.addEventListener('submit', (event) => {
+  event.preventDefault();
+  const fechaInicio = document.querySelector('#fecha_inicio').value;
+  $(document).ready(function(){
+  $("#fecha").datepicker({
+    dateFormat: "yyyy-mm-dd"
+  });
 });
 
-const endDatePicker = flatpickr("#end-date", {
-    dateFormat: "Y-m-d H:i",
-    minDate: startDatePicker.selectedDates[0],
-    maxDate: "today",
-    enableTime: true,
-    onClose: function(selectedDates, dateStr, instance) {
-        if (selectedDates.length === 1) {
-            instance.setDate(selectedDates[0]);
-        }
-    }
-});
+const horaInicio = document.querySelector('#hora_inicio').value;
+const fechaFin = document.querySelector('#fecha_fin').value;
+const horaFin = document.querySelector('#hora_fin').value;
 
-document.getElementById("clear-dates").addEventListener("click", function() {
-    startDatePicker.clear();
-    endDatePicker.clear();
-    endDatePicker.set("minDate", null);
+fetch(`/linea?fecha_inicio=${fechaInicio}&hora_inicio=${horaInicio}&fecha_fin=${fechaFin}&hora_fin=${horaFin}`)
+  .then(response => response.json())
+  .then(data => {
+    console.log(data);
+  })
+  .catch(error => console.error(error));
 });

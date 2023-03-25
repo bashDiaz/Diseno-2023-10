@@ -9,7 +9,10 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 
 // Variable data empty is inserted
-let data1, data2, data3, data4;
+let data1 = 'Waiting to server';
+let data2 = 'Waiting to server';
+let data3 = 'Waiting to server';
+let data4 = 'Waiting to server';
 
 // Other files that are complement of index are located in static
 app.use(express.static(__dirname + "/static"));
@@ -30,7 +33,7 @@ app.listen(80, () => {
 // A connection with mysql is created, with credentials
 const connection = mysql.createConnection({
   host: 'mysql1.czemchtiopw1.us-east-1.rds.amazonaws.com',
-  user: 'admin', 
+  user: 'admin',
   password: 'prueba123',
   database: 'mysql1'
 });
@@ -52,7 +55,7 @@ server.on('message', (msg) => {
   data4 = data[3];
   console.log(`Data received: ${data1}, ${data2}, ${data3}, ${data4}`);
 
-  // insert data to database
+  // Insert data to database
   const sql = "INSERT INTO datos_gps (Latitud, Longitud, Fecha, Hora) VALUES (?, ?, ?, ?)";
   const values = [data1, data2, data3, data4];
   connection.query(sql, values, (error, results, fields) => {
@@ -61,6 +64,61 @@ server.on('message', (msg) => {
     } else {
       console.log("Data inserted successfully!");
     }
+  });
+
+  // Selecting last position in lat and lng for maping (of database)
+  app.get('/last', (req, res) => {
+    const query = 'SELECT Latitud, Longitud FROM datos_gps ORDER BY id DESC LIMIT 1';
+
+    connection.query(query, (error, rows) => {
+      if (error) {
+        console.error('Error al hacer el query: ', error);
+        res.status(500).send('Error al hacer el query');
+      } else {
+        const values = rows.map(obj => [parseFloat(obj.Latitud), parseFloat(obj.Longitud)]);
+
+        res.json({
+          rows: values
+        });
+      }
+    });
+  });
+});
+
+// Let a global variable for receive data of a new query
+let values = []; 
+
+app.get("/consultar", (req, res) => {
+  const fecha_inicio = req.query.fecha_inicio;
+  const fecha_final = req.query.fecha_final;
+  const hora_inicio = req.query.hora_inicio;
+  const hora_final = req.query.hora_final;
+  const vector = [fecha_inicio, fecha_final, hora_inicio, hora_final];
+  
+  // Create a sql query for last date and time, updating last data
+  const query = `SELECT Latitud, Longitud FROM datos_gps WHERE Fecha >= '${fecha_inicio}' AND Hora >= '${hora_inicio}' AND Fecha <= '${fecha_final}' AND Hora <= '${hora_final}' ORDER BY id DESC`;
+  
+  connection.query(query, (error, rows) => {
+    if (error) {
+      console.error('Error al hacer el query: ', error);
+      res.status(500).send('Error al hacer el query');
+    } else {
+      values = rows.map(obj => [parseFloat(obj.Latitud), parseFloat(obj.Longitud)]);
+
+      console.log(vector);
+      
+      res.json({
+        rows: values
+      });
+    }
+  });
+});
+
+// Recent data goes in selected route
+app.get('/linea', (req, res) => {
+  console.log(values);
+  res.json({
+    rows: values
   });
 });
 
@@ -77,32 +135,4 @@ app.get('/data', (req, res) => {
   } else {
     res.status(500).json({ message: 'Error al obtener los datos' });
   }
-});
-
-app.post('/linea', (req, res) => {
-  // Obtener los valores de fecha y hora del formulario
-  const fechaInicio = req.body.startDate;
-  const fechaFin = req.body.endDate;
-  const horaInicio = req.body.startTime;
-  const horaFin = req.body.endTime;
-  console.log(fechaInicio);
-  console.log(horaInicio);
-
-  // Crea la consulta SQL con los parámetros de fecha y hora
-  const query = `SELECT Latitud, Longitud FROM datos_gps WHERE Fecha >= '${fechaInicio}' AND Hora >= '${horaInicio}' AND Fecha <= '${fechaFin}' AND Hora <= '${horaFin}' ORDER BY id DESC LIMIT 50`;
-
-  connection.query(query, (error, rows) => {
-    if (error) {
-      console.error('Error al hacer el query: ', error);
-      res.status(500).send('Error al hacer el query');
-    } else {
-      console.log('Resultados del query: ', rows);
-
-      const values = rows.map(obj => [parseFloat(obj.Latitud), parseFloat(obj.Longitud)]);
-
-      res.json({
-        rows: values
-      });
-    }
-  });
 });
