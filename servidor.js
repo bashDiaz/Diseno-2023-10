@@ -4,6 +4,7 @@ const dgram = require('dgram');
 const app = express();
 const server = dgram.createSocket('udp4');
 const mysql = require('mysql');
+require('dotenv').config();
 
 // Variable data empty is inserted
 let data1 = 'Waiting to server';
@@ -29,10 +30,10 @@ app.listen(80, () => {
 
 // A connection with mysql is created, with credentials
 const connection = mysql.createConnection({
-  host: 'mysql1.czemchtiopw1.us-east-1.rds.amazonaws.com',
-  user: 'admin',
-  password: 'prueba123',
-  database: 'mysql1'
+  host: process.env.host_1,
+  user: process.env.user_1,
+  password: process.env.password_1,
+  database: process.env.database_1
 });
 
 connection.connect((error) => {
