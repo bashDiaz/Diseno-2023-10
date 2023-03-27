@@ -53,25 +53,40 @@ updateMarker(data.rows);
 });
 }, 2000);
 
-// const markers = {};
-// function handleUdpData(data) {
-//   // Add a marker to the map at a specific latitude and longitude
-//   const [lat, lng, seq] = data.split(';');
-//   let newCoords = L.latLng(lat, lng);
-//   L.marker(newCoords).addTo(mymap);
-  // Add polylines for markers registered on UDP sender and based on sequences
-  // if (!markers[seq]) {
-  //   markers[seq] = [];
-  // }
-  // markers[seq].push(newCoords);
-  // const latLngs = markers[seq];
-  // if (latLngs.length > 1) {
-  //   if (!markers[seq].polyline) {
-  //     const polyline = L.polyline(latLngs).addTo(mymap);
-  //     markers[seq] = polyline;
-  //   } else {
-  //     markers[seq].addLatLng(newCoords);
-  //     markers[seq].setLatLngs(markers[seq].getLatLngs());
-  //   }
-  // }
-//}
+let circle = L.circle([data1, data2], {
+  color: 'blue',
+  fillColor: '#f03',
+  fillOpacity: 0.5,
+  radius: 500
+}).addTo(mymap);
+
+// Agrega un evento de escucha de clic en el mapa
+mymap.on('click', function(e) {
+  // Actualiza la posición del círculo a la ubicación del cursor
+  circle.setLatLng(e.latlng);
+  
+  // Obtiene la nueva posición del círculo
+  const newLatLng = circle.getLatLng();
+  const latitud1Span = document.getElementById('latitud1');
+  const longitud1Span = document.getElementById('longitud1');
+  // Crea el objeto data con los nuevos valores de latitud y longitud
+  const data = {
+    lat: newLatLng.lat,
+    lng: newLatLng.lng
+  };
+  latitud1Span.textContent = data.lat;
+  longitud1Span.textContent = data.lng;
+  fetch('/p4', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data)
+  })
+  .then(response => response.json())
+  .then(data => {
+    console.log('Respuesta del servidor:', data);
+  })
+  .catch(error => {
+    console.error('Error al realizar la solicitud POST:', error);
+  });
+  console.log('Nueva posición del círculo:', newLatLng.lat, newLatLng.lng);
+});
