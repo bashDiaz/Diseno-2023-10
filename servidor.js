@@ -4,6 +4,8 @@ const dgram = require('dgram');
 const app = express();
 const server = dgram.createSocket('udp4');
 const mysql = require('mysql');
+const bodyParser = require('body-parser');
+app.use(bodyParser.json());
 
 // Variable data empty is inserted
 let data1, data2, data3, data4;
@@ -79,6 +81,30 @@ app.get('/last', (req, res) => {
 
 
 });
+app.post('/p4', (req, res) => {
+  const latitud = req.body.lat;
+  const longitud = req.body.lng;
+
+  console.log('Nueva latitud:', latitud);
+  console.log('Nueva longitud:', longitud);
+
+  // Hacer consulta a la base de datos
+  const query = `SELECT Fecha, Hora FROM datos_gps WHERE Longitud > ${longitud-(-1*longitud*0.0001)} AND Longitud < ${longitud + (-1*longitud * 0.0001)} AND Latitud > ${latitud - (latitud * 0.0001)} AND Latitud < ${latitud + (latitud * 0.0001)} ORDER BY id DESC`;
+
+  connection.query(query, (error, results) => {
+    
+    if (error) {
+      console.error('Error al hacer el query: ', error);
+      res.status(500).send('Error al hacer el query');
+    }else { 
+      console.log("HOLAAAAAAAAAAAAA");
+      console.log(results);
+      res.send(results);
+    }
+   
+  });
+});
+
 
 let values = []; // variable global para almacenar los valores de la consulta más reciente
 
@@ -119,6 +145,8 @@ app.get('/linea', (req, res) => {
 app.get('/', (req, res) => {
   res.sendFile(__dirname + '/index.html');
 });
+
+
 
 // This endpoint will return the latest values of data1, data2, data3, and data4 as a JSON object
 app.get('/data', (req, res) => {
