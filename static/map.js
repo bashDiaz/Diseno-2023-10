@@ -52,3 +52,46 @@ setInterval(() => {
 updateMarker(data.rows);
 });
 }, 2000);
+
+let circle = L.circle([data1, data2], {
+  color: 'blue',
+  fillColor: '#f03',
+  fillOpacity: 0.5,
+  radius: 500
+}).addTo(mymap);
+
+// Agrega un evento de escucha de clic en el mapa
+mymap.on('click', function(e) {
+  // Actualiza la posición del círculo a la ubicación del cursor
+  circle.setLatLng(e.latlng);
+  
+  // Obtiene la nueva posición del círculo
+  const newLatLng = circle.getLatLng();
+  const latitud1Span = document.getElementById('latitud1');
+  const longitud1Span = document.getElementById('longitud1');
+  // Crea el objeto data con los nuevos valores de latitud y longitud
+  const data = {
+    lat: newLatLng.lat,
+    lng: newLatLng.lng
+  };
+  latitud1Span.textContent = data.lat;
+  longitud1Span.textContent = data.lng;
+  const resultElement = document.getElementById('result-list');
+fetch('/p4', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify(data)
+})
+.then(response => response.json())
+.then(data => {
+  console.log('Respuesta del servidor:', data);
+  // Actualiza el contenido de la lista con los resultados
+  const resultElement = document.getElementById('result-list');
+  const resultItems = data.map(result => `<li>${JSON.stringify(result)}</li>`);
+  resultElement.innerHTML = resultItems.join('');
+})
+.catch(error => {
+  console.error('Error al realizar la solicitud POST:', error);
+});
+  console.log('Nueva posición del círculo:', newLatLng.lat, newLatLng.lng);
+});

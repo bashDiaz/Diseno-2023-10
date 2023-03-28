@@ -19,12 +19,16 @@
       <!--Create the table-->
       <div id="table">
         <ul id="data">
-          <li>LATITUDE: <span id="data1"></span></li>
-          <li>LONGITUDE: <span id="data2"></span></li>
-          <li>DATE: <span id="data3"></span></li>
-          <li>TIME: <span id="data4"></span></li>
+          <li>LATITUD: <span id="data1"></span></li>
+          <li>LONGITUD: <span id="data2"></span></li>
+          <li>FECHA: <span id="data3"></span></li>
+          <li>HORA: <span id="data4"></span></li>
+          <li>LATITUD NUEVA: <span id="latitud1"></span></li>
+          <li>LONGITUD NUEVA: <span id="longitud1"></span></li> 
+          <li>RESULTADO: <span id="da"></span></li> 
         </ul>
        <script src="udp.js"></script>
+       
       </div>
       <!--Create the calendar-->
       <div id="Cal">
@@ -53,6 +57,11 @@
         <div id="map"></div>
         <script src="map.js"></script>
        </div>
+       <div id="result-container">
+        <h2>¿Cuándo estuvo el vehiculo?:</h2>
+        <ul id="result-list"></ul>
+       </div>
+       
     </main>
   </body>
 </html>

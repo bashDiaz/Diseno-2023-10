@@ -34,3 +34,14 @@ ul li{
   height: 100%;
   padding: 10px;
 }
+#result-container {
+  position: fixed;
+  top: 10%;
+  right: 2%;
+  width: 50%;
+  height: 100%;
+  background-color: rgb(226, 186, 186);
+  overflow-y: auto;
+  padding: 20px;
+  box-sizing: border-box;
+}
