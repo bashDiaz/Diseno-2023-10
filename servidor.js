@@ -86,15 +86,6 @@ server.on('message', (msg) => {
     }
   });
 });
-      res.json({
-        rows: values
-      });
-    }
-  });
-});
-
-
-});
 app.post('/p4', (req, res) => {
   const latitud = req.body.lat;
   const longitud = req.body.lng;
