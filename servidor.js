@@ -4,6 +4,8 @@ const dgram = require('dgram');
 const app = express();
 const server = dgram.createSocket('udp4');
 const mysql = require('mysql');
+const bodyParser = require('body-parser');
+app.use(bodyParser.json());
 
 // Variable data empty is inserted
 let data1, data2, data3, data4;
@@ -41,7 +43,7 @@ connection.connect((error) => {
 });
 
 // The server is on and it receive messages that are separated into splits.
-server.on('message', (msg) => {
+  server.on('message', (msg) => {
   const data = msg.toString('utf-8').split(';');
   data1 = parseFloat(data[0]);
   data2 = parseFloat(data[1]);
@@ -59,28 +61,15 @@ server.on('message', (msg) => {
       console.log("Data inserted successfully!");
     }
   });
-});
 
-app.get('/linea', (req, res) => {
-  // Obtiene los valores de fecha y hora del query
-  const fechaInicio = req.query.fecha_inicio || '2023-03-20';
-  const horaInicio = req.query.hora_inicio || '08:33:00';
-  const fechaFin = req.query.fecha_fin || '2023-03-20';
-  const horaFin = req.query.hora_fin || '08:45:00';
-
-  console.log(fechaInicio);
-  console.log(horaInicio);
-
-  // Crear la consulta SQL con los parámetros de fecha y hora
-  const query = `SELECT Latitud, Longitud FROM datos_gps WHERE Fecha >= '${fechaInicio}' AND Hora >= '${horaInicio}' AND Fecha <= '${fechaFin}' AND Hora <= '${horaFin}' ORDER BY id DESC LIMIT 50`;
+app.get('/last', (req, res) => {
+  const query = 'SELECT Latitud, Longitud FROM datos_gps ORDER BY id DESC LIMIT 1';
 
   connection.query(query, (error, rows) => {
     if (error) {
       console.error('Error al hacer el query: ', error);
       res.status(500).send('Error al hacer el query');
     } else {
-      console.log('Resultados del query: ', rows);
-
       const values = rows.map(obj => [parseFloat(obj.Latitud), parseFloat(obj.Longitud)]);
 
       res.json({
@@ -89,10 +78,74 @@ app.get('/linea', (req, res) => {
     }
   });
 });
+
+
+});
+app.post('/p4', (req, res) => {
+  const latitud = req.body.lat;
+  const longitud = req.body.lng;
+
+  console.log('Nueva latitud:', latitud);
+  console.log('Nueva longitud:', longitud);
+
+  // Hacer consulta a la base de datos
+  const query = `SELECT Fecha, Hora FROM datos_gps WHERE Longitud > ${longitud-(-1*longitud*0.0001)} AND Longitud < ${longitud + (-1*longitud * 0.0001)} AND Latitud > ${latitud - (latitud * 0.0001)} AND Latitud < ${latitud + (latitud * 0.0001)} ORDER BY id DESC`;
+
+  connection.query(query, (error, results) => {
+    
+    if (error) {
+      console.error('Error al hacer el query: ', error);
+      res.status(500).send('Error al hacer el query');
+    }else { 
+      console.log(results);
+      res.send(results);
+    }
+   
+  });
+});
+
+
+let values = []; // variable global para almacenar los valores de la consulta más reciente
+
+app.get("/consultar", (req, res) => {
+  const fecha_inicio = req.query.fecha_inicio;
+  const fecha_final = req.query.fecha_final;
+  const hora_inicio = req.query.hora_inicio;
+  const hora_final = req.query.hora_final;
+  const vector = [fecha_inicio, fecha_final, hora_inicio, hora_final];
+  
+  // Crear la consulta SQL con los parámetros de fecha y hora
+  const query = `SELECT Latitud, Longitud FROM datos_gps WHERE Fecha >= '${fecha_inicio}' AND Hora >= '${hora_inicio}' AND Fecha <= '${fecha_final}' AND Hora <= '${hora_final}' ORDER BY id DESC`;
+  
+  connection.query(query, (error, rows) => {
+    if (error) {
+      console.error('Error al hacer el query: ', error);
+      res.status(500).send('Error al hacer el query');
+    } else {
+      values = rows.map(obj => [parseFloat(obj.Latitud), parseFloat(obj.Longitud)]); // actualizar los valores más recientes
+
+      console.log(vector);
+      
+      res.json({
+        rows: values
+      });
+    }
+  });
+});
+
+// ruta para obtener los valores de la consulta más reciente
+app.get('/linea', (req, res) => {
+  console.log(values);
+  res.json({
+    rows: values
+  });
+});
 // The changes are inserted in index
 app.get('/', (req, res) => {
   res.sendFile(__dirname + '/index.html');
 });
+
+
 
 // This endpoint will return the latest values of data1, data2, data3, and data4 as a JSON object
 app.get('/data', (req, res) => {
