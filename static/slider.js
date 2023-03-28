@@ -9,4 +9,5 @@ inputSlider.oninput = (() => {
 inputSlider.onblur = (() => {
     sliderValue.classList.remove('show');
 });
+console.log(inputSlider.value)
 

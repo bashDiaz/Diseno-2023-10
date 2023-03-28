@@ -1,6 +1,7 @@
 body{
   font-family: sans-serif;
   margin: 0;
+  background-color: #faebc9;
 }
 footer{
   background-color: antiquewhite;
@@ -11,7 +12,7 @@ footer{
 header{
   display: flex;
   min-height: 70px;
-  background-color: antiquewhite;
+  background-color: #faebd7;
   justify-content: space-between;
   align-items: center;
   padding: 10px;
@@ -94,6 +95,9 @@ ul li{
   overflow-y: auto;
   padding: 20px;
   box-sizing: border-box;
+}
+#cons_button{
+  margin-left: 200px;
 }
 h3{
   margin: 10px;
