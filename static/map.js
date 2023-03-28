@@ -76,17 +76,22 @@ mymap.on('click', function(e) {
   };
   latitud1Span.textContent = data.lat;
   longitud1Span.textContent = data.lng;
-  fetch('/p4', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(data)
-  })
-  .then(response => response.json())
-  .then(data => {
-    console.log('Respuesta del servidor:', data);
-  })
-  .catch(error => {
-    console.error('Error al realizar la solicitud POST:', error);
-  });
+  const resultElement = document.getElementById('result-list');
+fetch('/p4', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify(data)
+})
+.then(response => response.json())
+.then(data => {
+  console.log('Respuesta del servidor:', data);
+  // Actualiza el contenido de la lista con los resultados
+  const resultElement = document.getElementById('result-list');
+  const resultItems = data.map(result => `<li>${JSON.stringify(result)}</li>`);
+  resultElement.innerHTML = resultItems.join('');
+})
+.catch(error => {
+  console.error('Error al realizar la solicitud POST:', error);
+});
   console.log('Nueva posición del círculo:', newLatLng.lat, newLatLng.lng);
 });
