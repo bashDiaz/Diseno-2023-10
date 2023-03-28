@@ -9,6 +9,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 const bodyParser = require('body-parser');
 app.use(bodyParser.json());
+require('dotenv').config();
 
 // Variable data empty is inserted
 let data1 = 'Waiting to server';
@@ -34,10 +35,10 @@ app.listen(80, () => {
 
 // A connection with mysql is created, with credentials
 const connection = mysql.createConnection({
-  host: 'mysql1.czemchtiopw1.us-east-1.rds.amazonaws.com',
-  user: 'admin',
-  password: 'prueba123',
-  database: 'mysql1'
+  host: process.env.host_1,
+  user: process.env.user_1,
+  password: process.env.password_1,
+  database: process.env.database_1
 });
 
 connection.connect((error) => {
@@ -85,6 +86,12 @@ server.on('message', (msg) => {
     }
   });
 });
+      res.json({
+        rows: values
+      });
+    }
+  });
+});
 
 
 });
@@ -111,10 +118,8 @@ app.post('/p4', (req, res) => {
   });
 });
 
-
-
 // Let a global variable for receive data of a new query
-let values = []; 
+let values = [];
 
 app.get("/consultar", (req, res) => {
   const fecha_inicio = req.query.fecha_inicio;

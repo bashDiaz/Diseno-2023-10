@@ -18,7 +18,7 @@
     <main>
       <!--Create the table-->
       <div id="table">
-        <ul id="data-list">
+        <ul id="data">
           <li>LATITUD: <span id="data1"></span></li>
           <li>LONGITUD: <span id="data2"></span></li>
           <li>FECHA: <span id="data3"></span></li>
@@ -47,24 +47,7 @@
           <br><br>
           <button type="button" onclick="consultar()">CONSULT</button>
         </form>
-        <script>
-          function consultar() {
-            const fecha_inicio = document.getElementById("fecha_inicio").value;
-            const fecha_final = document.getElementById("fecha_final").value;
-            const hora_inicio = document.getElementById("hora_inicio").value;
-            const hora_final = document.getElementById("hora_final").value;
-            
-            const url = `/consultar?fecha_inicio=${fecha_inicio}&fecha_final=${fecha_final}&hora_inicio=${hora_inicio}&hora_final=${hora_final}`;
-            fetch(url)
-              .then(response => response.json())
-              .then(data => {
-                console.log(data);
-              })
-              .catch(error => {
-                console.error(error);
-              });
-          }
-        </script>
+        <script src="consult.js"></script>
       </div>
       <!--Create the map-->
       <div id="m">      
