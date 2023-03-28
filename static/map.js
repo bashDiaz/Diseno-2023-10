@@ -34,7 +34,7 @@ setInterval(() => {
 
 
 function updatePolyline(rows) {
-  var coordsArray =rows
+  var coordsArray = rows
   if (polyline) {
     polyline.setLatLngs(coordsArray);
   } else {
@@ -49,16 +49,22 @@ setInterval(() => {
     .then(data => {
       console.log(data.rows);
       updatePolyline(data.rows);
-updateMarker(data.rows);
+      //updateMarker(data.rows);
 });
 }, 2000);
-
-let circle = L.circle([data1, data2], {
+const zoomc = document.getElementById("sli");
+const actzoom= mymap.getZoom();
+const circle = L.circle([data1, data2], {
   color: 'blue',
   fillColor: '#f03',
   fillOpacity: 0.5,
-  radius: 500
+  radius: 500 * zoomc.value / 100
 }).addTo(mymap);
+
+zoomc.addEventListener('input', () => {
+  circle.setRadius(500*actzoom*0.5* zoomc.value / 100);
+});
+
 
 // Agrega un evento de escucha de clic en el mapa
 mymap.on('click', function(e) {
