@@ -7,6 +7,8 @@ const mysql = require('mysql');
 const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: true }));
 
+const bodyParser = require('body-parser');
+app.use(bodyParser.json());
 
 // Variable data empty is inserted
 let data1 = 'Waiting to server';
@@ -77,13 +79,39 @@ server.on('message', (msg) => {
       } else {
         const values = rows.map(obj => [parseFloat(obj.Latitud), parseFloat(obj.Longitud)]);
 
-        res.json({
-          rows: values
-        });
-      }
-    });
+      res.json({
+        rows: values
+      });
+    }
   });
 });
+
+
+});
+app.post('/p4', (req, res) => {
+  const latitud = req.body.lat;
+  const longitud = req.body.lng;
+
+  console.log('Nueva latitud:', latitud);
+  console.log('Nueva longitud:', longitud);
+
+  // Hacer consulta a la base de datos
+  const query = `SELECT Fecha, Hora FROM datos_gps WHERE Longitud > ${longitud-(-1*longitud*0.0001)} AND Longitud < ${longitud + (-1*longitud * 0.0001)} AND Latitud > ${latitud - (latitud * 0.0001)} AND Latitud < ${latitud + (latitud * 0.0001)} ORDER BY id DESC`;
+
+  connection.query(query, (error, results) => {
+    
+    if (error) {
+      console.error('Error al hacer el query: ', error);
+      res.status(500).send('Error al hacer el query');
+    }else { 
+      console.log(results);
+      res.send(results);
+    }
+   
+  });
+});
+
+
 
 // Let a global variable for receive data of a new query
 let values = []; 
@@ -126,6 +154,8 @@ app.get('/linea', (req, res) => {
 app.get('/', (req, res) => {
   res.sendFile(__dirname + '/index.html');
 });
+
+
 
 // This endpoint will return the latest values of data1, data2, data3, and data4 as a JSON object
 app.get('/data', (req, res) => {
