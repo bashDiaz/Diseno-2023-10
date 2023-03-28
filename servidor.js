@@ -97,7 +97,6 @@ app.post('/p4', (req, res) => {
       console.error('Error al hacer el query: ', error);
       res.status(500).send('Error al hacer el query');
     }else { 
-      console.log("HOLAAAAAAAAAAAAA");
       console.log(results);
       res.send(results);
     }
