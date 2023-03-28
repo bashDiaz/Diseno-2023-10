@@ -1,28 +1,28 @@
 // Create a map object and set its view to a specific latitude, longitude, and zoom level
-const data1 = 11.02713824366;
-const data2 = -74.82960349742;
+const data1=11.02713824366;
+const data2=-74.82960349742;
 let vector = [];
 let mymap = L.map('map').setView([data1, data2], 12);
 polyline = L.polyline(vector, {color: 'red'}).addTo(mymap);
 polyline1 = L.polyline([], {color: 'green'}).addTo(mymap);
-
 // Add a tile layer to the map using OpenStreetMap's tile server
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
   maxZoom: 18,
 }).addTo(mymap);
 
-// Create and update a marker
+// Create a marker
 var marker = L.marker([data1, data2]).addTo(mymap);
+
 function updateMarkerAndPolyline(rows) {
-  const latestData = rows[rows.length - 1];
-  const latlng = L.latLng(latestData[0], latestData[1]);
-  marker.setLatLng(latlng);
-  vector.push(latlng);
-  polyline1.setLatLngs(vector);
+  const latestData = rows[rows.length - 1]; // obtiene la última posición
+  const latlng = L.latLng(latestData[0], latestData[1]); // crea un objeto LatLng con la posición
+  marker.setLatLng(latlng); // actualiza la posición del marcador
+  vector.push(latlng); // agrega la posición al arreglo de puntos
+  polyline1.setLatLngs(vector); // actualiza la polilínea con los nuevos puntos
 }
 
-// Every 10 seconds, it make a request to API
+// Hace una petición a la API cada 10 segundos
 setInterval(() => {
   fetch('/last')
     .then(response => response.json())
@@ -32,9 +32,9 @@ setInterval(() => {
     });
 }, 10000);
 
-// Polyline is updated in real time
+
 function updatePolyline(rows) {
-  var coordsArray = rows
+  var coordsArray =rows
   if (polyline) {
     polyline.setLatLngs(coordsArray);
   } else {

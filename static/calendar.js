@@ -1,15 +1,13 @@
 const formulario = document.querySelector('#formulario');
 
-// A function that wait for data submitted by client
 formulario.addEventListener('submit', (event) => {
   event.preventDefault();
-  const fechaInicio = document.querySelector('#fecha_inicio').value;
-  $(document).ready(function(){
+const fechaInicio = document.querySelector('#fecha_inicio').value;
+$(document).ready(function(){
   $("#fecha").datepicker({
-    dateFormat: "yyyy-mm-dd"
+    dateFormat: "yyyy-mm-dd" //formato de fecha personalizado
   });
 });
-
 const horaInicio = document.querySelector('#hora_inicio').value;
 const fechaFin = document.querySelector('#fecha_fin').value;
 const horaFin = document.querySelector('#hora_fin').value;
@@ -18,6 +16,8 @@ fetch(`/linea?fecha_inicio=${fechaInicio}&hora_inicio=${horaInicio}&fecha_fin=${
   .then(response => response.json())
   .then(data => {
     console.log(data);
+    // hacer algo con los datos obtenidos
   })
   .catch(error => console.error(error));
+  
 });

@@ -5,17 +5,10 @@ const app = express();
 const server = dgram.createSocket('udp4');
 const mysql = require('mysql');
 const bodyParser = require('body-parser');
-app.use(bodyParser.urlencoded({ extended: true }));
-
-const bodyParser = require('body-parser');
 app.use(bodyParser.json());
-require('dotenv').config();
 
 // Variable data empty is inserted
-let data1 = 'Waiting to server';
-let data2 = 'Waiting to server';
-let data3 = 'Waiting to server';
-let data4 = 'Waiting to server';
+let data1, data2, data3, data4;
 
 // Other files that are complement of index are located in static
 app.use(express.static(__dirname + "/static"));
@@ -35,10 +28,10 @@ app.listen(80, () => {
 
 // A connection with mysql is created, with credentials
 const connection = mysql.createConnection({
-  host: process.env.host_1,
-  user: process.env.user_1,
-  password: process.env.password_1,
-  database: process.env.database_1
+  host: 'mysql1.czemchtiopw1.us-east-1.rds.amazonaws.com',
+  user: 'admin',
+  password: 'prueba123',
+  database: 'mysql1'
 });
 
 connection.connect((error) => {
@@ -50,7 +43,7 @@ connection.connect((error) => {
 });
 
 // The server is on and it receive messages that are separated into splits.
-server.on('message', (msg) => {
+  server.on('message', (msg) => {
   const data = msg.toString('utf-8').split(';');
   data1 = parseFloat(data[0]);
   data2 = parseFloat(data[1]);
@@ -58,7 +51,7 @@ server.on('message', (msg) => {
   data4 = data[3];
   console.log(`Data received: ${data1}, ${data2}, ${data3}, ${data4}`);
 
-  // Insert data to database
+  // insert data to database
   const sql = "INSERT INTO datos_gps (Latitud, Longitud, Fecha, Hora) VALUES (?, ?, ?, ?)";
   const values = [data1, data2, data3, data4];
   connection.query(sql, values, (error, results, fields) => {
@@ -69,22 +62,24 @@ server.on('message', (msg) => {
     }
   });
 
-  // Selecting last position in lat and lng for maping (of database)
-  app.get('/last', (req, res) => {
-    const query = 'SELECT Latitud, Longitud FROM datos_gps ORDER BY id DESC LIMIT 1';
+app.get('/last', (req, res) => {
+  const query = 'SELECT Latitud, Longitud FROM datos_gps ORDER BY id DESC LIMIT 1';
 
-    connection.query(query, (error, rows) => {
-      if (error) {
-        console.error('Error al hacer el query: ', error);
-        res.status(500).send('Error al hacer el query');
-      } else {
-        const values = rows.map(obj => [parseFloat(obj.Latitud), parseFloat(obj.Longitud)]);
+  connection.query(query, (error, rows) => {
+    if (error) {
+      console.error('Error al hacer el query: ', error);
+      res.status(500).send('Error al hacer el query');
+    } else {
+      const values = rows.map(obj => [parseFloat(obj.Latitud), parseFloat(obj.Longitud)]);
 
       res.json({
         rows: values
       });
     }
   });
+});
+
+
 });
 app.post('/p4', (req, res) => {
   const latitud = req.body.lat;
@@ -109,8 +104,8 @@ app.post('/p4', (req, res) => {
   });
 });
 
-// Let a global variable for receive data of a new query
-let values = [];
+
+let values = []; // variable global para almacenar los valores de la consulta más reciente
 
 app.get("/consultar", (req, res) => {
   const fecha_inicio = req.query.fecha_inicio;
@@ -119,7 +114,7 @@ app.get("/consultar", (req, res) => {
   const hora_final = req.query.hora_final;
   const vector = [fecha_inicio, fecha_final, hora_inicio, hora_final];
   
-  // Create a sql query for last date and time, updating last data
+  // Crear la consulta SQL con los parámetros de fecha y hora
   const query = `SELECT Latitud, Longitud FROM datos_gps WHERE Fecha >= '${fecha_inicio}' AND Hora >= '${hora_inicio}' AND Fecha <= '${fecha_final}' AND Hora <= '${hora_final}' ORDER BY id DESC`;
   
   connection.query(query, (error, rows) => {
@@ -127,7 +122,7 @@ app.get("/consultar", (req, res) => {
       console.error('Error al hacer el query: ', error);
       res.status(500).send('Error al hacer el query');
     } else {
-      values = rows.map(obj => [parseFloat(obj.Latitud), parseFloat(obj.Longitud)]);
+      values = rows.map(obj => [parseFloat(obj.Latitud), parseFloat(obj.Longitud)]); // actualizar los valores más recientes
 
       console.log(vector);
       
@@ -138,14 +133,13 @@ app.get("/consultar", (req, res) => {
   });
 });
 
-// Recent data goes in selected route
+// ruta para obtener los valores de la consulta más reciente
 app.get('/linea', (req, res) => {
   console.log(values);
   res.json({
     rows: values
   });
 });
-
 // The changes are inserted in index
 app.get('/', (req, res) => {
   res.sendFile(__dirname + '/index.html');
