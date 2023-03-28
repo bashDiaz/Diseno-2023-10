@@ -23,9 +23,11 @@
           <li>FECHA: <span id="data3"></span></li>
           <li>HORA: <span id="data4"></span></li>
           <li>LATITUD NUEVA: <span id="latitud1"></span></li>
-          <li>LONGITUD NUEVA: <span id="longitud1"></span></li>  
+          <li>LONGITUD NUEVA: <span id="longitud1"></span></li> 
+          <li>RESULTADO: <span id="da"></span></li> 
         </ul>
        <script src="udp.js"></script>
+       
       </div>
       <!--Create the calendar-->
       <div id="Cal">
@@ -50,7 +52,7 @@
             const fecha_final = document.getElementById("fecha_final").value;
             const hora_inicio = document.getElementById("hora_inicio").value;
             const hora_final = document.getElementById("hora_final").value;
-    
+            
             const url = `/consultar?fecha_inicio=${fecha_inicio}&fecha_final=${fecha_final}&hora_inicio=${hora_inicio}&hora_final=${hora_final}`;
             fetch(url)
               .then(response => response.json())
@@ -71,6 +73,11 @@
         <div id="map"></div>
         <script src="map.js"></script>
        </div>
+       <div id="result-container">
+        <h2>¿Cuándo estuvo el vehiculo?:</h2>
+        <ul id="result-list"></ul>
+       </div>
+       
     </main>
   </body>
 </html>
