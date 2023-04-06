@@ -144,7 +144,9 @@ app.get('/linea', (req, res) => {
 app.get('/', (req, res) => {
   res.sendFile(__dirname + '/index.html');
 });
-
+app.get('/historico.html', (req, res) => {
+  res.sendFile(__dirname + '/historico.html');
+});
 
 
 // This endpoint will return the latest values of data1, data2, data3, and data4 as a JSON object
