@@ -17,7 +17,7 @@
         <h2 class="name"> SSJMAP Location Service</h2>
       </div>
       <nav>
-        <a href="#">HOME</a>
+        <a href="index.html">HOME</a>
         <a href="treal.html">TIEMPO REAL</a>
         <a href="historico.html">HISTÓRICOS POR FECHA</a>
         <a href="historico1.html">HISTÓRICOS POR LUGAR</a>
@@ -26,7 +26,14 @@
     </header>
     <main>
       <!--Create the table-->
-    
+    <!--Create the table-->
+    <div id="table">
+      <ul id="data">
+        <li>LATITUD NUEVA: <span id="latitud1"></span></li>
+        <li>LONGITUD NUEVA: <span id="longitud1"></span></li>
+      </ul>
+     <script src="udp.js"></script>
+    </div>
       <!--Create the calendar-->
       <div id="Cal">
         <form>
@@ -63,11 +70,26 @@
         integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
         crossorigin=""></script>
         <!--Create the slider to select circle range-->
+        <h3>Area's size selector</h3>
+        <div class="range">
+          <div class="sliderValue">
+            <span>100</span>
+          </div>
+          <div class="field">
+            <div class="value left">0</div>
+            <input id="sli" type="range" min="10" max="100" steps="1">
+          </div>
+        </div>
         <!--Create the map-->
         <div id="map"></div>
         <!--Calls all the .JS-->
+        <script src="slider.js"></script>
         <script src="map.js"></script>
-    
+      </div>
+       <div id="result-container">
+        <h2>¿Cuándo estuvo el vehiculo?:</h2>
+        <ul id="result-list"></ul>
+       </div>
       </div>
     </main>
     <footer>
