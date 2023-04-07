@@ -81,57 +81,70 @@ app.get('/last', (req, res) => {
 
 
 });
-app.post('/p4', (req, res) => {
-  const latitud = req.body.lat;
-  const longitud = req.body.lng;
-
-  console.log('Nueva latitud:', latitud);
-  console.log('Nueva longitud:', longitud);
-
-  // Hacer consulta a la base de datos
-  const query = `SELECT Fecha, Hora FROM datos_gps WHERE Longitud > ${longitud-(-1*longitud*0.0001)} AND Longitud < ${longitud + (-1*longitud * 0.0001)} AND Latitud > ${latitud - (latitud * 0.0001)} AND Latitud < ${latitud + (latitud * 0.0001)} ORDER BY id DESC`;
-
-  connection.query(query, (error, results) => {
-    
-    if (error) {
-      console.error('Error al hacer el query: ', error);
-      res.status(500).send('Error al hacer el query');
-    }else { 
-      console.log(results);
-      res.send(results);
-    }
-   
-  });
-});
-
-
-let values = []; // variable global para almacenar los valores de la consulta más reciente
-
+let fecha_hora_recientes = [];
 app.get("/consultar", (req, res) => {
   const fecha_inicio = req.query.fecha_inicio;
   const fecha_final = req.query.fecha_final;
   const hora_inicio = req.query.hora_inicio;
   const hora_final = req.query.hora_final;
   const vector = [fecha_inicio, fecha_final, hora_inicio, hora_final];
-  
+
   // Crear la consulta SQL con los parámetros de fecha y hora
   const query = `SELECT Latitud, Longitud FROM datos_gps WHERE Fecha >= '${fecha_inicio}' AND Hora >= '${hora_inicio}' AND Fecha <= '${fecha_final}' AND Hora <= '${hora_final}' ORDER BY id DESC`;
-  
+
   connection.query(query, (error, rows) => {
     if (error) {
-      console.error('Error al hacer el query: ', error);
-      res.status(500).send('Error al hacer el query');
+      console.error("Error al hacer el query: ", error);
+      res.status(500).send("Error al hacer el query");
     } else {
-      values = rows.map(obj => [parseFloat(obj.Latitud), parseFloat(obj.Longitud)]); // actualizar los valores más recientes
-
+      values = rows.map(obj => [
+        parseFloat(obj.Latitud),
+        parseFloat(obj.Longitud)
+      ]); // actualizar los valores más recientes
+      fecha_hora_recientes = [fecha_inicio, fecha_final, hora_inicio, hora_final];
       console.log(vector);
       
+
       res.json({
         rows: values
       });
     }
   });
 });
+
+
+app.post('/p4', (req, res) => {
+  console.log("Fecha final ", fecha_hora_recientes[0]);
+  console.log("Fecha inicial ", fecha_hora_recientes[1]);
+  const latitud = req.body.lat;
+  const longitud = req.body.lng;
+  const fecha_inicio = fecha_hora_recientes[0]|| '2023-03-01';
+  const fecha_final = fecha_hora_recientes[1]|| '2023-04-05';
+  const hora_inicio = fecha_hora_recientes[2] || '00:00:01';
+  const hora_final = fecha_hora_recientes[3] || '12:59:59';
+  
+  console.log('Nueva latitud:', latitud);
+  console.log('Nueva longitud:', longitud);
+
+  // Hacer consulta a la base de datos
+  const query = `SELECT Fecha, Hora FROM datos_gps WHERE Longitud > ${longitud - (-1*longitud*0.0001)} AND Longitud < ${longitud + (-1*longitud * 0.0001)} AND Latitud > ${latitud - (latitud * 0.0001)} AND Latitud < ${latitud + (latitud * 0.0001)} AND Fecha <= '${fecha_final}' AND Fecha >= '${fecha_inicio}' AND Hora >= '${hora_inicio}' AND Hora <= '${hora_final}' ORDER BY id DESC`;
+
+  connection.query(query, (error, results) => {
+    if (error) {
+      console.error('Error al hacer el query: ', error);
+      res.status(500).send('Error al hacer el query');
+    } else { 
+      console.log(results);
+      res.send(results);
+    }   
+  });
+});
+
+
+
+let values = []; // variable global para almacenar los valores de la consulta más reciente
+
+
 
 // ruta para obtener los valores de la consulta más reciente
 app.get('/linea', (req, res) => {
