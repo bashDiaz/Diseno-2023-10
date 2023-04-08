@@ -119,7 +119,7 @@ app.post('/p4', (req, res) => {
   const latitud = req.body.lat;
   const longitud = req.body.lng;
   const fecha_inicio = fecha_hora_recientes[0]|| '2023-03-01';
-  const fecha_final = fecha_hora_recientes[1]|| '2023-04-05';
+  const fecha_final = fecha_hora_recientes[1]|| '2023-04-08';
   const hora_inicio = fecha_hora_recientes[2] || '00:00:01';
   const hora_final = fecha_hora_recientes[3] || '12:59:59';
   
