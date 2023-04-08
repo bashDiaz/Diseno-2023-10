@@ -121,13 +121,26 @@ app.post('/p4', (req, res) => {
   const fecha_inicio = fecha_hora_recientes[0]|| '2023-03-01';
   const fecha_final = fecha_hora_recientes[1]|| '2023-04-08';
   const hora_inicio = fecha_hora_recientes[2] || '00:00:01';
-  const hora_final = fecha_hora_recientes[3] || '12:59:59';
+  const hora_final = fecha_hora_recientes[3] || '23:59:59';
   
   console.log('Nueva latitud:', latitud);
   console.log('Nueva longitud:', longitud);
 
   // Hacer consulta a la base de datos
-  const query = `SELECT Fecha, Hora FROM datos_gps WHERE Longitud > ${longitud - (-1*longitud*0.0001)} AND Longitud < ${longitud + (-1*longitud * 0.0001)} AND Latitud > ${latitud - (latitud * 0.0001)} AND Latitud < ${latitud + (latitud * 0.0001)} AND Fecha <= '${fecha_final}' AND Fecha >= '${fecha_inicio}' AND Hora >= '${hora_inicio}' AND Hora <= '${hora_final}' ORDER BY id DESC`;
+  const query = `SELECT Fecha, Hora, Latitud, Longitud, 
+                 (6371000 * acos(cos(radians(${latitud})) 
+                  * cos(radians(Latitud)) 
+                  * cos(radians(Longitud) 
+                  - radians(${longitud})) 
+                  + sin(radians(${latitud})) 
+                  * sin(radians(Latitud)))) AS distance 
+                 FROM datos_gps 
+                 WHERE Fecha <= '${fecha_final}' 
+                 AND Fecha >= '${fecha_inicio}' 
+                 AND Hora >= '${hora_inicio}' 
+                 AND Hora <= '${hora_final}' 
+                 HAVING distance <= 500 
+                 ORDER BY id DESC`;
 
   connection.query(query, (error, results) => {
     if (error) {
