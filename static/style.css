@@ -205,6 +205,9 @@ h3{
 }
 /*Footer*/
 
+footer{
+  height: 200px;
+}
 .footer{
   background-color: #2C3E50;
 }
