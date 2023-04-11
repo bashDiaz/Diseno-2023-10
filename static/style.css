@@ -8,6 +8,9 @@ main {
   position: relative; /* asegura que los elementos hijos usen la posición relativa */
   height: 100%; /* establece una altura para la sección principal */
 }
+header h2{
+  color: #F2F2F2;
+}
 header{
   display: flex;
   min-height: 70px;
