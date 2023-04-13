@@ -47,6 +47,34 @@ a{
     padding: 10px 0px;
   }
 }
+/*Real time data table */
+.table{
+  position: relative;
+  left: 30px;
+  top: 50px;
+  bottom: 50px;
+  background-color: red;
+  width: 25%;
+  height: 100%;
+  padding: 10px;
+}
+.table-div{
+  width: 100%;
+  height: 70px;
+  display: column;
+  background-color: blue;
+}
+.table-div-header{
+  width: 100%px;
+  height: 20px;
+  display: column;
+  background-color: green;
+  padding: 10px;
+}
+
+
+
+/*Estilo del los objetos mapa*/
 #map { 
   position: absolute; /* establece la posición absoluta */
   right: 0; /* coloca el mapa en la parte superior */
@@ -57,10 +85,6 @@ a{
   margin-right: 70px;
   margin-bottom: 10px;
 
-}
-#table{
-  top: 200px;
-  margin: 10px;
 }
 .dates{
   display: flex;
@@ -289,7 +313,6 @@ hr{
   font-weight: 600;
 }
 @media screen and (max-width: 850px){
-
   .sb_footer-feading h1{
       font-size: 34px;
       line-height: 42px;

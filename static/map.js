@@ -22,7 +22,8 @@ function updateMarkerAndPolyline(rows) {
   polyline1.setLatLngs(vector); // actualiza la polilínea con los nuevos puntos
   
   // centra el mapa en las nuevas coordenadas y ajusta el zoom automáticamente
-
+  const bounds = L.latLngBounds(vector);
+  mymap.fitBounds(bounds, { padding: [150, 150] });
 }
 
 // Hace una petición a la API cada 10 segundos
