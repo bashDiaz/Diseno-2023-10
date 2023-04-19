@@ -25,16 +25,14 @@
       </nav>
     </header>
     <main>
-      <!--Create the table-->
-    
       <!--Create the calendar-->
       <div id="Cal">
         <form>
           <div class="dates">
             <label for="fecha_inicio">BEGINNING DATE:</label>
-            <input type="date" id="fecha_inicio" name="fecha_inicio" min="2023-03-01" max="2023-04-11">
+            <input type="date" id="fecha_inicio" name="fecha_inicio" min="2023-03-01" max="2023-04-10">
             <label for="fecha_final">ENDING DATE:</label>
-            <input type="date" id="fecha_final" name="fecha_final" min="2023-03-01" max="2023-04-11">
+            <input type="date" id="fecha_final" name="fecha_final" min="2023-03-01" max="2023-04-10">
           </div>
           <div class="time">
             <label for="hora_inicio">BEGINNING TIME:</label>
@@ -43,21 +41,25 @@
             <input type="time" id="hora_final" name="hora_final">
           </div>
           <button id="cons_button" type="button" onclick="consultar()">CONSULT</button>
-          <script>
-            // Obtener los elementos del DOM
-            const fechaInicio = document.getElementById('fecha_inicio');
-            const fechaFinal = document.getElementById('fecha_final');
-            const horaInicio=document.getElementById('hora_inicio');
-            const horaFinal=document.getElementById('hora_final');
-            // Agregar un evento onChange al input de la fecha de inicio
-            fechaInicio.addEventListener('change', function() {
-              // Actualizar la propiedad min del input de la fecha final
-              fechaFinal.min = fechaInicio.value;
-            });
-          </script>
-        </form>
+          <button id="clear_button" type="button" onclick="limpiar()">CLEAR</button>
+        </div>
+        <script>
+          // Obtener los elementos del DOM
+          const fechaInicio = document.getElementById('fecha_inicio');
+          const fechaFinal = document.getElementById('fecha_final');
+          const horaInicio = document.getElementById('hora_inicio');
+          const horaFinal = document.getElementById('hora_final');
+          // Agregar un evento onChange al input de la fecha de inicio
+          fechaInicio.addEventListener('change', function() {
+            // Actualizar la propiedad min del input de la fecha final
+            fechaFinal.min = fechaInicio.value;
+          });
+        </script>
         <script src="consult.js"></script>
+        <script src="limpiar.js"></script>
       </div>
+      
+        
       <div id="m">      
         <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
         integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
@@ -77,46 +79,46 @@
             <div class='sb_footer-links'>
               <div class='sb_footer-links_div'>
                 <h4>For Business</h4>
-                <a href='/employer'>
+                <a href='#'>
                   <p>Employer</p>
                 </a>
-                <a href='/healthplan'>
+                <a href='#'>
                   <p>Health Plan</p>
                 </a>
-                <a href='/individual'>
+                <a href='#'>
                   <p>Individual</p>
                 </a>
               </div>
               <div class='sb_footer-links_div'>
                 <h4>Resources</h4>
-                <a href='/resource'>
+                <a href='#'>
                   <p>Resource Center</p>
                 </a>
-                <a href='/resource'>
+                <a href='#'>
                   <p>Testimonials</p>
                 </a>
-                <a href='/resource'>
+                <a href='#'>
                   <p>STV</p>
                 </a>
               </div>
               <div class='sb_footer-links_div'>
                 <h4>Partners</h4>
-                <a href='/employer'>
+                <a href='#'>
                   <p>Swing Tech</p>
                 </a>
               </div>
               <div class='sb_footer-links_div'>
                 <h4>Company</h4>
-                <a href='/about'>
+                <a href='#'>
                   <p>About</p>
                 </a>
-                <a href='/press'>
+                <a href='#'>
                   <p>Press</p>
                 </a>
-                <a href='/career'>
+                <a href='#'>
                   <p>Career</p>
                 </a>
-                <a href='/contact'>
+                <a href='#'>
                   <p>Contact</p>
                 </a>
               </div>
