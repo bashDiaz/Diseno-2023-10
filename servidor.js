@@ -126,12 +126,7 @@ app.post('/p4', (req, res) => {
   
   console.log('Nueva latitud:', latitud);
   console.log('Nueva longitud:', longitud);
-  //valor del slider
-  var slider = document.getElementById("sli");
-  slider.addEventListener("change", function() {
-    var sliderValue = 500*slider.value/100;
-    console.log("El valor del slider ha cambiado a: " + sliderValue);
-  });
+
 
   // Hacer consulta a la base de datos
 
@@ -147,7 +142,7 @@ app.post('/p4', (req, res) => {
                  AND Fecha >= '${fecha_inicio}' 
                  AND Hora >= '${hora_inicio}' 
                  AND Hora <= '${hora_final}' 
-                 HAVING distance <= sliderValue
+                 HAVING distance <= 500
                  ORDER BY id DESC`;
 
   connection.query(query, (error, results) => {
