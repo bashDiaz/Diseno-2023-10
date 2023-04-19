@@ -90,7 +90,8 @@ app.get("/consultar", (req, res) => {
   const vector = [fecha_inicio, fecha_final, hora_inicio, hora_final];
 
   // Crear la consulta SQL con los parámetros de fecha y hora
-  const query = `SELECT Latitud, Longitud FROM datos_gps WHERE Fecha >= '${fecha_inicio}' AND Hora >= '${hora_inicio}' AND Fecha <= '${fecha_final}' AND Hora <= '${hora_final}' ORDER BY id DESC`;
+  const query = `SELECT Latitud, Longitud FROM datos_gps WHERE Fecha BETWEEN '${fecha_inicio}' AND '${fecha_final}' AND ((Fecha = '${fecha_inicio}' AND Hora >= '${hora_inicio}') OR (Fecha > '${fecha_inicio}' AND Fecha < '${fecha_final}') OR (Fecha = '${fecha_final}' AND Hora <= '${hora_final}')) 
+  ORDER BY id DESC`;
 
   connection.query(query, (error, rows) => {
     if (error) {
@@ -199,3 +200,4 @@ app.get('/data', (req, res) => {
     res.status(500).json({ message: 'Error al obtener los datos' });
   }
 });
+
