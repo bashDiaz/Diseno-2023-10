@@ -50,6 +50,7 @@
             <input type="time" id="hora_final" name="hora_final">
           </div>
           <button id="cons_button" type="button" onclick="consultar()">CONSULT</button>
+          <button id="clear_button" type="button" onclick="limpiar()">CLEAR</button>
           <script>
             // Obtener los elementos del DOM
             const fechaInicio = document.getElementById('fecha_inicio');
@@ -64,6 +65,7 @@
           </script>
         </form>
         <script src="consult.js"></script>
+        <script src="limpiar.js"></script>
       </div>
       <div id="m">      
         <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
