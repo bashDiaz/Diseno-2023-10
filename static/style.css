@@ -58,6 +58,16 @@ a{
   display: column;
   justify-items: center;
 }
+.table-historico{
+  position: relative;
+  left: 8px;
+  top: 40px;
+  width: 25%;
+  height: 100%;
+  padding: 10px;
+  display: column;
+  justify-items: center;
+}
 .table-div{
   width: 100%;
   height: 60px;
@@ -70,7 +80,7 @@ a{
 }
 .table-div-header{
   height: 20px;
-  border-radius: 20px;
+  border-radius: 5px;
   background-color: #ECECEC;
   display: column;
   padding-top: 5px;
@@ -80,7 +90,7 @@ a{
   position: absolute;
   width: 95%;
   margin-top: 10px;
-  border-radius:20px;
+  border-radius:5px;
   background-color: #ECECEC;
 }
 
@@ -134,17 +144,21 @@ ul li{
   left: 30px;
   width: 20%;
   height: 100%;
-  padding: 10px;
-  background-color: bisque;
+  padding: 5px;
+  border-radius: 5px;
+  background-color: #ddd;
+  display: block;
 }
 #Cal label{
 
 }
 .start-dates-div{
-  background-color: red;
+  display: block;
+  background-color: #2C3E50;
   margin: 10px;
 }
 .end-dates-div{
+  display: block;
   margin: 10px;
   background-color: #2C3E50;
 }
@@ -155,10 +169,20 @@ ul li{
 .dates{
   border-radius: 10px;
   display: inline;
+  align-items: center;
+
 }
 #cons_button{
   margin-top:10px ;
   left: 38%;
+  position: absolute;
+  border-radius: 20px ;
+  color:#ECECEC; 
+  background-color: #2C3E50;
+}
+#clear_button{
+  margin-top:10px ;
+  left: 10%;
   position: absolute;
   border-radius: 20px ;
   color:#ECECEC; 
