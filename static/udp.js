@@ -23,11 +23,11 @@ function updateData() {
     fetch('/huella')
     .then(response => response.json())
     .then(data => {
-      data5Span.textContent = data[0];
+      data5Span.textContent = data.huella;
     })
     .catch(error => {
       console.log('Error al obtener los datos:', error);
-      data1Span.textContent = 'Error';
+      data5Span.textContent = 'Error';
     });
     
 };
