@@ -28,14 +28,13 @@
       <!--Create the calendar-->
       <div id="Cal">
         <form>
-          <div class="dates">
-            <p id="huella_total"></p>
+          <div class="start-dates-div">
             <label for="fecha_inicio">BEGINNING DATE:</label>
-            <input type="date" id="fecha_inicio" name="fecha_inicio" min="2023-03-01" max="2023-04-10">
+            <input type="date" id="fecha_inicio" name="fecha_inicio" min="2023-03-01" max="2023-04-25">
             <label for="fecha_final">ENDING DATE:</label>
-            <input type="date" id="fecha_final" name="fecha_final" min="2023-03-01" max="2023-04-10">
+            <input type="date" id="fecha_final" name="fecha_final" min="2023-03-01" max="2023-04-25">
           </div>
-          <div class="time">
+          <div class="end-dates-div">
             <label for="hora_inicio">BEGINNING TIME:</label>
             <input type="time" id="hora_inicio" name="hora_inicio">
             <label for="hora_final">ENDING TIME:</label>
@@ -43,12 +42,13 @@
           </div>
           <button id="cons_button" type="button" onclick="consultar()">CONSULT</button>
           <button id="clear_button" type="button" onclick="limpiar()">CLEAR</button>
-          
-          
-        </div>
-        <div class="table-div">
-          <div class="table-div-header">ESTIMACIÓN TOTAL</div>
-          <span id="data1"> Waiting for new data...</span>
+      </div>
+
+        <div class="table-historico">
+          <div class="table-div">
+            <div class="table-div-header">ESTIMACIÓN TOTAL</div>
+            <span id="data1"> Waiting for new data...</span>
+          </div>
         </div>
         <script src="udp1.js"></script>
 
