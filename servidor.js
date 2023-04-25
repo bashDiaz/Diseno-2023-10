@@ -84,8 +84,10 @@ app.get('/last', (req, res) => {
 
 });
 let fecha_hora_recientes = [];
-app.get('/last1', (req, res) => {
+app.get('/huella', (req, res) => {
   const query = 'SELECT Latitud, Longitud FROM datos_gps ORDER BY id DESC LIMIT 2';
+  const consumo = 16; // km/litro
+  const emisiones = 0.144; // Kg CO2/Litro
 
   connection.query(query, (error, rows) => {
     if (error) {
@@ -107,12 +109,15 @@ app.get('/last1', (req, res) => {
       const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
       const distance = R * c;
 
+      const huella = (distance / consumo) * emisiones;
+
       res.json({
-        distance: distance
+        huella: huella
       });
     }
   });
 });
+
 
 function toRadians(degrees) {
   return degrees * Math.PI / 180;
