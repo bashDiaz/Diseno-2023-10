@@ -84,6 +84,41 @@ app.get('/last', (req, res) => {
 
 });
 let fecha_hora_recientes = [];
+app.get('/last1', (req, res) => {
+  const query = 'SELECT Latitud, Longitud FROM datos_gps ORDER BY id DESC LIMIT 2';
+
+  connection.query(query, (error, rows) => {
+    if (error) {
+      console.error('Error al hacer el query: ', error);
+      res.status(500).send('Error al hacer el query');
+    } else {
+      const lat1 = parseFloat(rows[1].Latitud);
+      const lon1 = parseFloat(rows[1].Longitud);
+      const lat2 = parseFloat(rows[0].Latitud);
+      const lon2 = parseFloat(rows[0].Longitud);
+
+      const R = 6371; // Radio de la Tierra en km
+      const dLat = toRadians(lat2 - lat1);
+      const dLon = toRadians(lon2 - lon1);
+      const a =
+        Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+        Math.cos(toRadians(lat1)) * Math.cos(toRadians(lat2)) *
+        Math.sin(dLon / 2) * Math.sin(dLon / 2);
+      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+      const distance = R * c;
+
+      res.json({
+        distance: distance
+      });
+    }
+  });
+});
+
+function toRadians(degrees) {
+  return degrees * Math.PI / 180;
+}
+
+
 app.get("/consultar", (req, res) => {
   const fecha_inicio = req.query.fecha_inicio;
   const fecha_final = req.query.fecha_final;
