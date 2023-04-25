@@ -5,6 +5,7 @@ const app = express();
 const server = dgram.createSocket('udp4');
 const mysql = require('mysql');
 const bodyParser = require('body-parser');
+const i=1
 app.use(bodyParser.json());
 
 // Variable data empty is inserted
@@ -61,7 +62,8 @@ connection.connect((error) => {
       console.log("Data inserted successfully!");
     }
   });
-
+i=i+1
+console.log('El valor de i es: ', i)
 app.get('/last', (req, res) => {
   const query = 'SELECT Latitud, Longitud FROM datos_gps ORDER BY id DESC LIMIT 1';
 
