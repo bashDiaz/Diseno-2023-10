@@ -5,7 +5,7 @@ const app = express();
 const server = dgram.createSocket('udp4');
 const mysql = require('mysql');
 const bodyParser = require('body-parser');
-const i=1
+let i=1
 app.use(bodyParser.json());
 
 // Variable data empty is inserted
