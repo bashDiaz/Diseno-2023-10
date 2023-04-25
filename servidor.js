@@ -5,6 +5,7 @@ const app = express();
 const server = dgram.createSocket('udp4');
 const mysql = require('mysql');
 const bodyParser = require('body-parser');
+let i=1
 app.use(bodyParser.json());
 
 // Variable data empty is inserted
@@ -61,7 +62,8 @@ connection.connect((error) => {
       console.log("Data inserted successfully!");
     }
   });
-
+i=i+1
+console.log('El valor de i es: ', i)
 app.get('/last', (req, res) => {
   const query = 'SELECT Latitud, Longitud FROM datos_gps ORDER BY id DESC LIMIT 1';
 
@@ -82,7 +84,49 @@ app.get('/last', (req, res) => {
 
 });
 let fecha_hora_recientes = [];
+app.get('/huella', (req, res) => {
+  const query = 'SELECT Latitud, Longitud FROM datos_gps ORDER BY id DESC LIMIT 2';
+  const consumo = 16; // km/litro
+  const emisiones = 0.144; // Kg CO2/Litro
+
+  connection.query(query, (error, rows) => {
+    if (error) {
+      console.error('Error al hacer el query: ', error);
+      res.status(500).send('Error al hacer el query');
+    } else {
+      const lat1 = parseFloat(rows[1].Latitud);
+      const lon1 = parseFloat(rows[1].Longitud);
+      const lat2 = parseFloat(rows[0].Latitud);
+      const lon2 = parseFloat(rows[0].Longitud);
+
+      const R = 6371; // Radio de la Tierra en km
+      const dLat = toRadians(lat2 - lat1);
+      const dLon = toRadians(lon2 - lon1);
+      const a =
+        Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+        Math.cos(toRadians(lat1)) * Math.cos(toRadians(lat2)) *
+        Math.sin(dLon / 2) * Math.sin(dLon / 2);
+      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+      const distance = R * c;
+
+      const huella = (distance / consumo) * emisiones;
+
+      res.json({
+        huella: huella
+      });
+    }
+  });
+});
+
+
+function toRadians(degrees) {
+  return degrees * Math.PI / 180;
+}
+
+let huellaTotal = [];
 app.get("/consultar", (req, res) => {
+  const consumo = 16; // km/litro
+  const emisiones = 0.144; // Kg CO2/Litro
   const fecha_inicio = req.query.fecha_inicio;
   const fecha_final = req.query.fecha_final;
   const hora_inicio = req.query.hora_inicio;
@@ -90,21 +134,41 @@ app.get("/consultar", (req, res) => {
   const vector = [fecha_inicio, fecha_final, hora_inicio, hora_final];
 
   // Crear la consulta SQL con los parámetros de fecha y hora
-  const query = `SELECT Latitud, Longitud FROM datos_gps WHERE Fecha >= '${fecha_inicio}' AND Hora >= '${hora_inicio}' AND Fecha <= '${fecha_final}' AND Hora <= '${hora_final}' ORDER BY id DESC`;
+  const query = `SELECT Latitud, Longitud FROM datos_gps WHERE Fecha BETWEEN '${fecha_inicio}' AND '${fecha_final}' AND ((Fecha = '${fecha_inicio}' AND Hora >= '${hora_inicio}') OR (Fecha > '${fecha_inicio}' AND Fecha < '${fecha_final}') OR (Fecha = '${fecha_final}' AND Hora <= '${hora_final}')) 
+  ORDER BY id DESC`;
 
   connection.query(query, (error, rows) => {
     if (error) {
       console.error("Error al hacer el query: ", error);
       res.status(500).send("Error al hacer el query");
     } else {
+      let huellaTotal = 0;
+      let puntoAnterior = null;
+      for (let i = 0; i < rows.length; i++) {
+        const puntoActual = {
+          lat: parseFloat(rows[i].Latitud),
+          lon: parseFloat(rows[i].Longitud)
+        };
+        if (puntoAnterior) {
+          const distancia = calcularDistancia(puntoAnterior, puntoActual);
+          const huella = (distancia / consumo) * emisiones;
+          huellaTotal += huella;
+        }
+        puntoAnterior = puntoActual;
+      }
+      
       values = rows.map(obj => [
         parseFloat(obj.Latitud),
         parseFloat(obj.Longitud)
       ]); // actualizar los valores más recientes
+      
       fecha_hora_recientes = [fecha_inicio, fecha_final, hora_inicio, hora_final];
       console.log(vector);
+      app.get("/huella_total", (req, res) => {
+        res.json({ huellaTotal: huellaTotal });
+        console.log('La huella total es ', huellaTotal);
+      });
       
-
       res.json({
         rows: values
       });
@@ -113,20 +177,49 @@ app.get("/consultar", (req, res) => {
 });
 
 
+
+function calcularDistancia(punto1, punto2) {
+  const R = 6371; // Radio de la Tierra en km
+  const dLat = toRadians(punto2.lat - punto1.lat);
+  const dLon = toRadians(punto2.lon - punto1.lon);
+  const a =
+    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.cos(toRadians(punto1.lat)) * Math.cos(toRadians(punto2.lat)) *
+    Math.sin(dLon / 2) * Math.sin(dLon / 2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  const distance = R * c;
+  return distance;
+}
+
+function toRadians(degrees) {
+  return degrees * Math.PI / 180;
+}
+
+
+
 app.post('/p4', (req, res) => {
   console.log("Fecha final ", fecha_hora_recientes[0]);
   console.log("Fecha inicial ", fecha_hora_recientes[1]);
   const latitud = req.body.lat;
   const longitud = req.body.lng;
-  const fecha_inicio = fecha_hora_recientes[0]|| '2023-03-01';
-  const fecha_final = fecha_hora_recientes[1]|| '2023-04-08';
+  let fecha_inicio = fecha_hora_recientes[0]|| '2023-03-01';
+  let fecha_final = fecha_hora_recientes[1]|| '2023-04-08';
   const hora_inicio = fecha_hora_recientes[2] || '00:00:01';
   const hora_final = fecha_hora_recientes[3] || '23:59:59';
+  
+  if (fecha_hora_recientes[0]=='2023-02-09'){
+    console.log('LIMPIADO');
+    fecha_inicio = '2023-03-01';
+    fecha_final =  '2023-04-10';
+  }
+  
   
   console.log('Nueva latitud:', latitud);
   console.log('Nueva longitud:', longitud);
 
+
   // Hacer consulta a la base de datos
+
   const query = `SELECT Fecha, Hora, Latitud, Longitud, 
                  (6371000 * acos(cos(radians(${latitud})) 
                   * cos(radians(Latitud)) 
@@ -134,12 +227,8 @@ app.post('/p4', (req, res) => {
                   - radians(${longitud})) 
                   + sin(radians(${latitud})) 
                   * sin(radians(Latitud)))) AS distance 
-                 FROM datos_gps 
-                 WHERE Fecha <= '${fecha_final}' 
-                 AND Fecha >= '${fecha_inicio}' 
-                 AND Hora >= '${hora_inicio}' 
-                 AND Hora <= '${hora_final}' 
-                 HAVING distance <= 500 
+                  FROM datos_gps WHERE Fecha BETWEEN '${fecha_inicio}' AND '${fecha_final}' AND ((Fecha = '${fecha_inicio}' AND Hora >= '${hora_inicio}') OR (Fecha > '${fecha_inicio}' AND Fecha < '${fecha_final}') OR (Fecha = '${fecha_final}' AND Hora <= '${hora_final}'))  
+                 HAVING distance <= 500
                  ORDER BY id DESC`;
 
   connection.query(query, (error, results) => {
@@ -156,7 +245,6 @@ app.post('/p4', (req, res) => {
 
 
 let values = []; // variable global para almacenar los valores de la consulta más reciente
-
 
 
 // ruta para obtener los valores de la consulta más reciente
@@ -192,3 +280,4 @@ app.get('/data', (req, res) => {
     res.status(500).json({ message: 'Error al obtener los datos' });
   }
 });
+
