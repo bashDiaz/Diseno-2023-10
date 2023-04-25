@@ -119,10 +119,17 @@ app.post('/p4', (req, res) => {
   console.log("Fecha inicial ", fecha_hora_recientes[1]);
   const latitud = req.body.lat;
   const longitud = req.body.lng;
-  const fecha_inicio = fecha_hora_recientes[0]|| '2023-03-01';
-  const fecha_final = fecha_hora_recientes[1]|| '2023-04-08';
+  let fecha_inicio = fecha_hora_recientes[0]|| '2023-03-01';
+  let fecha_final = fecha_hora_recientes[1]|| '2023-04-08';
   const hora_inicio = fecha_hora_recientes[2] || '00:00:01';
   const hora_final = fecha_hora_recientes[3] || '23:59:59';
+  
+  if (fecha_hora_recientes[0]=='2023-02-09'){
+    console.log('LIMPIADO');
+    fecha_inicio = '2023-03-01';
+    fecha_final =  '2023-04-10';
+  }
+  
   
   console.log('Nueva latitud:', latitud);
   console.log('Nueva longitud:', longitud);
@@ -137,11 +144,7 @@ app.post('/p4', (req, res) => {
                   - radians(${longitud})) 
                   + sin(radians(${latitud})) 
                   * sin(radians(Latitud)))) AS distance 
-                 FROM datos_gps 
-                 WHERE Fecha <= '${fecha_final}' 
-                 AND Fecha >= '${fecha_inicio}' 
-                 AND Hora >= '${hora_inicio}' 
-                 AND Hora <= '${hora_final}' 
+                  FROM datos_gps WHERE Fecha BETWEEN '${fecha_inicio}' AND '${fecha_final}' AND ((Fecha = '${fecha_inicio}' AND Hora >= '${hora_inicio}') OR (Fecha > '${fecha_inicio}' AND Fecha < '${fecha_final}') OR (Fecha = '${fecha_final}' AND Hora <= '${hora_final}'))  
                  HAVING distance <= 500
                  ORDER BY id DESC`;
 
