@@ -37,6 +37,6 @@ i=i+1;
       console.log('Error al obtener los datos:', error);
       data5Span.textContent = 'Error';
     });
-    
+
 };
 setInterval(updateData, 10000);
