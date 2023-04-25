@@ -123,8 +123,10 @@ function toRadians(degrees) {
   return degrees * Math.PI / 180;
 }
 
-
+let huellaTotal = [];
 app.get("/consultar", (req, res) => {
+  const consumo = 16; // km/litro
+  const emisiones = 0.144; // Kg CO2/Litro
   const fecha_inicio = req.query.fecha_inicio;
   const fecha_final = req.query.fecha_final;
   const hora_inicio = req.query.hora_inicio;
@@ -140,20 +142,59 @@ app.get("/consultar", (req, res) => {
       console.error("Error al hacer el query: ", error);
       res.status(500).send("Error al hacer el query");
     } else {
+      let huellaTotal = 0;
+      let puntoAnterior = null;
+      for (let i = 0; i < rows.length; i++) {
+        const puntoActual = {
+          lat: parseFloat(rows[i].Latitud),
+          lon: parseFloat(rows[i].Longitud)
+        };
+        if (puntoAnterior) {
+          const distancia = calcularDistancia(puntoAnterior, puntoActual);
+          const huella = (distancia / consumo) * emisiones;
+          huellaTotal += huella;
+        }
+        puntoAnterior = puntoActual;
+      }
+      
       values = rows.map(obj => [
         parseFloat(obj.Latitud),
         parseFloat(obj.Longitud)
       ]); // actualizar los valores más recientes
+      
       fecha_hora_recientes = [fecha_inicio, fecha_final, hora_inicio, hora_final];
       console.log(vector);
+      app.get("/huella_total", (req, res) => {
+        res.json({ huellaTotal: huellaTotal });
+        console.log('La huella total es ', huellaTotal);
+      });
       
-
       res.json({
         rows: values
       });
     }
   });
 });
+
+
+
+function calcularDistancia(punto1, punto2) {
+  const R = 6371; // Radio de la Tierra en km
+  const dLat = toRadians(punto2.lat - punto1.lat);
+  const dLon = toRadians(punto2.lon - punto1.lon);
+  const a =
+    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.cos(toRadians(punto1.lat)) * Math.cos(toRadians(punto2.lat)) *
+    Math.sin(dLon / 2) * Math.sin(dLon / 2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  const distance = R * c;
+  return distance;
+}
+
+function toRadians(degrees) {
+  return degrees * Math.PI / 180;
+}
+
 
 
 app.post('/p4', (req, res) => {
@@ -204,7 +245,6 @@ app.post('/p4', (req, res) => {
 
 
 let values = []; // variable global para almacenar los valores de la consulta más reciente
-
 
 
 // ruta para obtener los valores de la consulta más reciente
