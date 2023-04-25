@@ -29,6 +29,7 @@
       <div id="Cal">
         <form>
           <div class="dates">
+            <p id="huella_total"></p>
             <label for="fecha_inicio">BEGINNING DATE:</label>
             <input type="date" id="fecha_inicio" name="fecha_inicio" min="2023-03-01" max="2023-04-10">
             <label for="fecha_final">ENDING DATE:</label>
@@ -42,7 +43,15 @@
           </div>
           <button id="cons_button" type="button" onclick="consultar()">CONSULT</button>
           <button id="clear_button" type="button" onclick="limpiar()">CLEAR</button>
+          
+          
         </div>
+        <div class="table-div">
+          <div class="table-div-header">ESTIMACIÓN TOTAL</div>
+          <span id="data1"> Waiting for new data...</span>
+        </div>
+        <script src="udp1.js"></script>
+
         <script>
           // Obtener los elementos del DOM
           const fechaInicio = document.getElementById('fecha_inicio');
