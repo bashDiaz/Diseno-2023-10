@@ -10,8 +10,8 @@ let myChart = new Chart(ctx, {
       borderColor: 'rgba(255, 99, 132, 1)',
       borderWidth: 1
     },{
-      label: 'Producción diaria de un Ser humano',
-      data: [1.05],
+      label: 'Producción por hora de un Ser humano (KG/CO2)',
+      data: [0.044],
       backgroundColor: 'rgba(54, 162, 235, 0.2)',
       borderColor: 'rgba(54, 162, 235, 1)',
       borderWidth: 1
@@ -39,4 +39,4 @@ setInterval(() => {
     .catch(error => {
       console.error(error);
     });
-}, 1000); // realizamos un fetch cada 1000 milisegundos (1 segundo)
+}, 10000); // realizamos un fetch cada 1000 milisegundos (1 segundo)
