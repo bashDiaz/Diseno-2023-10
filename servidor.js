@@ -63,7 +63,6 @@ connection.connect((error) => {
     }
   });
 i=i+1
-console.log('El valor de i es: ', i)
 app.get('/last', (req, res) => {
   const query = 'SELECT Latitud, Longitud FROM datos_gps ORDER BY id DESC LIMIT 1';
 
@@ -122,8 +121,17 @@ app.get('/huella', (req, res) => {
 function toRadians(degrees) {
   return degrees * Math.PI / 180;
 }
+let huellaTotal = null;
 
-let huellaTotal = [];
+app.get("/huella_total", (req, res) => {
+  if (huellaTotal !== null) {
+    res.json({ huellaTotal: huellaTotal });
+    console.log('La huella total es ', huellaTotal);
+  } else {
+    res.status(404).send("La huella total no ha sido calculada todavía.");
+  }
+});
+
 app.get("/consultar", (req, res) => {
   const consumo = 16; // km/litro
   const emisiones = 0.144; // Kg CO2/Litro
@@ -142,7 +150,7 @@ app.get("/consultar", (req, res) => {
       console.error("Error al hacer el query: ", error);
       res.status(500).send("Error al hacer el query");
     } else {
-      let huellaTotal = 0;
+      huellaTotal = 0;
       let puntoAnterior = null;
       for (let i = 0; i < rows.length; i++) {
         const puntoActual = {
@@ -164,10 +172,6 @@ app.get("/consultar", (req, res) => {
       
       fecha_hora_recientes = [fecha_inicio, fecha_final, hora_inicio, hora_final];
       console.log(vector);
-      app.get("/huella_total", (req, res) => {
-        res.json({ huellaTotal: huellaTotal });
-        console.log('La huella total es ', huellaTotal);
-      });
       
       res.json({
         rows: values
@@ -175,6 +179,7 @@ app.get("/consultar", (req, res) => {
     }
   });
 });
+
 
 
 
@@ -198,6 +203,8 @@ function toRadians(degrees) {
 
 
 app.post('/p4', (req, res) => {
+  const consumo = 16; // km/litro
+  const emisiones = 0.144; // Kg CO2/Litro
   console.log("Fecha final ", fecha_hora_recientes[0]);
   console.log("Fecha inicial ", fecha_hora_recientes[1]);
   const latitud = req.body.lat;
@@ -236,6 +243,20 @@ app.post('/p4', (req, res) => {
       console.error('Error al hacer el query: ', error);
       res.status(500).send('Error al hacer el query');
     } else { 
+      huellaTotal = 0;
+      let puntoAnterior = null;
+      for (let i = 0; i < results.length; i++) {
+        const puntoActual = {
+          lat: parseFloat(results[i].Latitud),
+          lon: parseFloat(results[i].Longitud)
+        };
+        if (puntoAnterior) {
+          const distancia = calcularDistancia(puntoAnterior, puntoActual);
+          const huella = (distancia / consumo) * emisiones;
+          huellaTotal += huella;
+        }
+        puntoAnterior = puntoActual;
+      }
       console.log(results);
       res.send(results);
     }   
