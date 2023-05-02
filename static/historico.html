@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <script src="servidor.js"></script>
+    
+<script src="servidor.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <meta charset="UTF-8">
     <title>WEBSERVER</title>
     <link rel="stylesheet" href="style.css">
@@ -17,22 +19,20 @@
         <h2 class="name"> SSJMAP Location Service</h2>
       </div>
       <nav>
-        <a href="index.html">HOME</a>
-        <a href="treal.html">TIEMPO REAL</a>
-        <a href="historico.html">HISTÓRICOS POR FECHA</a>
-        <a href="historico1.html">HISTÓRICOS POR LUGAR</a>
-        <a href="#">CONTACTO</a>
+        <a href="treal.html">Tiempo real</a>
+        <a href="historico.html">Historicos</a>
+        <a href="index.html">Contacto</a>
       </nav>
     </header>
     <main>
-      <!--Create the calendar-->
-      <div id="Cal">
-        <form>
+      <div class="Lateral-Bar">
+        <!-- Calendar -->
+        <div id="Cal">
           <div class="start-dates-div">
             <label for="fecha_inicio">BEGINNING DATE:</label>
-            <input type="date" id="fecha_inicio" name="fecha_inicio" min="2023-03-01" max="2023-04-25">
+            <input type="date" id="fecha_inicio" name="fecha_inicio" min="2023-03-01" max="2023-05-02">
             <label for="fecha_final">ENDING DATE:</label>
-            <input type="date" id="fecha_final" name="fecha_final" min="2023-03-01" max="2023-04-25">
+            <input type="date" id="fecha_final" name="fecha_final" min="2023-03-01" max="2023-05-02">
           </div>
           <div class="end-dates-div">
             <label for="hora_inicio">BEGINNING TIME:</label>
@@ -42,16 +42,19 @@
           </div>
           <button id="cons_button" type="button" onclick="consultar()">CONSULT</button>
           <button id="clear_button" type="button" onclick="limpiar()">CLEAR</button>
-      </div>
-
+        </div>
         <div class="table-historico">
           <div class="table-div">
-            <div class="table-div-header">ESTIMACIÓN TOTAL</div>
+            <div class="table-div-header">ESTIMACIÓN TOTAL KgCO2/año</div>
             <span id="data1"> Waiting for new data...</span>
           </div>
+          <button id="clear_button" type="button" onclick="window.location.href='historico1.html'">HISTORICOS POR LUGAR</button>
+          <canvas id="grafico" width="200" height="250"></canvas>
+          <script src="chart.js"></script>
         </div>
         <script src="udp1.js"></script>
-
+       
+        
         <script>
           // Obtener los elementos del DOM
           const fechaInicio = document.getElementById('fecha_inicio');
@@ -66,20 +69,18 @@
         </script>
         <script src="consult.js"></script>
         <script src="limpiar.js"></script>
-      </div>
-      
+        <!--Create the slider to select circle range-->
         
+      <!-- Map object -->
       <div id="m">      
         <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
         integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
         crossorigin=""></script>
-        <!--Create the slider to select circle range-->
-        <!--Create the map-->
         <div id="map"></div>
         <!--Calls all the .JS-->
         <script src="map1.js"></script>
-    
-      </div>
+      </div>    
+    </div>
     </main>
     <div class="footer">
       <footer>

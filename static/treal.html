@@ -2,6 +2,7 @@
 <html>
   <head>
     <script src="servidor.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <meta charset="UTF-8">
     <title>WEBSERVER</title>
     <link rel="stylesheet" href="style.css">
@@ -17,11 +18,9 @@
         <h2 class="name"> SSJMAP Location Service</h2>
       </div>
       <nav>
-        <a href="index.html">HOME</a>
-        <a href="treal.html">TIEMPO REAL</a>
-        <a href="historico.html">HISTÓRICOS POR FECHA</a>
-        <a href="historico1.html">HISTÓRICOS POR LUGAR</a>
-        <a href="#">CONTACTO</a>
+        <a href="treal.html">Tiempo real</a>
+        <a href="historico.html">Historicos</a>
+        <a href="index.html">Contacto</a>
       </nav>
     </header>
     <main>
@@ -44,9 +43,11 @@
           <span id="data4">Waiting for new data...</span>
         </div>
         <div class="table-div">
-          <div class="table-div-header">HUELLA CARBONO</div>
+          <div class="table-div-header">HUELLA CARBONO KgCO2/año</div>
           <span id="data5">Waiting for new data...</span>
         </div>
+        <canvas id="grafico" width="200" height="250"></canvas>
+        <script src="chart1.js"></script>
         <script src="udp.js"></script>
       </div>
         <!--Create the calendar-->
