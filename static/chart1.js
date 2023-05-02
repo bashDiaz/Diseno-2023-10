@@ -27,12 +27,13 @@ let myChart = new Chart(ctx, {
     }
   }
 });
-
+totalhuella=0;
 setInterval(() => {
   fetch('/huella')
     .then(response => response.json())
     .then(data => {
-      myChart.data.datasets[0].data[0] = data.huella; // actualizamos los datos del primer dataset
+      totalhuella+=data.huella;
+      myChart.data.datasets[0].data[0] = totalhuella; // actualizamos los datos del primer dataset
       myChart.update(); // actualizamos el gráfico
     })
     .catch(error => {
