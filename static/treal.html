@@ -2,6 +2,7 @@
 <html>
   <head>
     <script src="servidor.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <meta charset="UTF-8">
     <title>WEBSERVER</title>
     <link rel="stylesheet" href="style.css">
@@ -45,6 +46,8 @@
           <div class="table-div-header">HUELLA CARBONO KgCO2/año</div>
           <span id="data5">Waiting for new data...</span>
         </div>
+        <canvas id="grafico" width="200" height="250"></canvas>
+        <script src="chart1.js"></script>
         <script src="udp.js"></script>
       </div>
         <!--Create the calendar-->
