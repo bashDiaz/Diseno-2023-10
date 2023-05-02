@@ -21,9 +21,8 @@ function updateMarkerAndPolyline(rows) {
   vector.push(latlng); // agrega la posición al arreglo de puntos
   polyline1.setLatLngs(vector); // actualiza la polilínea con los nuevos puntos
   
-  // centra el mapa en las nuevas coordenadas y ajusta el zoom automáticamente
-  const bounds = L.latLngBounds(vector);
-  mymap.fitBounds(bounds, { padding: [150, 150] });
+  // centra el mapa en las nuevas coordenadas sin ajustar el zoom automáticamente
+  mymap.setView(latlng, mymap.getZoom());
 }
 
 // Hace una petición a la API cada 10 segundos
