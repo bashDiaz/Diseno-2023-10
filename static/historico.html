@@ -18,17 +18,15 @@
         <h2 class="name"> SSJMAP Location Service</h2>
       </div>
       <nav>
-        <a href="index.html">HOME</a>
-        <a href="treal.html">TIEMPO REAL</a>
-        <a href="historico.html">HISTÓRICOS POR FECHA</a>
-        <a href="historico1.html">HISTÓRICOS POR LUGAR</a>
-        <a href="#">CONTACTO</a>
+        <a href="treal.html">Tiempo real</a>
+        <a href="historico.html">Historicos</a>
+        <a href="index.html">Contato</a>
       </nav>
     </header>
     <main>
-      <!--Create the calendar-->
-      <div id="Cal">
-        <form>
+      <div class="Lateral-Bar">
+        <!-- Calendar -->
+        <div id="Cal">
           <div class="start-dates-div">
             <label for="fecha_inicio">BEGINNING DATE:</label>
             <input type="date" id="fecha_inicio" name="fecha_inicio" min="2023-03-01" max="2023-04-25">
@@ -43,11 +41,10 @@
           </div>
           <button id="cons_button" type="button" onclick="consultar()">CONSULT</button>
           <button id="clear_button" type="button" onclick="limpiar()">CLEAR</button>
-      </div>
-
+        </div>
         <div class="table-historico">
           <div class="table-div">
-            <div class="table-div-header">ESTIMACIÓN TOTAL</div>
+            <div class="table-div-header">ESTIMACIÓN TOTAL KgCO2/año</div>
             <span id="data1"> Waiting for new data...</span>
           </div>
         </div>
@@ -67,20 +64,32 @@
         </script>
         <script src="consult.js"></script>
         <script src="limpiar.js"></script>
+        <!--Create the slider to select circle range-->
+        <div id="slider">
+          <div class="range">
+            <div class="sliderValue">
+              <span>100</span>
+            </div>
+            <div class="field">
+              <input id="sli" type="range" min="10" max="100" steps="1">
+            </div>
+          </div>
+        </div>
+        <div id="result-container">
+          <h>¿Cuándo estuvo el vehiculo?</h4>
+          <ul id="result-list"></ul>
+         </div>
       </div>
-      
-        
+      <!-- Map object -->
       <div id="m">      
         <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
         integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
         crossorigin=""></script>
-        <!--Create the slider to select circle range-->
-        <!--Create the map-->
         <div id="map"></div>
         <!--Calls all the .JS-->
         <script src="map1.js"></script>
-    
-      </div>
+      </div>    
+    </div>
     </main>
     <div class="footer">
       <footer>
