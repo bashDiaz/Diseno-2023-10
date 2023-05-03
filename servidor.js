@@ -88,10 +88,10 @@ app.get('/id', (req, res) => {
       console.error('Error al hacer el query: ', error);
       res.status(500).send('Error al hacer el query');
     } else {
-      const values = rows.map(obj => parseFloat(obj.iden));
+      const values = parseFloat(obj.iden);
 
       res.json({
-        rows: values
+        id: values
       });
     }
   });
