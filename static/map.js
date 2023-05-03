@@ -21,9 +21,9 @@ let marker2 = L.marker([data1, data2]).addTo(mymap);
 
 function updateMarkerAndPolyline(rows) {
   
-    const latestData = rows[rows.length - 1]; // obtiene la última posición
+  const latestData = rows[rows.length - 1]; // obtiene la última posición
   const latlng = L.latLng(latestData[0], latestData[1]); // crea un objeto LatLng con la posición
-  marker.setLatLng(latlng); // actualiza la posición del marcador
+  marker1.setLatLng(latlng); // actualiza la posición del marcador
   vector.push(latlng); // agrega la posición al arreglo de puntos
   polyline1.setLatLngs(vector); // actualiza la polilínea con los nuevos puntos
   
