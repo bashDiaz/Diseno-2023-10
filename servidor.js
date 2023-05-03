@@ -88,6 +88,7 @@ app.get('/id', (req, res) => {
       console.error('Error al hacer el query: ', error);
       res.status(500).send('Error al hacer el query');
     } else {
+      console.log("HOLA");
       const value = rows.map(obj => [parseFloat(obj.iden)]);
       if (rows[0]==1){
         console.log("ENTRE A 1");
