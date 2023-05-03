@@ -20,7 +20,7 @@ let marker2 = L.marker([data1, data2]).addTo(mymap);
 
 
 function updateMarkerAndPolyline(rows) {
-  if (id==1){
+  
     const latestData = rows[rows.length - 1]; // obtiene la última posición
   const latlng = L.latLng(latestData[0], latestData[1]); // crea un objeto LatLng con la posición
   marker.setLatLng(latlng); // actualiza la posición del marcador
@@ -29,7 +29,7 @@ function updateMarkerAndPolyline(rows) {
   
   // centra el mapa en las nuevas coordenadas sin ajustar el zoom automáticamente
   mymap.setView(latlng, mymap.getZoom());
-  }
+  
   
 }
 
