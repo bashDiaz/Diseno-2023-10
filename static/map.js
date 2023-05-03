@@ -14,13 +14,22 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 let id=1;
 let app1Positions = [];
 let app2Positions = [];
+// Define el icono amarillo
+let yellowIcon = L.icon({
+    iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-yellow.png',
+    shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowSize: [41, 41]
+});
 let marker1 = L.marker([data1, data2]).addTo(mymap);
-let marker2 = L.marker([data1, data2]).addTo(mymap);
+let marker2 = L.marker([data1, data2], {icon: yellowIcon}).addTo(mymap);
 // Create a marker
 
 
 function updateMarkerAndPolyline(rows) {
-  
+  if (id==1){
   const latestData = rows[rows.length - 1]; // obtiene la última posición
   const latlng = L.latLng(latestData[0], latestData[1]); // crea un objeto LatLng con la posición
   marker1.setLatLng(latlng); // actualiza la posición del marcador
@@ -29,6 +38,8 @@ function updateMarkerAndPolyline(rows) {
   
   // centra el mapa en las nuevas coordenadas sin ajustar el zoom automáticamente
   mymap.setView(latlng, mymap.getZoom());
+  }
+  
   
   
 }
