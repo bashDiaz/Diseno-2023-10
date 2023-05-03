@@ -90,7 +90,7 @@ app.get('/id', (req, res) => {
     } else {
       console.log("HOLA");
       const value = rows.map(obj => [parseFloat(obj.iden)]);
-      if (rows[0]==1){
+      if (value==1){
         console.log("ENTRE A 1");
       }
       res.json({
