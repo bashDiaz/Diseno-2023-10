@@ -33,16 +33,16 @@ function updateMarkerAndPolyline(rows) {
     const latestData = rows[rows.length - 1]; // obtiene la última posición
     const latlng = L.latLng(latestData[0], latestData[1]); // crea un objeto LatLng con la posición
     marker1.setLatLng(latlng); // actualiza la posición del marcador
-    vector1.push(latlng); // agrega la posición al arreglo de puntos
-    polyline1.setLatLngs(vector1); // actualiza la polilínea con los nuevos puntos
-    mymap.fitBounds(polyline1.getBounds()); // ajusta el zoom para que se vea toda la polilínea
+    app1Positions.push(latlng); // agrega la posición al arreglo de puntos de la app 1
+    polyline1.setLatLngs(app1Positions); // actualiza la polilínea con los nuevos puntos
+    mymap.setView(latlng, mymap.getZoom()); // ajusta el zoom para que se vea toda la polilínea
   } else if (id == 2) {
     const latestData = rows[rows.length - 1]; // obtiene la última posición
     const latlng = L.latLng(latestData[0], latestData[1]); // crea un objeto LatLng con la posición
     marker2.setLatLng(latlng); // actualiza la posición del marcador
-    vector2.push(latlng); // agrega la posición al arreglo de puntos
-    polyline2.setLatLngs(vector2); // actualiza la polilínea con los nuevos puntos
-    mymap.fitBounds(polyline2.getBounds()); // ajusta el zoom para que se vea toda la polilínea
+    app2Positions.push(latlng); // agrega la posición al arreglo de puntos de la app 2
+    polyline2.setLatLngs(app2Positions); // actualiza la polilínea con los nuevos puntos
+    mymap.setView(latlng, mymap.getZoom()); // ajusta el zoom para que se vea toda la polilínea
   }
 }
 
