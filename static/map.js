@@ -48,7 +48,7 @@ setInterval(()=> {
   .then(response => response.json())
   .then(data => {
     console.log(data);
-    id = data.rows[0][0];
+    id = data.rows[0];
   });
 }, 6000);
 
