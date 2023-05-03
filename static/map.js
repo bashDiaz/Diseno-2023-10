@@ -48,9 +48,10 @@ setInterval(()=> {
   .then(response => response.json())
   .then(data => {
     console.log(data);
-    id = data.rows[0];
+    id = data.id;
   });
 }, 6000);
+
 
 function updatePolyline(rows) {
   var coordsArray = rows
