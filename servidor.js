@@ -89,16 +89,17 @@ app.get('/id', (req, res) => {
       res.status(500).send('Error al hacer el query');
     } else {
       console.log("HOLA");
-      const value = rows.map(obj => [parseFloat(obj.iden)]);
-      if (value==1){
+      const value = parseFloat(rows[0].iden);
+      if (value == 1){
         console.log("ENTRE A 1");
       }
       res.json({
-        rows: value
+        id: value
       });
     }
   });
 });
+
 
 });
 let fecha_hora_recientes = [];
