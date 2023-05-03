@@ -11,7 +11,7 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
   maxZoom: 18,
 }).addTo(mymap);
-let id;
+let id=1;
 let app1Positions = [];
 let app2Positions = [];
 let marker1 = L.marker([data1, data2]).addTo(mymap);
