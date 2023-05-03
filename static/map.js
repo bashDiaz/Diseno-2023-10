@@ -35,6 +35,13 @@ setInterval(() => {
     });
 }, 10000);
 
+setInterval(() => {
+  fetch('/id')
+    .then(response => response.json())
+    .then(data => {
+
+    });
+}, 10000);
 
 function updatePolyline(rows) {
   var coordsArray = rows
