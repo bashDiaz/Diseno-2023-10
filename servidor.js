@@ -9,7 +9,7 @@ let i=1
 app.use(bodyParser.json());
 
 // Variable data empty is inserted
-let data1, data2, data3, data4;
+let data1, data2, data3, data4, data5;
 
 // Other files that are complement of index are located in static
 app.use(express.static(__dirname + "/static"));
@@ -50,11 +50,12 @@ connection.connect((error) => {
   data2 = parseFloat(data[1]);
   data3 = data[2];
   data4 = data[3];
-  console.log(`Data received: ${data1}, ${data2}, ${data3}, ${data4}`);
+  data5 = data[4]
+  console.log(`Data received: ${data1}, ${data2}, ${data3}, ${data4}, ${data5} `);
 
   // insert data to database
-  const sql = "INSERT INTO datos_gps (Latitud, Longitud, Fecha, Hora) VALUES (?, ?, ?, ?)";
-  const values = [data1, data2, data3, data4];
+  const sql = "INSERT INTO datos_gps (Latitud, Longitud, Fecha, Hora, iden) VALUES (?, ?, ?, ?, ?)";
+  const values = [data1, data2, data3, data4, data5];
   connection.query(sql, values, (error, results, fields) => {
     if (error) {
       console.log("Error inserting data into MySQL database: " + error);
