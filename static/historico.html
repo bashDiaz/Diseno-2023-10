@@ -6,7 +6,8 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <meta charset="UTF-8">
     <title>WEBSERVER</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="./Styles/Main.css">
+    <link rel="stylesheet" href="./Styles/Footer.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
     integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
     crossorigin=""/>
@@ -15,7 +16,7 @@
   <body>
     <header>
       <div class="logo">
-        <img src="Logo.png" alt="Logo de la empresa">
+        <img src="./img/Logo.png" alt="Logo de la empresa">
         <h2 class="name"> SSJMAP Location Service</h2>
       </div>
       <nav>
@@ -51,6 +52,7 @@
           <button id="cons_button" type="button" onclick="consultar()">CONSULT</button>
           <button id="clear_button" type="button" onclick="limpiar()">CLEAR</button>
         </div>
+
         <div class="table-historico">
           <div class="table-div">
             <div class="table-div-header">ESTIMACIÓN TOTAL KgCO2/año</div>
@@ -60,25 +62,8 @@
           <canvas id="grafico" width="300" height="250"></canvas>
           <script src="chart.js"></script>
         </div>
-        <script src="udp1.js"></script>
-       
-        
-        <script>
-          // Obtener los elementos del DOM
-          const fechaInicio = document.getElementById('fecha_inicio');
-          const fechaFinal = document.getElementById('fecha_final');
-          const horaInicio = document.getElementById('hora_inicio');
-          const horaFinal = document.getElementById('hora_final');
-          // Agregar un evento onChange al input de la fecha de inicio
-          fechaInicio.addEventListener('change', function() {
-            // Actualizar la propiedad min del input de la fecha final
-            fechaFinal.min = fechaInicio.value;
-          });
-        </script>
-        <script src="consult.js"></script>
-        <script src="limpiar.js"></script>
-        <!--Create the slider to select circle range-->
-        
+ 
+      </div>
       <!-- Map object -->
       <div id="m">      
         <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
@@ -87,8 +72,11 @@
         <div id="map"></div>
         <!--Calls all the .JS-->
         <script src="map1.js"></script>
-      </div>    
-    </div>
+      </div>
+      <script src="udp1.js"></script>
+      <script src="consult.js"></script>
+      <script src="consult.js"></script>
+      <script src="limpiar.js"></script> 
     </main>
     <div class="footer">
       <footer>
@@ -143,10 +131,10 @@
               <div class='sb_footer-links_div'>
                 <h4>Coming soon on</h4>
                 <div class='socialmedia'>
-                  <p><img src='fb.png' alt=''></p>
-                  <p><img src='twitter.png' alt=''></p>
-                  <p><img src='ig.png' alt=''></p>
-                  <p><img src='linkedin.png' alt=''></p>
+                  <p><img src='./img/fb.png' alt=''></p>
+                  <p><img src='./img/twitter.png' alt=''></p>
+                  <p><img src='./img/ig.png' alt=''></p>
+                  <p><img src='./img/linkedin.png' alt=''></p>
                 </div>
               </div>
             </div>
@@ -163,7 +151,7 @@
               </div>
             </div>
           </div>
-        </div>      
+        </div>    
       </footer>
   </div>
   </body>
