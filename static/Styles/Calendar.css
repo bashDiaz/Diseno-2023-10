@@ -1,0 +1,42 @@
+.time{
+    margin: 10px;
+    align-items: center;
+}
+/*Calendary parameters*/
+#Cal{
+    position: relative;
+    top: 20px;
+    left: 30px;
+    width: 20%;
+    height: 100%;
+    padding: 5px;
+    border-radius: 5px;
+    background-color: #ddd;
+    display: block;
+}
+.start-dates-div{
+    display: block;
+    background-color: #2C3E50;
+    margin: 10px;
+}
+.end-dates-div{
+    display: block;
+    margin: 10px;
+    background-color: #2C3E50;
+}
+#cons_button{
+    margin-top:10px ;
+    left: 38%;
+    position: absolute;
+    border-radius: 20px ;
+    color:#ECECEC; 
+    background-color: #2C3E50;
+}
+#clear_button{
+    margin-top:10px ;
+    left: 10%;
+    position: absolute;
+    border-radius: 20px ;
+    color:#ECECEC; 
+    background-color: #2C3E50;
+}

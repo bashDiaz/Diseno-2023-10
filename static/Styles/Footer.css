@@ -140,18 +140,3 @@ footer{
         line-height: 38px;
     }
   }
-  .vehicle-select {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    margin-bottom: 10px;
-  }
-  
-  .vehicle-select label {
-    font-weight: bold;
-    margin-right: 5px;
-  }
-  
-  .vehicle-select select {
-    width: 100px;
-  }

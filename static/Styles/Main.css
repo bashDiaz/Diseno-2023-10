@@ -1,11 +1,10 @@
-
 body{
   font-family: sans-serif;
   margin: 0;
   background-color: #F2F2F2;
 }
 main {
-  min-height: calc(100vh - 250px); /* Establece una altura mínima de 250px para el footer */
+  min-height: calc(100vh - 100px); /* Establece una altura mínima de 100px para el footer */
   position: relative; /* asegura que los elementos hijos usen la posición relativa */
   height: 100%; /* establece una altura para la sección principal */
 }
@@ -19,6 +18,23 @@ header{
   justify-content: space-between;
   align-items: center;
   padding: 10px;
+}
+ul{
+  background-color: white;
+  border: solid 1px #ddd;
+  border-radius: 4px;
+  padding-left: 0px;
+  max-width: 400px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin: 10px;
+}
+ul li{
+  list-style-type: none;
+  border-bottom: solid 1px #ddd;
+  padding: 15px;
+  padding-right: 0px;
 }
 .logo{
   display: flex;
@@ -48,54 +64,6 @@ a{
     padding: 10px 0px;
   }
 }
-
-/*Real time data table */
-.table{
-  position: relative;
-  left: 30px;
-  top: 10px;
-  width: 25%;
-  height: 100%;
-  padding: 10px;
-  display: column;
-  justify-items: center;
-}
-.table-historico{
-  position: relative;
-  left: 8px;
-  top: 40px;
-  width: 25%;
-  height: 100%;
-  padding: 10px;
-  display: column;
-  justify-items: center;
-}
-.table-div{
-  width: 100%;
-  height: 60px;
-  display: column;
-  background-color: #2C3E50 ;
-  border-radius: 15px;
-  margin: 10px;
-  padding: 10px;
-  border: solid 10px #ddd;
-}
-.table-div-header{
-  height: 20px;
-  border-radius: 5px;
-  background-color: #ECECEC;
-  display: column;
-  padding-top: 5px;
-  color: black;
-}
-.table-div span{
-  position: absolute;
-  width: 95%;
-  margin-top: 10px;
-  border-radius:5px;
-  background-color: #ECECEC;
-}
-
 /*Estilo del los objetos mapa*/
 #map { 
   position: absolute; /* establece la posición absoluta */
@@ -107,87 +75,6 @@ a{
   margin-right: 70px;
   margin-bottom: 10px;
 }  
-.dates{
-  display: flex;
-  margin: 10px;
-  align-items: center;
-}
-.time{
-  display: flex;
-  margin: 10px;
-  align-items: center;
-}
-form label{
-  margin: 10px;
-}
-ul{
-  background-color: white;
-  border: solid 1px #ddd;
-  border-radius: 4px;
-  padding-left: 0px;
-  max-width: 400px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  margin: 10px;
-}
-ul li{
-  list-style-type: none;
-  border-bottom: solid 1px #ddd;
-  padding: 15px;
-  padding-right: 0px;
-}
-/*Calendary parameters*/
-#Cal{
-  position: relative;
-  top: 20px;
-  left: 30px;
-  width: 20%;
-  height: 100%;
-  padding: 5px;
-  border-radius: 5px;
-  background-color: #ddd;
-  display: block;
-}
-
-.start-dates-div{
-  display: block;
-  background-color: #2C3E50;
-  margin: 10px;
-}
-.end-dates-div{
-  display: block;
-  margin: 10px;
-  background-color: #2C3E50;
-}
-
-.times{
-  border-radius: 10px;
-}
-.dates{
-  border-radius: 10px;
-  display: inline;
-  align-items: center;
-
-}
-#cons_button{
-  margin-top:10px ;
-  left: 38%;
-  position: absolute;
-  border-radius: 20px ;
-  color:#ECECEC; 
-  background-color: #2C3E50;
-}
-#clear_button{
-  margin-top:10px ;
-  left: 10%;
-  position: absolute;
-  border-radius: 20px ;
-  color:#ECECEC; 
-  background-color: #2C3E50;
-}
-
-
 #result-container {
   width: 500px;
   height: 200px;
@@ -198,94 +85,4 @@ ul li{
 h3{
   margin: 10px;
   padding: 10px;
-}
-.range{
-  height: 40px;
-  width: 390px;
-  background: white;
-  border-radius: 10px;
-  padding: 0 65px 0 45px;
-  box-shadow: 2px 4px 8px rgba(0,0,0,0.1);
-}
-.sliderValue{
-  position: absolute;
-  height: 45px;
-  width: 45px;
-  transform: translateX(-70%) scale(0);
-  font-weight: 500;
-  top: -40px;
-  line-height: 55px;
-  z-index: 2;
-  color: #ddd;
-  transition: transform 0.3s ease;
-}
-.sliderValue span.show{
-  transform: translateX(-70%) scale(1);
-}
-.sliderValue span:after{
-  position: absolute;
-  content: "";
-  height: 100%;
-  width: 100%;
-  background: #292440;
-  border: 3px solid white;
-  z-index: -1;
-  left: 50%;
-  transform: translateX(-50%) rotate(45deg);
-  border-bottom-left-radius: 50%;
-  box-shadow: 0 0 8px rgba(0,0,0,0.1);
-  border-top-left-radius: 50%;
-  border-top-right-radius: 50%;
-}
-.field .value{
-  position: absolute;
-  font-size: 18px;
-  color: #292440;
-  font-weight: 600;
-}
-.field .value.left{
-  left: -22px;
-}
-.field .value.right{
-  right: -43px;
-}
-.range input{
-  
-  width: 100%;
-  height: 3px;
-  border-radius: 5px;
-  background: #ddd;
-  outline: none;
-  opacity: 0.7;
-  border:none;
-  -webkit-transition: .2s;
-  transition: opacity .2s;
-}
-.range input::-webkit-slider-thumb{
-  -webkit-appearance: none;
-  appearance: none;
-  width: 25px;
-  height: 25px;
-  border-radius: 50%;
-  background: lightblue;
-  cursor: pointer;
-  border: 3px solid white;
-  box-shadow: 0 0 8px rgba(0,0,0,0.1);
-}
-/*Principal info section*/
-#who{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  margin: 10px;
-  left: 0;
-}
-#loc1{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  margin: 10px;
-  float: right;
 }

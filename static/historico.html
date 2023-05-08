@@ -8,6 +8,8 @@
     <title>WEBSERVER</title>
     <link rel="stylesheet" href="./Styles/Main.css">
     <link rel="stylesheet" href="./Styles/Footer.css">
+    <link rel="stylesheet" href="./Styles/Tables.css">
+    <link rel="stylesheet" href="./Styles/Calendar.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
     integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
     crossorigin=""/>
@@ -52,7 +54,6 @@
           <button id="cons_button" type="button" onclick="consultar()">CONSULT</button>
           <button id="clear_button" type="button" onclick="limpiar()">CLEAR</button>
         </div>
-
         <div class="table-historico">
           <div class="table-div">
             <div class="table-div-header">ESTIMACIÓN TOTAL KgCO2/año</div>
@@ -60,9 +61,7 @@
           </div>
           <button id="clear_button" type="button" onclick="window.location.href='historico1.html'">HISTORICOS POR LUGAR</button>
           <canvas id="grafico" width="300" height="250"></canvas>
-          <script src="chart.js"></script>
         </div>
- 
       </div>
       <!-- Map object -->
       <div id="m">      
@@ -70,13 +69,14 @@
         integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
         crossorigin=""></script>
         <div id="map"></div>
-        <!--Calls all the .JS-->
-        <script src="map1.js"></script>
       </div>
-      <script src="udp1.js"></script>
-      <script src="consult.js"></script>
-      <script src="consult.js"></script>
-      <script src="limpiar.js"></script> 
+      <!--Calls all the .JS-->
+      <script src="./JS/map1.js"></script>
+      <script src="./JS/chart.js"></script>
+      <script src="./JS/udp1.js"></script>
+      <script src="./JS/consult.js"></script>
+      <script src="./JS/consult.js"></script>
+      <script src="./JS/limpiar.js"></script> 
     </main>
     <div class="footer">
       <footer>
