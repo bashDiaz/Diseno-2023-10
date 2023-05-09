@@ -30,7 +30,7 @@
     </header>
     <main>
     <!--Create the table-->
-      <div class="table">
+      <div class="Lateral-Bar">
         <div class="table-div">  
           <div class="table-div-header">LATITUD</div>
           <span id="latitud1"> Waiting for new data...</span>
@@ -39,7 +39,6 @@
           <div class="table-div-header">LONGITUD</div>
           <span id="longitud1"> Waiting for new data...</span>
         </div>
-        <script src="udp.js"></script>
         <div id="Cal">
           <div class="start-dates-div">
             <label for="fecha_inicio">BEGINNING DATE:</label>
@@ -54,7 +53,6 @@
             <input type="time" id="hora_final" name="hora_final">
           </div>
         </div>
-            
           <script src="Dom_elements.js"></script>
           <button id="cons_button" type="button" onclick="consultar()">CONSULT</button>
           <button id="clear_button" type="button" onclick="limpiar()">CLEAR</button>
@@ -62,17 +60,10 @@
           <div class="table-historico">
             <div class="table-div">
               <div class="table-div-header">ESTIMACIÓN TOTAL</div>
-              <span id="data1"> Waiting for new data...</span>
+              <span id="data1"> Esperando datos...</span>
             </div>
           </div>
-          <!-- Scripts -->
-          <script src="chart.js"></script>
-          <script src="consult.js"></script>
-          <script src="limpiar.js"></script>
         </div>
-        
-
-        <script src="udp1.js"></script>
           <!--Create the slider to select circle range-->
           <h3>Area's size selector</h3>
           <div class="range">
@@ -99,8 +90,14 @@
         <!--Create the map-->
         <div id="map"></div>
       </div>
-      <script src="slider.js"></script>
-      <script src="map1.js"></script>
+      <!-- Scripts -->
+      <script src="./JS/chart.js"></script>
+      <script src="./JS/consult.js"></script>
+      <script src="./JS/limpiar.js"></script>
+      <script src="./JS/udp1.js"></script>
+      <script src="./JS/udp.js"></script>
+      <script src="./JS/slider.js"></script>
+      <script src="./JS/map1.js"></script>
     </main>
     <footer>
       <div class="footer">

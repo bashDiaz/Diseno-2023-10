@@ -111,25 +111,6 @@ footer{
       display: column;
       place-items: center;
       align-items: center;
-    };
-    #map{
-      position: absolute;
-      width: 10px;
-      height: 10px;
-    }
-    .table{
-      display: flex;
-    }
-    .table-div-header{
-      font-size: small;
-    }
-    .table-div{
-      font-size: small;
-    }
-    .table-div span{
-      font-size: small;
-      overflow: hidden;
-      text-overflow: ellipsis;
     }
   }
   
