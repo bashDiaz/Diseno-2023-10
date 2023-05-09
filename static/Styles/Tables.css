@@ -60,9 +60,6 @@
 .vehicle-select select {
   width: 100px;
 }
-.Lateral-Bar{
-  width: 30%;
-}
 
 @media screen and (max-width: 700px){
   .table{
@@ -125,5 +122,4 @@
   .vehicle-select select {
     width: 100%;
   }
-
 }
