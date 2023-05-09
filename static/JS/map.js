@@ -5,25 +5,51 @@ let vector = [];
 let mymap = L.map('map').setView([data1, data2], 12);
 polyline = L.polyline(vector, {color: 'red'}).addTo(mymap);
 polyline1 = L.polyline([], {color: 'green'}).addTo(mymap);
+polyline2 = L.polyline([], {color: 'blue'}).addTo(mymap);
 // Add a tile layer to the map using OpenStreetMap's tile server
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
   maxZoom: 18,
 }).addTo(mymap);
+let id;
+let app1Positions = [];
+let app2Positions = [];
+// Define el icono amarillo
+let yellowIcon = L.icon({
+    iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-yellow.png',
+    shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowSize: [41, 41]
+});
+let marker1 = L.marker([data1, data2]).addTo(mymap);
+let marker2 = L.marker([data1, data2], {icon: yellowIcon}).addTo(mymap);
 
 // Create a marker
-var marker = L.marker([data1, data2]).addTo(mymap);
 
 function updateMarkerAndPolyline(rows) {
-  const latestData = rows[rows.length - 1]; // obtiene la última posición
-  const latlng = L.latLng(latestData[0], latestData[1]); // crea un objeto LatLng con la posición
-  marker.setLatLng(latlng); // actualiza la posición del marcador
-  vector.push(latlng); // agrega la posición al arreglo de puntos
-  polyline1.setLatLngs(vector); // actualiza la polilínea con los nuevos puntos
-  
-  // centra el mapa en las nuevas coordenadas sin ajustar el zoom automáticamente
-  mymap.setView(latlng, mymap.getZoom());
+  if (id==1){
+    const latestData = rows[rows.length - 1]; // obtiene la última posición
+    const latlng = L.latLng(latestData[0], latestData[1]); // crea un objeto LatLng con la posición
+    marker1.setLatLng(latlng); // actualiza la posición del marcador
+    app1Positions.push(latlng); // agrega la posición al arreglo de puntos de la app 1
+    polyline1.setLatLngs(app1Positions); // actualiza la polilínea con los nuevos puntos
+    mymap.setView(latlng, mymap.getZoom()); // ajusta el zoom para que se vea toda la polilínea
+  } else if (id == 2) {
+    const latestData = rows[rows.length - 1]; // obtiene la última posición
+    const latlng = L.latLng(latestData[0], latestData[1]); // crea un objeto LatLng con la posición
+    marker2.setLatLng(latlng); // actualiza la posición del marcador
+    app2Positions.push(latlng); // agrega la posición al arreglo de puntos de la app 2
+    polyline2.setLatLngs(app2Positions); // actualiza la polilínea con los nuevos puntos
+    mymap.setView(latlng, mymap.getZoom()); // ajusta el zoom para que se vea toda la polilínea
+  }
 }
+
+  
+  
+  
+
 
 // Hace una petición a la API cada 10 segundos
 setInterval(() => {
@@ -34,6 +60,15 @@ setInterval(() => {
       updateMarkerAndPolyline(data.rows);
     });
 }, 10000);
+
+setInterval(()=> {
+  fetch('/id')
+  .then(response => response.json())
+  .then(data => {
+    console.log(data);
+    id = data.id;
+  });
+}, 6000);
 
 
 function updatePolyline(rows) {

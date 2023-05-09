@@ -5,7 +5,9 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <meta charset="UTF-8">
     <title>WEBSERVER</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="./Styles/Main.css">
+    <link rel="stylesheet" href="./Styles/Footer.css">
+    <link rel="stylesheet" href="./Styles/Tables.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
     integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
     crossorigin=""/>
@@ -14,7 +16,7 @@
   <body>
     <header>
       <div class="logo">
-        <img src="Logo.png" alt="Logo de la empresa">
+        <img src="./img/Logo.png" alt="Logo de la empresa">
         <h2 class="name"> SSJMAP Location Service</h2>
       </div>
       <nav>
@@ -47,21 +49,18 @@
           <span id="data5">Waiting for new data...</span>
         </div>
         <canvas id="grafico" width="200" height="250"></canvas>
-        <script src="chart1.js"></script>
-        <script src="udp.js"></script>
       </div>
-        <!--Create the calendar-->
-        <div id="m">      
-          <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
-          integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
-          crossorigin=""></script>
-          <!--Create the slider to select circle range-->
-          <!--Create the map-->
-          <div id="map"></div>
-          <!--Calls all the .JS-->
-          <script src="map.js"></script>
-        </div>
+      <div id="m">      
+        <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
+        integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
+        crossorigin=""></script>
+        <!--Create the map-->
+        <div id="map"></div>
       </div>
+      <!--Calls all the .JS-->
+      <script src="./JS/map.js"></script>
+      <script src="./JS/chart1.js"></script>
+      <script src="./JS/udp.js"></script>
     </main>
     <footer>
       <div class="footer">
@@ -115,10 +114,10 @@
             <div class='sb_footer-links_div'>
               <h4>Coming soon on</h4>
               <div class='socialmedia'>
-                <p><img src='fb.png' alt=''></p>
-                <p><img src='twitter.png' alt=''></p>
-                <p><img src='ig.png' alt=''></p>
-                <p><img src='linkedin.png' alt=''></p>
+                <p><img src='./img/fb.png' alt=''></p>
+                <p><img src='./img/twitter.png' alt=''></p>
+                <p><img src='./img/ig.png' alt=''></p>
+                <p><img src='./img/linkedin.png' alt=''></p>
               </div>
             </div>
           </div>
@@ -135,7 +134,7 @@
             </div>
           </div>
         </div>
-      </div>      
+      </div>       
     </footer>
   </body>
 </html>

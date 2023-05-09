@@ -9,7 +9,7 @@ let i=1
 app.use(bodyParser.json());
 
 // Variable data empty is inserted
-let data1, data2, data3, data4;
+let data1, data2, data3, data4, data5;
 
 // Other files that are complement of index are located in static
 app.use(express.static(__dirname + "/static"));
@@ -50,11 +50,12 @@ connection.connect((error) => {
   data2 = parseFloat(data[1]);
   data3 = data[2];
   data4 = data[3];
-  console.log(`Data received: ${data1}, ${data2}, ${data3}, ${data4}`);
+  data5 = data[4]
+  console.log(`Data received: ${data1}, ${data2}, ${data3}, ${data4}, ${data5} `);
 
   // insert data to database
-  const sql = "INSERT INTO datos_gps (Latitud, Longitud, Fecha, Hora) VALUES (?, ?, ?, ?)";
-  const values = [data1, data2, data3, data4];
+  const sql = "INSERT INTO datos_gps (Latitud, Longitud, Fecha, Hora, iden) VALUES (?, ?, ?, ?, ?)";
+  const values = [data1, data2, data3, data4, data5];
   connection.query(sql, values, (error, results, fields) => {
     if (error) {
       console.log("Error inserting data into MySQL database: " + error);
@@ -75,6 +76,25 @@ app.get('/last', (req, res) => {
 
       res.json({
         rows: values
+      });
+    }
+  });
+});
+app.get('/id', (req, res) => {
+  const query = 'SELECT iden FROM datos_gps ORDER BY id DESC LIMIT 1';
+
+  connection.query(query, (error, rows) => {
+    if (error) {
+      console.error('Error al hacer el query: ', error);
+      res.status(500).send('Error al hacer el query');
+    } else {
+      console.log("HOLA");
+      const value = parseFloat(rows[0].iden);
+      if (value == 1){
+        console.log("ENTRE A 1");
+      }
+      res.json({
+        id: value
       });
     }
   });
@@ -139,11 +159,11 @@ app.get("/consultar", (req, res) => {
   const fecha_final = req.query.fecha_final;
   const hora_inicio = req.query.hora_inicio;
   const hora_final = req.query.hora_final;
+  const vehiculo = req.query.vehicle;
   const vector = [fecha_inicio, fecha_final, hora_inicio, hora_final];
 
   // Crear la consulta SQL con los parámetros de fecha y hora
-  const query = `SELECT Latitud, Longitud FROM datos_gps WHERE Fecha BETWEEN '${fecha_inicio}' AND '${fecha_final}' AND ((Fecha = '${fecha_inicio}' AND Hora >= '${hora_inicio}') OR (Fecha > '${fecha_inicio}' AND Fecha < '${fecha_final}') OR (Fecha = '${fecha_final}' AND Hora <= '${hora_final}')) 
-  ORDER BY id DESC`;
+  const query = `SELECT Latitud, Longitud FROM datos_gps WHERE Fecha BETWEEN '${fecha_inicio}' AND '${fecha_final}' AND ((Fecha = '${fecha_inicio}' AND Hora >= '${hora_inicio}') OR (Fecha > '${fecha_inicio}' AND Fecha < '${fecha_final}') OR (Fecha = '${fecha_final}' AND Hora <= '${hora_final}')) AND iden = '${vehiculo}'ORDER BY id DESC`;
 
   connection.query(query, (error, rows) => {
     if (error) {
