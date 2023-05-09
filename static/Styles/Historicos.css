@@ -13,7 +13,7 @@
   position: relative;
   left: 8px;
   top: 40px;
-  width: 25%;
+  width: 100%;
   height: 100%;
   padding: 10px;
   display: column;
@@ -38,8 +38,9 @@
   color: black;
 }
 .table-div span{
-  position: absolute;
-  width: 95%;
+  position: relative;
+  margin-top: 100px;
+  width: 100%;
   margin-top: 10px;
   border-radius:5px;
   background-color: #ECECEC;
@@ -59,6 +60,9 @@
 
 .vehicle-select select {
   width: 100px;
+}
+.Lateral-Bar{
+  width: 30%;
 }
 
 @media screen and (max-width: 700px){
@@ -122,4 +126,5 @@
   .vehicle-select select {
     width: 100%;
   }
+
 }
