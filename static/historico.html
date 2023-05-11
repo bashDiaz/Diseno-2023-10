@@ -28,6 +28,16 @@
       </nav>
     </header>
     <main>
+      <script>
+        // Cuando se carga la página
+        document.addEventListener('DOMContentLoaded', function() {
+          // Restablecer los valores de fecha y hora a cero
+          document.getElementById('fecha_inicio').value = '';
+          document.getElementById('fecha_final').value = '';
+          document.getElementById('hora_inicio').value = '';
+          document.getElementById('hora_final').value = '';
+        });
+      </script>
       <div class="Lateral-Bar">
         <!-- Calendar -->
         <div id="Cal">

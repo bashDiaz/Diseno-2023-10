@@ -21,4 +21,13 @@ function consultar() {
     .catch(error => {
       console.error(error);
     });
+    localStorage.setItem('fecha_inicio', fecha_inicio);
+    localStorage.setItem('fecha_final', fecha_final);
+    localStorage.setItem('hora_inicio', hora_inicio);
+    localStorage.setItem('hora_final', hora_final);
+    localStorage.setItem('consulta', consulta);
+    localStorage.setItem('estimacion', estimacion);
+  
+    // Eliminar la información de la polilínea
+    localStorage.removeItem('polilinea');
 }

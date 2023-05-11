@@ -64,6 +64,7 @@ connection.connect((error) => {
     }
   });
 i=i+1
+res.redirect('/linea');
 app.get('/last', (req, res) => {
   const query = 'SELECT Latitud, Longitud FROM datos_gps ORDER BY id DESC LIMIT 1';
 
@@ -88,10 +89,10 @@ app.get('/id', (req, res) => {
       console.error('Error al hacer el query: ', error);
       res.status(500).send('Error al hacer el query');
     } else {
-      console.log("HOLA");
+    
       const value = parseFloat(rows[0].iden);
       if (value == 1){
-        console.log("ENTRE A 1");
+        
       }
       res.json({
         id: value
@@ -129,7 +130,7 @@ app.get('/huella', (req, res) => {
       const distance = R * c;
 
       const huella = (distance / consumo) * emisiones;
-
+      
       res.json({
         huella: huella
       });
@@ -152,6 +153,8 @@ app.get("/huella_total", (req, res) => {
   }
 });
 
+ // Variable global para almacenar los valores de la consulta
+
 app.get("/consultar", (req, res) => {
   const consumo = 16; // km/litro
   const emisiones = 0.144; // Kg CO2/Litro
@@ -162,8 +165,11 @@ app.get("/consultar", (req, res) => {
   const vehiculo = req.query.vehicle;
   const vector = [fecha_inicio, fecha_final, hora_inicio, hora_final];
 
+  // Reiniciar los valores de la consulta al iniciar una nueva consulta
+  values = [];
+
   // Crear la consulta SQL con los parámetros de fecha y hora
-  const query = `SELECT Latitud, Longitud FROM datos_gps WHERE Fecha BETWEEN '${fecha_inicio}' AND '${fecha_final}' AND ((Fecha = '${fecha_inicio}' AND Hora >= '${hora_inicio}') OR (Fecha > '${fecha_inicio}' AND Fecha < '${fecha_final}') OR (Fecha = '${fecha_final}' AND Hora <= '${hora_final}')) AND iden = '${vehiculo}'ORDER BY id DESC`;
+  const query = `SELECT Latitud, Longitud FROM datos_gps WHERE Fecha BETWEEN '${fecha_inicio}' AND '${fecha_final}' AND ((Fecha = '${fecha_inicio}' AND Hora >= '${hora_inicio}') OR (Fecha > '${fecha_inicio}' AND Fecha < '${fecha_final}') OR (Fecha = '${fecha_final}' AND Hora <= '${hora_final}')) AND iden = '${vehiculo}' ORDER BY id DESC`;
 
   connection.query(query, (error, rows) => {
     if (error) {
@@ -184,15 +190,15 @@ app.get("/consultar", (req, res) => {
         }
         puntoAnterior = puntoActual;
       }
-      
+
       values = rows.map(obj => [
         parseFloat(obj.Latitud),
         parseFloat(obj.Longitud)
-      ]); // actualizar los valores más recientes
-      
+      ]); // Actualizar los valores de la consulta
+
       fecha_hora_recientes = [fecha_inicio, fecha_final, hora_inicio, hora_final];
       console.log(vector);
-      
+
       res.json({
         rows: values
       });
@@ -223,6 +229,7 @@ function toRadians(degrees) {
 
 
 app.post('/p4', (req, res) => {
+  
   const consumo = 16; // km/litro
   const emisiones = 0.144; // Kg CO2/Litro
   console.log("Fecha final ", fecha_hora_recientes[0]);
@@ -279,6 +286,7 @@ app.post('/p4', (req, res) => {
       }
       console.log(results);
       res.send(results);
+      
     }   
   });
 });
@@ -322,3 +330,11 @@ app.get('/data', (req, res) => {
   }
 });
 
+app.get('/reset-values', (req, res) => {
+  // Restablece los valores a sus estados iniciales
+  values = [];
+  huellaTotal = 0;
+
+  // Envía una respuesta JSON indicando que los valores se han restablecido correctamente
+  res.json({ success: true });
+});
