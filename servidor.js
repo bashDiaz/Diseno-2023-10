@@ -9,9 +9,14 @@ const session = require('express-session');
 let i=1
 app.use(bodyParser.json());
 app.use(session({
-  secret: 'secreto', // Cambia esto por una cadena aleatoria y segura
+  secret: 'secreto', // Cambia esto por una cadena de caracteres secreta y segura
   resave: false,
-  saveUninitialized: true
+  saveUninitialized: true,
+  cookie: {
+    secure: false, // Establece esto en false para utilizar HTTP en lugar de HTTPS
+    httpOnly: true,
+    maxAge: 24 * 60 * 60 * 1000 // Tiempo de vida de la cookie en milisegundos
+  }
 }));
 // Variable data empty is inserted
 let data1, data2, data3, data4, data5;
