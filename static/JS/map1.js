@@ -19,9 +19,7 @@ fetch('/reset-values')
     console.error('Error en la solicitud al restablecer los valores:', error);
   });
 
-// Código restante...
 
-// Agrega un evento de escucha al evento "load" para restablecer los valores
 window.addEventListener('load', resetValues);
 // Create a map object and set its view to a specific latitude, longitude, and zoom level
 const data1=11.02713824366;
@@ -59,7 +57,7 @@ setInterval(() => {
       updatePolyline(data.rows);
       //updateMarker(data.rows);
 });
-}, 2000);
+}, 5000);
 const zoomc = document.getElementById("sli");
 const actzoom= mymap.getZoom();
 const circle = L.circle([data1, data2], {

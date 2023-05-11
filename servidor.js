@@ -168,15 +168,10 @@ app.get('/linea', (req, res) => {
   const sessionId = req.sessionID;
   const sessionData = sessions[sessionId];
   console.log(sessionId);
-  if (sessions[sessionId]){
     res.json({
       rows: sessionData.data
     });
-  } else {
-    res.status(404).json({
-      error: 'No se encontraron datos de consulta para el cliente'
-    });
-  }
+   
 });
 
 
