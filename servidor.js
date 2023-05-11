@@ -5,9 +5,14 @@ const app = express();
 const server = dgram.createSocket('udp4');
 const mysql = require('mysql');
 const bodyParser = require('body-parser');
+const session = require('express-session');
 let i=1
 app.use(bodyParser.json());
-
+app.use(session({
+  secret: 'secreto', // Cambia esto por una cadena aleatoria y segura
+  resave: false,
+  saveUninitialized: true
+}));
 // Variable data empty is inserted
 let data1, data2, data3, data4, data5;
 
@@ -152,9 +157,11 @@ app.get("/huella_total", (req, res) => {
   }
 });
 
- // Variable global para almacenar los valores de la consulta
+const sessions = {};
 
 app.get("/consultar", (req, res) => {
+  const sessionId = req.sessionID;
+  console.log(sessionId);
   const consumo = 16; // km/litro
   const emisiones = 0.144; // Kg CO2/Litro
   const fecha_inicio = req.query.fecha_inicio;
@@ -163,9 +170,15 @@ app.get("/consultar", (req, res) => {
   const hora_final = req.query.hora_final;
   const vehiculo = req.query.vehicle;
   const vector = [fecha_inicio, fecha_final, hora_inicio, hora_final];
-
+  if (!sessions[sessionId]) {
+    // Crea una nueva sesión para el cliente
+    sessions[sessionId] = {
+      data: [],
+      huellaTotal: null
+    };
+  }
   // Reiniciar los valores de la consulta al iniciar una nueva consulta
-  values = [];
+  sessions[sessionId].data = [];
 
   // Crear la consulta SQL con los parámetros de fecha y hora
   const query = `SELECT Latitud, Longitud FROM datos_gps WHERE Fecha BETWEEN '${fecha_inicio}' AND '${fecha_final}' AND ((Fecha = '${fecha_inicio}' AND Hora >= '${hora_inicio}') OR (Fecha > '${fecha_inicio}' AND Fecha < '${fecha_final}') OR (Fecha = '${fecha_final}' AND Hora <= '${hora_final}')) AND iden = '${vehiculo}' ORDER BY id DESC`;
@@ -190,10 +203,12 @@ app.get("/consultar", (req, res) => {
         puntoAnterior = puntoActual;
       }
 
-      values = rows.map(obj => [
+      sessions[sessionId].data = rows.map(obj => [
         parseFloat(obj.Latitud),
         parseFloat(obj.Longitud)
-      ]); // Actualizar los valores de la consulta
+      ]); // Actualizar los valores de la consulta en la sesión
+
+      values = sessions[sessionId].data; // Actualizar los valores de la consulta en la variable global
 
       fecha_hora_recientes = [fecha_inicio, fecha_final, hora_inicio, hora_final];
       console.log(vector);
@@ -205,6 +220,16 @@ app.get("/consultar", (req, res) => {
   });
 });
 
+let values = []; // variable global para almacenar los valores de la consulta más reciente
+
+
+// ruta para obtener los valores de la consulta más reciente
+app.get('/linea', (req, res) => {
+  console.log(values);
+  res.json({
+    rows: values
+  });
+});
 
 
 
@@ -292,16 +317,7 @@ app.post('/p4', (req, res) => {
 
 
 
-let values = []; // variable global para almacenar los valores de la consulta más reciente
 
-
-// ruta para obtener los valores de la consulta más reciente
-app.get('/linea', (req, res) => {
-  console.log(values);
-  res.json({
-    rows: values
-  });
-});
 // The changes are inserted in index
 app.get('/', (req, res) => {
   res.sendFile(__dirname + '/index.html');

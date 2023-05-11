@@ -10,23 +10,28 @@ function consultar() {
   }
   
   const url = `/consultar?fecha_inicio=${fecha_inicio}&fecha_final=${fecha_final}&hora_inicio=${hora_inicio}&hora_final=${hora_final}&vehicle=${vehicle}`;
-  fetch(url)
-    .then(response => response.json())
-    .then(data => {
-      console.log(data);
-      if (data.rows.length === 0) {
-        alert("No se ha encontrado nada");
-      }
-    })
-    .catch(error => {
-      console.error(error);
-    });
+  const sessionId = localStorage.getItem('session-id');
+  fetch(url, {
+  headers: {
+   'session-id': sessionId // Incluye el identificador de sesión en el encabezado
+  }
+})
+  .then(response => response.json())
+  .then(data => {
+    console.log(data);
+    if (data.rows.length === 0) {
+      alert("No se ha encontrado nada");
+    }
+  })
+  .catch(error => {
+    console.error(error);
+  });
+
     localStorage.setItem('fecha_inicio', fecha_inicio);
     localStorage.setItem('fecha_final', fecha_final);
     localStorage.setItem('hora_inicio', hora_inicio);
     localStorage.setItem('hora_final', hora_final);
-    localStorage.setItem('consulta', consulta);
-    localStorage.setItem('estimacion', estimacion);
+    localStorage.setItem('hora_final', hora_final);
   
     // Eliminar la información de la polilínea
     localStorage.removeItem('polilinea');
