@@ -64,7 +64,6 @@ connection.connect((error) => {
     }
   });
 i=i+1
-res.redirect('/linea');
 app.get('/last', (req, res) => {
   const query = 'SELECT Latitud, Longitud FROM datos_gps ORDER BY id DESC LIMIT 1';
 
