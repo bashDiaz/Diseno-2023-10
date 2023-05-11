@@ -221,7 +221,7 @@ app.get("/consultar", (req, res) => {
 app.get('/linea', (req, res) => {
   const sessionId = req.sessionID;
   const sessionData = sessions[sessionId];
-  if (sessionData && sessionData.data) {
+  if (sessions[sessionId]){
     res.json({
       rows: sessionData.data
     });
