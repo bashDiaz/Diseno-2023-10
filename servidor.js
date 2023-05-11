@@ -206,30 +206,34 @@ app.get("/consultar", (req, res) => {
       sessions[sessionId].data = rows.map(obj => [
         parseFloat(obj.Latitud),
         parseFloat(obj.Longitud)
-      ]); // Actualizar los valores de la consulta en la sesión
-
-      values = sessions[sessionId].data; // Actualizar los valores de la consulta en la variable global
+      ]); // Actualizar los valores de la consulta en la sesión del cliente
 
       fecha_hora_recientes = [fecha_inicio, fecha_final, hora_inicio, hora_final];
       console.log(vector);
 
       res.json({
-        rows: values
+        rows: sessions[sessionId].data
       });
     }
   });
 });
 
-let values = []; // variable global para almacenar los valores de la consulta más reciente
-
-
-// ruta para obtener los valores de la consulta más reciente
 app.get('/linea', (req, res) => {
-  console.log(values);
-  res.json({
-    rows: values
-  });
+  const sessionId = req.sessionID;
+  const sessionData = sessions[sessionId];
+  if (sessionData && sessionData.data) {
+    res.json({
+      rows: sessionData.data
+    });
+  } else {
+    res.status(404).json({
+      error: 'No se encontraron datos de consulta para el cliente'
+    });
+  }
 });
+
+
+
 
 
 
