@@ -11,26 +11,7 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   maxZoom: 18,
 }).addTo(mymap);
 
-// Create a marker
-var marker = L.marker([data1, data2]).addTo(mymap);
 
-function updateMarkerAndPolyline(rows) {
-  const latestData = rows[rows.length - 1]; // obtiene la última posición
-  const latlng = L.latLng(latestData[0], latestData[1]); // crea un objeto LatLng con la posición
-  marker.setLatLng(latlng); // actualiza la posición del marcador
-  vector.push(latlng); // agrega la posición al arreglo de puntos
-  polyline1.setLatLngs(vector); // actualiza la polilínea con los nuevos puntos
-}
-
-// Hace una petición a la API cada 10 segundos
-setInterval(() => {
-  fetch('/last')
-    .then(response => response.json())
-    .then(data => {
-      console.log(data);
-      updateMarkerAndPolyline(data.rows);
-    });
-}, 10000);
 
 
 function updatePolyline(rows) {
