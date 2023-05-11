@@ -18,57 +18,6 @@ let data1, data2, data3, data4, data5;
 
 // Other files that are complement of index are located in static
 app.use(express.static(__dirname + "/static"));
-
-// The server is listening and sending information to console
-server.on('listening', () => {
-  const address = server.address();
-  console.log(`UDP server listening on ${address.address}:${address.port}`);
-});
-
-// A specific port is assigned
-server.bind(1234);
-
-app.listen(80, () => {
-  console.log('HTTP server listening on port 80');
-});
-
-// A connection with mysql is created, with credentials
-const connection = mysql.createConnection({
-  host: 'mysql1.czemchtiopw1.us-east-1.rds.amazonaws.com',
-  user: 'admin',
-  password: 'prueba123',
-  database: 'mysql1'
-});
-
-connection.connect((error) => {
-  if (error) {
-    console.error('Error connecting to MySQL database: ' + error.stack);
-    return;
-  }
-  console.log('Connected to MySQL database with id ' + connection.threadId);
-});
-
-// The server is on and it receive messages that are separated into splits.
-  server.on('message', (msg) => {
-  const data = msg.toString('utf-8').split(';');
-  data1 = parseFloat(data[0]);
-  data2 = parseFloat(data[1]);
-  data3 = data[2];
-  data4 = data[3];
-  data5 = data[4]
-  console.log(`Data received: ${data1}, ${data2}, ${data3}, ${data4}, ${data5} `);
-
-  // insert data to database
-  const sql = "INSERT INTO datos_gps (Latitud, Longitud, Fecha, Hora, iden) VALUES (?, ?, ?, ?, ?)";
-  const values = [data1, data2, data3, data4, data5];
-  connection.query(sql, values, (error, results, fields) => {
-    if (error) {
-      console.log("Error inserting data into MySQL database: " + error);
-    } else {
-      console.log("Data inserted successfully!");
-    }
-  });
-i=i+1
 app.get('/last', (req, res) => {
   const query = 'SELECT Latitud, Longitud FROM datos_gps ORDER BY id DESC LIMIT 1';
 
@@ -103,9 +52,6 @@ app.get('/id', (req, res) => {
       });
     }
   });
-});
-
-
 });
 let fecha_hora_recientes = [];
 app.get('/huella', (req, res) => {
@@ -357,4 +303,57 @@ app.get('/reset-values', (req, res) => {
 
   // Envía una respuesta JSON indicando que los valores se han restablecido correctamente
   res.json({ success: true });
+});
+
+// The server is listening and sending information to console
+server.on('listening', () => {
+  const address = server.address();
+  console.log(`UDP server listening on ${address.address}:${address.port}`);
+});
+
+// A specific port is assigned
+server.bind(1234);
+
+app.listen(80, () => {
+  console.log('HTTP server listening on port 80');
+});
+
+// A connection with mysql is created, with credentials
+const connection = mysql.createConnection({
+  host: 'mysql1.czemchtiopw1.us-east-1.rds.amazonaws.com',
+  user: 'admin',
+  password: 'prueba123',
+  database: 'mysql1'
+});
+
+connection.connect((error) => {
+  if (error) {
+    console.error('Error connecting to MySQL database: ' + error.stack);
+    return;
+  }
+  console.log('Connected to MySQL database with id ' + connection.threadId);
+});
+
+// The server is on and it receive messages that are separated into splits.
+  server.on('message', (msg) => {
+  const data = msg.toString('utf-8').split(';');
+  data1 = parseFloat(data[0]);
+  data2 = parseFloat(data[1]);
+  data3 = data[2];
+  data4 = data[3];
+  data5 = data[4]
+  console.log(`Data received: ${data1}, ${data2}, ${data3}, ${data4}, ${data5} `);
+
+  // insert data to database
+  const sql = "INSERT INTO datos_gps (Latitud, Longitud, Fecha, Hora, iden) VALUES (?, ?, ?, ?, ?)";
+  const values = [data1, data2, data3, data4, data5];
+  connection.query(sql, values, (error, results, fields) => {
+    if (error) {
+      console.log("Error inserting data into MySQL database: " + error);
+    } else {
+      console.log("Data inserted successfully!");
+    }
+  });
+i=i+1
+
 });
