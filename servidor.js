@@ -161,7 +161,7 @@ const sessions = {};
 
 app.get("/consultar", (req, res) => {
   const sessionId = req.sessionID;
-  console.log(sessionId);
+  
   const consumo = 16; // km/litro
   const emisiones = 0.144; // Kg CO2/Litro
   const fecha_inicio = req.query.fecha_inicio;
@@ -221,6 +221,7 @@ app.get("/consultar", (req, res) => {
 app.get('/linea', (req, res) => {
   const sessionId = req.sessionID;
   const sessionData = sessions[sessionId];
+  console.log(sessionId);
   if (sessions[sessionId]){
     res.json({
       rows: sessionData.data
