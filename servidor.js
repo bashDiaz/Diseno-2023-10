@@ -120,13 +120,13 @@ app.get("/consultar", (req, res) => {
   const hora_final = req.query.hora_final;
   const vehiculo = req.query.vehicle;
   const vector = [fecha_inicio, fecha_final, hora_inicio, hora_final];
-  
+  if (!sessions[sessionId]) {
     // Crea una nueva sesión para el cliente
     sessions[sessionId] = {
       data: [],
       huellaTotal: null
     };
-  
+  }
   // Reiniciar los valores de la consulta al iniciar una nueva consulta
   sessions[sessionId].data = [];
 
@@ -164,6 +164,7 @@ app.get("/consultar", (req, res) => {
       res.json({
         rows: sessions[sessionId].data
       });
+      
     }
   });
 });
@@ -171,7 +172,7 @@ app.get("/consultar", (req, res) => {
 app.get('/linea', (req, res) => {
   const sessionId = req.sessionID;
   const sessionData = sessions[sessionId];
-  
+  console.log(sessionId);
   if (sessions[sessionId]){
     res.json({
       rows: sessionData.data
