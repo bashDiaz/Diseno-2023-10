@@ -164,30 +164,12 @@ app.get("/consultar", (req, res) => {
       res.json({
         rows: sessions[sessionId].data
       });
+      console.log(sessionId);
     }
   });
 });
 
-app.get('/linea', (req, res) => {
-  const sessionId = req.sessionID;
-  const sessionData = sessions[sessionId];
-  if (!sessions[sessionId]) {
-    // Crea una nueva sesión para el cliente
-    sessions[sessionId] = {
-    };
-  }
-  
-  console.log(sessionId);
-  if (sessions[sessionId]){
-    res.json({
-      rows: 1
-    });
-  } else {
-    res.status(404).json({
-      error: 'No se encontraron datos de consulta para el cliente'
-    });
-  }
-});
+
 
 
 
