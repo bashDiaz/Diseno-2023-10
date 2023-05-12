@@ -6,7 +6,6 @@ const server = dgram.createSocket('udp4');
 const mysql = require('mysql');
 const bodyParser = require('body-parser');
 const session = require('express-session');
-let i=1
 app.use(bodyParser.json());
 app.use(session({
   secret: 'secreto',
@@ -16,7 +15,6 @@ app.use(session({
     secure: false,
     httpOnly: true,
     maxAge: 24 * 60 * 60 * 1000,
-    domain: 'grupo1server.hopto.org/historico.html' // Reemplaza esto con tu dominio real, por ejemplo: 'subdominio.midominio.com'
   }
 }));
 // Variable data empty is inserted
@@ -360,6 +358,4 @@ connection.connect((error) => {
       console.log("Data inserted successfully!");
     }
   });
-i=i+1
-
 });
