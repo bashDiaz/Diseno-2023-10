@@ -180,7 +180,7 @@ app.get('/linea', (req, res) => {
   console.log(sessionId);
   if (sessions[sessionId]){
     res.json({
-      rows: sessionData.data
+      rows: 1
     });
   } else {
     res.status(404).json({
