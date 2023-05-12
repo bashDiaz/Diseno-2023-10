@@ -174,8 +174,6 @@ app.get('/linea', (req, res) => {
   if (!sessions[sessionId]) {
     // Crea una nueva sesión para el cliente
     sessions[sessionId] = {
-      data: [],
-      huellaTotal: null
     };
   }
   
