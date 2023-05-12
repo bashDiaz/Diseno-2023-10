@@ -171,6 +171,14 @@ app.get("/consultar", (req, res) => {
 app.get('/linea', (req, res) => {
   const sessionId = req.sessionID;
   const sessionData = sessions[sessionId];
+  if (!sessions[sessionId]) {
+    // Crea una nueva sesión para el cliente
+    sessions[sessionId] = {
+      data: [],
+      huellaTotal: null
+    };
+  }
+  
   console.log(sessionId);
   if (sessions[sessionId]){
     res.json({
