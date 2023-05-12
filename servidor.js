@@ -9,8 +9,8 @@ const session = require('express-session');
 app.use(bodyParser.json());
 app.use(session({
   secret: 'secreto',
-  resave: true,
-  saveUninitialized: false,
+  resave: false,
+  saveUninitialized: true,
   cookie: {
     secure: false,
     httpOnly: true,
@@ -172,7 +172,7 @@ app.get("/consultar", (req, res) => {
 app.get('/linea', (req, res) => {
   const sessionId = req.sessionID;
   const sessionData = sessions[sessionId];
-  console.log(sessionId);
+  console.log(sessionId)
   if (sessions[sessionId]){
     res.json({
       rows: sessionData.data
