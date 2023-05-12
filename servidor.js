@@ -16,7 +16,7 @@ app.use(session({
     secure: false,
     httpOnly: true,
     maxAge: 24 * 60 * 60 * 1000,
-    domain: 'http://grupo1server.hopto.org/historico.html' // Reemplaza esto con tu dominio real, por ejemplo: 'subdominio.midominio.com'
+    domain: 'grupo1server.hopto.org/historico.html' // Reemplaza esto con tu dominio real, por ejemplo: 'subdominio.midominio.com'
   }
 }));
 // Variable data empty is inserted
