@@ -88,7 +88,7 @@ setInterval(()=> {
     console.log(data);
     id = data.id;
   });
-}, 6000);
+}, 10000);
 
 
 function updatePolyline(rows) {
