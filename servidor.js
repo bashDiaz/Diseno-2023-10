@@ -9,13 +9,14 @@ const session = require('express-session');
 let i=1
 app.use(bodyParser.json());
 app.use(session({
-  secret: 'secreto', // Cambia esto por una cadena de caracteres secreta y segura
+  secret: 'secreto',
   resave: false,
   saveUninitialized: true,
   cookie: {
-    secure: false, // Establece esto en false para utilizar HTTP en lugar de HTTPS
+    secure: false,
     httpOnly: true,
-    maxAge: 24 * 60 * 60 * 1000 // Tiempo de vida de la cookie en milisegundos
+    maxAge: 24 * 60 * 60 * 1000,
+    domain: 'http://grupo1server.hopto.org/historico.html' // Reemplaza esto con tu dominio real, por ejemplo: 'subdominio.midominio.com'
   }
 }));
 // Variable data empty is inserted
