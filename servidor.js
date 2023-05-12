@@ -9,7 +9,7 @@ const session = require('express-session');
 app.use(bodyParser.json());
 app.use(session({
   secret: 'secreto',
-  resave: false,
+  resave: true,
   saveUninitialized: true,
   cookie: {
     secure: false,
