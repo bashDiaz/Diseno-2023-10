@@ -10,7 +10,7 @@ app.use(bodyParser.json());
 app.use(session({
   secret: 'secreto',
   resave: false,
-  saveUninitialized: true,
+  saveUninitialized: false,
   cookie: {
     secure: false,
     httpOnly: true,
