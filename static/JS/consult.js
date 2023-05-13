@@ -10,12 +10,8 @@ function consultar() {
   }
   
   const url = `/consultar?fecha_inicio=${fecha_inicio}&fecha_final=${fecha_final}&hora_inicio=${hora_inicio}&hora_final=${hora_final}&vehicle=${vehicle}`;
-  const sessionId = localStorage.getItem('session-id');
-  fetch(url, {
-  headers: {
-   'session-id': sessionId // Incluye el identificador de sesión en el encabezado
-  }
-})
+  
+  fetch(url) 
   .then(response => response.json())
   .then(data => {
     console.log(data);
@@ -26,6 +22,9 @@ function consultar() {
   .catch(error => {
     console.error(error);
   });
+
+
+  
 
     localStorage.setItem('fecha_inicio', fecha_inicio);
     localStorage.setItem('fecha_final', fecha_final);

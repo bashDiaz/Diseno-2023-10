@@ -56,7 +56,23 @@
             <option value="2">Vehiculo 2</option>
           </select>
         </div>
-        <canvas id="grafico" width="200" height="250"></canvas>
+      <script>
+        document.addEventListener("DOMContentLoaded", function() {
+          // Obtener la referencia al elemento select del vehículo
+          var vehicleSelect = document.getElementById("vehicle");
+    
+          // Agregar el evento de cambio al elemento select
+          vehicleSelect.addEventListener("change", function() {
+            var selectedVehicle = vehicleSelect.value; // Obtener el valor seleccionado
+          });
+          fetch('/v1')
+          .then(response => response.json())
+            .then(data => {
+            selectedVehicle = data[0]; 
+            })
+        });
+            </script>
+            <canvas id="grafico" width="200" height="250"></canvas>
       </div>
       <div id="m">      
         <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
