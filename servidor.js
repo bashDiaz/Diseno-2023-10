@@ -6,6 +6,7 @@ const server = dgram.createSocket('udp4');
 const mysql = require('mysql');
 const bodyParser = require('body-parser');
 const session = require('express-session');
+const axios = require('axios');
 app.use(bodyParser.json());
 app.use(session({
   secret: 'secreto',
@@ -359,4 +360,36 @@ connection.connect((error) => {
       console.log("Data inserted successfully!");
     }
   });
+});
+let valoresGuardados = [];
+app.get('/v1', (req, res) => {
+  const vehiculo = req.query.vehiculo; // Obtener el valor del parámetro "vehiculo" de la solicitud
+  
+  console.log(vehiculo);
+
+  // Enviar el valor del vehículo a la otra API en formato JSON
+  axios.post('/carro', { vehiculo }) // Reemplaza "http://localhost:3000" con la URL correcta de la otra API
+    .then(response => {
+      console.log('Respuesta de la otra API:', response.data);
+      res.json({ valor: vehiculo });
+    })
+    .catch(error => {
+      console.error('Error al enviar el valor del vehículo a la otra API:', error);
+      res.status(500).json({ error: 'Error al enviar el valor del vehículo' });
+    });
+});
+let ultimoValor = 0;
+app.post('/carro', (req, res) => {
+  const vehiculo = req.body.vehiculo;
+
+  // Actualizar el último valor recibido
+  ultimoValor = vehiculo;
+
+  // Realiza cualquier operación adicional que necesites con el valor del vehículo
+
+  res.json({ mensaje: 'Solicitud POST recibida correctamente' });
+});
+
+app.get('/ultimoValor', (req, res) => {
+  res.json({ ultimoValor });
 });
