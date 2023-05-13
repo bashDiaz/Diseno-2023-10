@@ -93,7 +93,7 @@ setInterval(() => {
         mymap.addLayer(polyline2); // Agrega la polilínea 2
       }
     })
-}, 2000);
+}, 1000);
 
 
 
