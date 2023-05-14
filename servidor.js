@@ -26,6 +26,19 @@ let data1, data2, data3, data4, data5;
 // Other files that are complement of index are located in static
 app.use(express.static(__dirname + "/static"));
 
+// The server is listening and sending information to console
+server.on('listening', () => {
+  const address = server.address();
+  console.log(`UDP server listening on ${address.address}:${address.port}`);
+});
+
+// A specific port is assigned
+server.bind(1234);
+
+app.listen(80, () => {
+  console.log('HTTP server listening on port 80');
+});
+
 app.get('/id', (req, res) => {
   const query = 'SELECT iden FROM datos_gps ORDER BY id DESC LIMIT 1';
 
@@ -48,7 +61,7 @@ app.get('/id', (req, res) => {
 let fecha_hora_recientes = [];
 app.get('/huella', (req, res) => {
   let huella=0;
-  const query = 'SELECT Latitud, Longitud FROM datos_gps WHERE iden = 1 ORDER BY id DESC LIMIT 2';
+  const query = 'SELECT Latitud, Longitud FROM datos_gps ORDER BY id DESC LIMIT 2';
   const consumo = 16; // km/litro
   const emisiones = 0.144; // Kg CO2/Litro
 
@@ -297,32 +310,6 @@ app.post('/p4', (req, res) => {
 
 
 
-// The changes are inserted in index
-app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/index.html');
-});
-app.get('/index.html', (req, res) => {
-  res.sendFile(__dirname + '/historico.html');
-});
-app.get('/historico.html', (req, res) => {
-  res.sendFile(__dirname + '/historico.html');
-});
-app.get('/historico1.html', (req, res) => {
-  res.sendFile(__dirname + '/historico.html');
-});
-app.get('/treal.html', (req, res) => {
-  res.sendFile(__dirname + '/historico.html');
-});
-
-// This endpoint will return the latest values of data1, data2, data3, and data4 as a JSON object
-app.get('/data', (req, res) => {
-  if (data1 && data2 && data3 && data4) {
-    const myData = [data1, data2, data3, data4];
-    res.json(myData);
-  } else {
-    res.status(500).json({ message: 'Error al obtener los datos' });
-  }
-});
 
 app.get('/reset-values', (req, res) => {
   // Restablece los valores a sus estados iniciales
@@ -333,18 +320,7 @@ app.get('/reset-values', (req, res) => {
   res.json({ success: true });
 });
 
-// The server is listening and sending information to console
-server.on('listening', () => {
-  const address = server.address();
-  console.log(`UDP server listening on ${address.address}:${address.port}`);
-});
 
-// A specific port is assigned
-server.bind(1234);
-
-app.listen(80, () => {
-  console.log('HTTP server listening on port 80');
-});
 
 // A connection with mysql is created, with credentials
 const connection = mysql.createConnection({
@@ -400,6 +376,8 @@ connection.connect((error) => {
   });
 });
 
+
+
 app.get('/v1', (req, res) => {
   const vehiculo = req.query.vehiculo; // Obtener el valor del parámetro "vehiculo" de la solicitud
 
@@ -444,5 +422,32 @@ app.post('/ultimoValor', (req, res) => {
     res.json({ ultimoValor: ultimoValorCookie });
   } else {
     res.json({ ultimoValor });
+  }
+});
+
+// The changes are inserted in index
+app.get('/', (req, res) => {
+  res.sendFile(__dirname + '/index.html');
+});
+app.get('/index.html', (req, res) => {
+  res.sendFile(__dirname + '/historico.html');
+});
+app.get('/historico.html', (req, res) => {
+  res.sendFile(__dirname + '/historico.html');
+});
+app.get('/historico1.html', (req, res) => {
+  res.sendFile(__dirname + '/historico.html');
+});
+app.get('/treal.html', (req, res) => {
+  res.sendFile(__dirname + '/historico.html');
+});
+
+// This endpoint will return the latest values of data1, data2, data3, and data4 as a JSON object
+app.get('/data', (req, res) => {
+  if (data1 && data2 && data3 && data4) {
+    const myData = [data1, data2, data3, data4];
+    res.json(myData);
+  } else {
+    res.status(500).json({ message: 'Error al obtener los datos' });
   }
 });
