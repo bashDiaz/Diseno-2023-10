@@ -10,16 +10,7 @@ const cookieParser = require('cookie-parser');
 const axios = require('axios');
 app.use(bodyParser.json());
 app.use(cookieParser());
-app.use(session({
-  secret: 'secreto',
-  resave: false,
-  saveUninitialized: true,
-  cookie: {
-    secure: false,
-    httpOnly: true,
-    maxAge: 24 * 60 * 60 * 1000,
-  }
-}));
+
 // Variable data empty is inserted
 let data1, data2, data3, data4, data5;
 
@@ -61,7 +52,7 @@ app.get('/id', (req, res) => {
 let fecha_hora_recientes = [];
 app.get('/huella', (req, res) => {
   let huella=0;
-  const query = 'SELECT Latitud, Longitud FROM datos_gps ORDER BY id DESC LIMIT 2';
+  const query = 'SELECT Latitud, Longitud FROM datos_gps WHERE iden = 1 ORDER BY id DESC LIMIT 2';
   const consumo = 16; // km/litro
   const emisiones = 0.144; // Kg CO2/Litro
 
@@ -306,6 +297,9 @@ app.post('/p4', (req, res) => {
     }   
   });
 });
+
+
+
 
 
 
