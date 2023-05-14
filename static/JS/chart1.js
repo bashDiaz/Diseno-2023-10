@@ -15,14 +15,7 @@ let myChart = new Chart(ctx, {
       backgroundColor: 'rgba(54, 162, 235, 0.2)',
       borderColor: 'rgba(54, 162, 235, 1)',
       borderWidth: 1
-    },{
-      label: 'Huella Total estimada Vehiculo 2',
-      data: [0],
-      backgroundColor: 'rgba(46, 204, 113, 0.2)', // Establecer el color verde
-      borderColor: 'rgba(46, 204, 113, 1)', // Establecer el color verde
-      borderWidth: 1
-
-    } 
+    }
   ]
   },
   options: {
