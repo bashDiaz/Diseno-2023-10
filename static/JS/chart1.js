@@ -11,7 +11,7 @@ let myChart = new Chart(ctx, {
       borderWidth: 1
     },{
       label: 'Producción cada 10 segundos de 8 Seres humanos (KG/CO2)',
-      data: [0],
+      data: [0.4],
       backgroundColor: 'rgba(54, 162, 235, 0.2)',
       borderColor: 'rgba(54, 162, 235, 1)',
       borderWidth: 1
@@ -30,18 +30,12 @@ let myChart = new Chart(ctx, {
 });
 
 let totalhuella = 0;
-let seresHumanos = 0;
-let totalhuella1 = 0;
 setInterval(() => {
   fetch('/huella')
     .then(response => response.json())
     .then(data => {
       totalhuella += data.huella;
       myChart.data.datasets[0].data[0] = totalhuella; // actualizamos los datos del primer dataset
-
-      seresHumanos += 0.001; // Incrementamos la producción de 8 seres humanos cada 10 segundos
-      myChart.data.datasets[1].data[0] = seresHumanos; // actualizamos los datos del segundo dataset
-
       myChart.update(); // actualizamos el gráfico
     })
     .catch(error => {
