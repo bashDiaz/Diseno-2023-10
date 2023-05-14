@@ -15,6 +15,13 @@ let myChart = new Chart(ctx, {
       backgroundColor: 'rgba(54, 162, 235, 0.2)',
       borderColor: 'rgba(54, 162, 235, 1)',
       borderWidth: 1
+    },{
+      label: 'Producción estimada de CO2 Vehiculo 2',
+      data: [0],
+      backgroundColor: 'rgba(46, 204, 113, 0.2)', // Establecer el color verde
+      borderColor: 'rgba(46, 204, 113, 1)', // Establecer el color verde
+      borderWidth: 1
+
     }]
   },
   options: {
@@ -28,12 +35,25 @@ let myChart = new Chart(ctx, {
   }
 });
 totalhuella=0;
+totalhuella1=0;
 setInterval(() => {
   fetch('/huella')
     .then(response => response.json())
     .then(data => {
       totalhuella+=data.huella;
       myChart.data.datasets[0].data[0] = totalhuella; // actualizamos los datos del primer dataset
+      myChart.update(); // actualizamos el gráfico
+    })
+    .catch(error => {
+      console.error(error);
+    });
+}, 10000); // realizamos un fetch cada 1000 milisegundos (1 segundo)
+setInterval(() => {
+  fetch('/huella1')
+    .then(response => response.json())
+    .then(data => {
+      totalhuella1+=data.huella;
+      myChart.data.datasets[0].data[0] = totalhuella1; // actualizamos los datos del primer dataset
       myChart.update(); // actualizamos el gráfico
     })
     .catch(error => {
