@@ -29,13 +29,13 @@ function updateData() {
     .then(response => response.json())
     .then(data => {
       if (i==0){
-totalhuella=0;
-}
-else {
-totalhuella+=data.huella;
-}
+  totalhuella=0;
+  }
+  else {
+  totalhuella+=data.huella;
+  }
       data5Span.textContent = totalhuella.toFixed(7);
-i=i+1;
+  i=i+1;
     })
     .catch(error => {
       console.log('Error al obtener los datos:', error);
@@ -45,19 +45,17 @@ i=i+1;
     .then(response => response.json())
     .then(data => {
       if (i==0){
-totalhuella=0;
-}
-else {
-totalhuella1+=data.huella;
-}
+  totalhuella=0;
+  }
+  else {
+  totalhuella1+=data.huella;
+  }
       data6Span.textContent = totalhuella.toFixed(7);
-j=j+1;
+  j=j+1;
     })
     .catch(error => {
       console.log('Error al obtener los datos:', error);
       data6Span.textContent = 'Error';
     });
-
+    setInterval(updateData, 10000);
   };
-
-setInterval(updateData, 10000);
