@@ -71,9 +71,8 @@ function updateMarkerAndPolyline(rows) {
   
 setInterval(() => {
   fetch('/ultimoValor', {
-    method: 'POST',
+    method: 'GET', // Cambia el método a GET
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({})
   })
     .then(response => response.json())
     .then(data => {
@@ -101,6 +100,7 @@ setInterval(() => {
       console.error('Error al realizar la solicitud:', error);
     });
 }, 500);
+
 
 
 

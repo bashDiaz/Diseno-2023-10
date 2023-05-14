@@ -6,8 +6,10 @@ const server = dgram.createSocket('udp4');
 const mysql = require('mysql');
 const bodyParser = require('body-parser');
 const session = require('express-session');
+const cookieParser = require('cookie-parser');
 const axios = require('axios');
 app.use(bodyParser.json());
+app.use(cookieParser());
 app.use(session({
   secret: 'secreto',
   resave: false,
@@ -361,7 +363,7 @@ connection.connect((error) => {
     }
   });
 });
-let valoresGuardados = [];
+
 app.get('/v1', (req, res) => {
   const vehiculo = req.query.vehiculo; // Obtener el valor del parámetro "vehiculo" de la solicitud
 
@@ -372,6 +374,7 @@ app.get('/v1', (req, res) => {
     .post('/carro', { vehiculo }) // Reemplaza "http://localhost:3000" con la URL correcta de la otra API
     .then((response) => {
       console.log('Respuesta de la otra API:', response.data);
+      res.cookie('ultimoValor', vehiculo); // Almacenar el último valor en una cookie
       res.json({ valor: vehiculo });
     })
     .catch((error) => {
@@ -379,8 +382,7 @@ app.get('/v1', (req, res) => {
       res.status(500).json({ error: 'Error al enviar el valor del vehículo' });
     });
 });
-
-let ultimoValor = '0'; // Inicializa el último valor como una cadena en lugar de un número
+let ultimoValor=0;
 app.post('/carro', (req, res) => {
   const vehiculo = req.body.vehiculo;
 
@@ -392,6 +394,12 @@ app.post('/carro', (req, res) => {
   res.json({ ultimoValor });
 });
 
-app.post('/ultimoValor', (req, res) => {
-  res.json({ ultimoValor });
+app.get('/ultimoValor', (req, res) => {
+  const ultimoValorCookie = req.cookies.ultimoValor;
+
+  if (ultimoValorCookie) {
+    res.json({ ultimoValor: ultimoValorCookie });
+  } else {
+    res.json({ ultimoValor });
+  }
 });
