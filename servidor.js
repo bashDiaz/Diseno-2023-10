@@ -25,22 +25,7 @@ let data1, data2, data3, data4, data5;
 
 // Other files that are complement of index are located in static
 app.use(express.static(__dirname + "/static"));
-app.get('/last', (req, res) => {
-  const query = 'SELECT Latitud, Longitud FROM datos_gps ORDER BY id DESC LIMIT 1';
 
-  connection.query(query, (error, rows) => {
-    if (error) {
-      console.error('Error al hacer el query: ', error);
-      res.status(500).send('Error al hacer el query');
-    } else {
-      const values = rows.map(obj => [parseFloat(obj.Latitud), parseFloat(obj.Longitud)]);
-
-      res.json({
-        rows: values
-      });
-    }
-  });
-});
 app.get('/id', (req, res) => {
   const query = 'SELECT iden FROM datos_gps ORDER BY id DESC LIMIT 1';
 
@@ -396,6 +381,22 @@ connection.connect((error) => {
     } else {
       console.log("Data inserted successfully!");
     }
+    app.get('/last', (req, res) => {
+      const query = 'SELECT Latitud, Longitud FROM datos_gps ORDER BY id DESC LIMIT 1';
+    
+      connection.query(query, (error, rows) => {
+        if (error) {
+          console.error('Error al hacer el query: ', error);
+          res.status(500).send('Error al hacer el query');
+        } else {
+          const values = rows.map(obj => [parseFloat(obj.Latitud), parseFloat(obj.Longitud)]);
+    
+          res.json({
+            rows: values
+          });
+        }
+      });
+    });
   });
 });
 
