@@ -133,12 +133,7 @@ app.get("/huella_total", (req, res) => {
     res.status(404).send("La huella total no ha sido calculada todavía.");
   }
 });
-
-const sessions = {};
-
 app.get("/consultar", (req, res) => {
-  const sessionId = req.sessionID;
-  
   const consumo = 16; // km/litro
   const emisiones = 0.144; // Kg CO2/Litro
   const fecha_inicio = req.query.fecha_inicio;
@@ -147,18 +142,9 @@ app.get("/consultar", (req, res) => {
   const hora_final = req.query.hora_final;
   const vehiculo = req.query.vehicle;
   const vector = [fecha_inicio, fecha_final, hora_inicio, hora_final];
-  if (!sessions[sessionId]) {
-    // Crea una nueva sesión para el cliente
-    sessions[sessionId] = {
-      data: [],
-      huellaTotal: null
-    };
-  }
-  // Reiniciar los valores de la consulta al iniciar una nueva consulta
-  sessions[sessionId].data = [];
 
   // Crear la consulta SQL con los parámetros de fecha y hora
-  const query = `SELECT Latitud, Longitud FROM datos_gps WHERE Fecha BETWEEN '${fecha_inicio}' AND '${fecha_final}' AND ((Fecha = '${fecha_inicio}' AND Hora >= '${hora_inicio}') OR (Fecha > '${fecha_inicio}' AND Fecha < '${fecha_final}') OR (Fecha = '${fecha_final}' AND Hora <= '${hora_final}')) AND iden = '${vehiculo}' ORDER BY id DESC`;
+  const query = `SELECT Latitud, Longitud FROM datos_gps WHERE Fecha BETWEEN '${fecha_inicio}' AND '${fecha_final}' AND ((Fecha = '${fecha_inicio}' AND Hora >= '${hora_inicio}') OR (Fecha > '${fecha_inicio}' AND Fecha < '${fecha_final}') OR (Fecha = '${fecha_final}' AND Hora <= '${hora_final}')) AND iden = '${vehiculo}'ORDER BY id DESC`;
 
   connection.query(query, (error, rows) => {
     if (error) {
@@ -179,38 +165,32 @@ app.get("/consultar", (req, res) => {
         }
         puntoAnterior = puntoActual;
       }
-
-      sessions[sessionId].data = rows.map(obj => [
+      
+      values = rows.map(obj => [
         parseFloat(obj.Latitud),
         parseFloat(obj.Longitud)
-      ]); // Actualizar los valores de la consulta en la sesión del cliente
-
+      ]); // actualizar los valores más recientes
+      
       fecha_hora_recientes = [fecha_inicio, fecha_final, hora_inicio, hora_final];
       console.log(vector);
-
-      res.json({
-        rows: sessions[sessionId].data
-      });
       
+      res.json({
+        rows: values
+      });
     }
   });
 });
 
-app.get('/linea', (req, res) => {
-  const sessionId = req.sessionID;
-  const sessionData = sessions[sessionId];
-  console.log(sessionId)
-  if (sessions[sessionId]){
-    res.json({
-      rows: sessionData.data
-    });
-  } else {
-    res.status(404).json({
-      error: 'No se encontraron datos de consulta para el cliente'
-    });
-  }
-});
+let values = []; // variable global para almacenar los valores de la consulta más reciente
 
+
+// ruta para obtener los valores de la consulta más reciente
+app.get('/linea', (req, res) => {
+  console.log(values);
+  res.json({
+    rows: values
+  });
+});
 
 
 
@@ -433,7 +413,7 @@ app.get('/historico1.html', (req, res) => {
   res.sendFile(__dirname + '/historico.html');
 });
 app.get('/treal.html', (req, res) => {
-  res.sendFile(__dirname + '/historico.html');
+  res.sendFile(__dirname + '/treal.html');
 });
 
 // This endpoint will return the latest values of data1, data2, data3, and data4 as a JSON object
