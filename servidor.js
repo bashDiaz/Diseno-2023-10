@@ -364,21 +364,23 @@ connection.connect((error) => {
 let valoresGuardados = [];
 app.get('/v1', (req, res) => {
   const vehiculo = req.query.vehiculo; // Obtener el valor del parámetro "vehiculo" de la solicitud
-  
+
   console.log(vehiculo);
 
   // Enviar el valor del vehículo a la otra API en formato JSON
-  axios.post('/carro', { vehiculo }) // Reemplaza "http://localhost:3000" con la URL correcta de la otra API
-    .then(response => {
+  axios
+    .post('/carro', { vehiculo }) // Reemplaza "http://localhost:3000" con la URL correcta de la otra API
+    .then((response) => {
       console.log('Respuesta de la otra API:', response.data);
       res.json({ valor: vehiculo });
     })
-    .catch(error => {
+    .catch((error) => {
       console.error('Error al enviar el valor del vehículo a la otra API:', error);
       res.status(500).json({ error: 'Error al enviar el valor del vehículo' });
     });
 });
-let ultimoValor = 0;
+
+let ultimoValor = '0'; // Inicializa el último valor como una cadena en lugar de un número
 app.post('/carro', (req, res) => {
   const vehiculo = req.body.vehiculo;
 
@@ -387,9 +389,9 @@ app.post('/carro', (req, res) => {
 
   // Realiza cualquier operación adicional que necesites con el valor del vehículo
 
-  res.json({ mensaje: 'Solicitud POST recibida correctamente' });
+  res.json({ ultimoValor });
 });
 
-app.get('/ultimoValor', (req, res) => {
+app.post('/ultimoValor', (req, res) => {
   res.json({ ultimoValor });
 });

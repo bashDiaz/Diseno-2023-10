@@ -70,30 +70,38 @@ function updateMarkerAndPolyline(rows) {
   
   
 setInterval(() => {
-  fetch('/ultimoValor') // Realiza la solicitud GET a /ultimoValor en tu API
+  fetch('/ultimoValor', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({})
+  })
     .then(response => response.json())
     .then(data => {
       console.log(data.ultimoValor);
       if (data.ultimoValor == '1') {
-        mymap.removeLayer(marker2); // Elimina el marcador 2
-        mymap.removeLayer(polyline2); // Elimina la polilínea 2
+        mymap.removeLayer(marker2); // Elimina el marcador 2 si existe
+        mymap.removeLayer(polyline2); // Elimina la polilínea 2 si existe
         mymap.addLayer(marker1); // Agrega el marcador 1
         mymap.addLayer(polyline1); // Agrega la polilínea 1
       }
       else if (data.ultimoValor == '2') {
-        mymap.removeLayer(marker1); // Elimina el marcador 1
-        mymap.removeLayer(polyline1); // Elimina la polilínea 1
+        mymap.removeLayer(marker1); // Elimina el marcador 1 si existe
+        mymap.removeLayer(polyline1); // Elimina la polilínea 1 si existe
         mymap.addLayer(marker2); // Agrega el marcador 2
         mymap.addLayer(polyline2); // Agrega la polilínea 2
-      } 
+      }
       else {
         mymap.addLayer(marker1); // Agrega el marcador 1
         mymap.addLayer(polyline1); // Agrega la polilínea 1
         mymap.addLayer(marker2); // Agrega el marcador 2
         mymap.addLayer(polyline2); // Agrega la polilínea 2
-      }
+      } 
     })
-}, 1000);
+    .catch(error => {
+      console.error('Error al realizar la solicitud:', error);
+    });
+}, 500);
+
 
 
 
