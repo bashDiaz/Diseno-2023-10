@@ -52,15 +52,3 @@ setInterval(() => {
       console.error(error);
     });
 }, 10000); // realizamos un fetch cada 1000 milisegundos (1 segundo)
-setInterval(() => {
-  fetch('/huella1')
-    .then(response => response.json())
-    .then(data => {
-      totalhuella1+=data.huella;
-      myChart.data.datasets[2].data[0] = totalhuella1; // actualizamos los datos del primer dataset
-      myChart.update(); // actualizamos el gráfico
-    })
-    .catch(error => {
-      console.error(error);
-    });
-}, 10000); // realizamos un fetch cada 1000 milisegundos (1 segundo)
