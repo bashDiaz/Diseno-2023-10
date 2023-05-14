@@ -43,15 +43,11 @@ setInterval(() => {
   fetch('/huella')
     .then(response => response.json())
     .then(data => {
-      totalhuella += data.huella;
+      totalhuella+=data.huella;
       myChart.data.datasets[0].data[0] = totalhuella; // actualizamos los datos del primer dataset
-
-      seresHumanos += 0.001; // Incrementamos la producción de 8 seres humanos cada 10 segundos
-      myChart.data.datasets[1].data[0] = seresHumanos; // actualizamos los datos del segundo dataset
-
       myChart.update(); // actualizamos el gráfico
     })
     .catch(error => {
       console.error(error);
     });
-}, 10000); // realizamos un fetch cada 10000 milisegundos (10 segundos)
+}, 10000);
