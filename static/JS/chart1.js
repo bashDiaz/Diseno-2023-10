@@ -42,9 +42,9 @@ setInterval(() => {
     .then(response => response.json())
     .then(data => {
       totalhuella+=data.huella;
-      s+=0.001;
+      s+=0.0012;
       myChart.data.datasets[0].data[0] = totalhuella; 
-       
+      myChart.data.datasets[0].data[1] = s; 
       // actualizamos los datos del primer dataset
       myChart.update(); // actualizamos el gráfico
     })
