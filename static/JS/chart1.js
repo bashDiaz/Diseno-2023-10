@@ -44,7 +44,7 @@ setInterval(() => {
       totalhuella+=data.huella;
       s+=0.001;
       myChart.data.datasets[0].data[0] = totalhuella; 
-      myChart.data.datasets[0].data[1] = s; 
+       
       // actualizamos los datos del primer dataset
       myChart.update(); // actualizamos el gráfico
     })
@@ -57,7 +57,7 @@ setInterval(() => {
     .then(response => response.json())
     .then(data => {
       totalhuella1+=data.huella;
-      myChart.data.datasets[0].data[2] = totalhuella1; // actualizamos los datos del primer dataset
+      myChart.data.datasets[2].data[0] = totalhuella1; // actualizamos los datos del primer dataset
       myChart.update(); // actualizamos el gráfico
     })
     .catch(error => {
