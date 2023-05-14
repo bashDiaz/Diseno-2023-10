@@ -62,6 +62,7 @@ app.get('/id', (req, res) => {
 });
 let fecha_hora_recientes = [];
 app.get('/huella', (req, res) => {
+  let huella=0;
   const query = 'SELECT Latitud, Longitud FROM datos_gps WHERE iden = 1 ORDER BY id DESC LIMIT 2';
   const consumo = 16; // km/litro
   const emisiones = 0.144; // Kg CO2/Litro
@@ -94,7 +95,9 @@ app.get('/huella', (req, res) => {
     }
   });
 });
+
 app.get('/huella1', (req, res) => {
+  let huella=0;
   const query = 'SELECT Latitud, Longitud FROM datos_gps WHERE iden = 2 ORDER BY id DESC LIMIT 2';
   const consumo = 16; // km/litro
   const emisiones = 0.144; // Kg CO2/Litro
