@@ -394,8 +394,15 @@ app.post('/carro', (req, res) => {
   res.json({ ultimoValor });
 });
 
-app.get('/ultimoValor', (req, res) => {
+app.post('/ultimoValor', (req, res) => {
   const ultimoValorCookie = req.cookies.ultimoValor;
+  const vehiculo = req.body.vehiculo;
+
+  if (vehiculo) {
+    // Actualizar el último valor recibido
+    ultimoValor = vehiculo;
+    res.cookie('ultimoValor', ultimoValor); // Almacenar el último valor en una cookie
+  }
 
   if (ultimoValorCookie) {
     res.json({ ultimoValor: ultimoValorCookie });
