@@ -45,7 +45,7 @@ function updateData() {
     .then(response => response.json())
     .then(data => {
       if (i==0){
-  totalhuella=0;
+  totalhuella1=0;
   }
   else {
   totalhuella1+=data.huella;

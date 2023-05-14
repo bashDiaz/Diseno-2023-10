@@ -60,8 +60,8 @@ setInterval(() => {
   fetch('/huella1')
     .then(response => response.json())
     .then(data => {
-      totalhuella += data.huella;
-      myChart.data.datasets[2].data[0] = totalhuella; // actualizamos los datos del primer dataset
+      totalhuella1 += data.huella;
+      myChart.data.datasets[2].data[0] = totalhuella1; // actualizamos los datos del primer dataset
 
       myChart.update(); // actualizamos el gráfico
     })
