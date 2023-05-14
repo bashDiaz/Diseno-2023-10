@@ -47,4 +47,4 @@ setInterval(() => {
     .catch(error => {
       console.error(error);
     });
-}, 10000); // realizamos un fetch cada 10000 milisegundos (10 segundos)
+}, 11000); // realizamos un fetch cada 10000 milisegundos (10 segundos)
