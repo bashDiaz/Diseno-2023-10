@@ -382,21 +382,21 @@ connection.connect((error) => {
       console.log("Data inserted successfully!");
     }
     app.get('/last', (req, res) => {
-      const query = 'SELECT Latitud, Longitud FROM datos_gps ORDER BY id DESC LIMIT 1';
-    
-      connection.query(query, (error, rows) => {
-        if (error) {
-          console.error('Error al hacer el query: ', error);
-          res.status(500).send('Error al hacer el query');
-        } else {
-          const values = rows.map(obj => [parseFloat(obj.Latitud), parseFloat(obj.Longitud)]);
-    
-          res.json({
-            rows: values
-          });
-        }
+  const query = 'SELECT Latitud, Longitud FROM datos_gps ORDER BY id DESC LIMIT 1';
+
+  connection.query(query, (error, rows) => {
+    if (error) {
+      console.error('Error al hacer el query: ', error);
+      res.status(500).send('Error al hacer el query');
+    } else {
+      const values = rows.map(obj => [parseFloat(obj.Latitud), parseFloat(obj.Longitud)]);
+
+      res.json({
+        rows: values
       });
-    });
+    }
+  });
+});
   });
 });
 
