@@ -1,6 +1,7 @@
 .range{
+  position: relative;
     height: 40px;
-    width: 390px;
+    width: 100%;
     background: white;
     border-radius: 10px;
     padding: 0 65px 0 45px;
