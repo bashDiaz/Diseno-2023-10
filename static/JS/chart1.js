@@ -11,7 +11,7 @@ let myChart = new Chart(ctx, {
       borderWidth: 1
     },{
       label: 'Producción por hora de un Ser humano (KG/CO2)',
-      data: [0.044],
+      data: [0],
       backgroundColor: 'rgba(54, 162, 235, 0.2)',
       borderColor: 'rgba(54, 162, 235, 1)',
       borderWidth: 1
@@ -42,9 +42,9 @@ setInterval(() => {
     .then(response => response.json())
     .then(data => {
       totalhuella+=data.huella;
-      s+=0.0012;
+      s+=1;
       myChart.data.datasets[0].data[0] = totalhuella; 
-      myChart.data.datasets[0].data[1] = s; 
+      myChart.data.datasets[1].data[0] = s; 
       // actualizamos los datos del primer dataset
       myChart.update(); // actualizamos el gráfico
     })
