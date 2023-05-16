@@ -36,7 +36,7 @@ let myChart = new Chart(ctx, {
 });
 totalhuella=0;
 totalhuella1=0;
-s=0.4;
+s=0.04;
 
 
 setInterval(() => {
