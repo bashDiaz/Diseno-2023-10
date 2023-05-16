@@ -2,9 +2,9 @@ let ctx = document.getElementById('grafico').getContext('2d');
 let myChart = new Chart(ctx, {
   type: 'bar',
   data: {
-    labels: ['Producción estimada de CO2 Vehiculo 1'],
+    labels: ['Huella Total estimada'],
     datasets: [{
-      label: 'Huella Total estimada',
+      label: 'Producción estimada de CO2 Vehiculo 1',
       data: [0], // inicializamos los datos con 0
       backgroundColor: 'rgba(255, 99, 132, 0.2)',
       borderColor: 'rgba(255, 99, 132, 1)',
@@ -40,7 +40,7 @@ s=0.0001;
 
 
 setInterval(() => {
-  s+=0.0014583;
+  s+=0.0017583;
   myChart.data.datasets[1].data[0] = s; 
   myChart.update();
   fetch('/huella')
