@@ -18,3 +18,10 @@
   margin: 10px;
   float: right;
 }
+#formula{
+  width: 500px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 10px;
+}
