@@ -171,7 +171,7 @@ app.get("/consultar", (req, res) => {
         parseFloat(obj.Longitud)
       ]); // actualizar los valores más recientes
       
-      fecha_hora_recientes = [fecha_inicio, fecha_final, hora_inicio, hora_final];
+      fecha_hora_recientes = [fecha_inicio, fecha_final, hora_inicio, hora_final, vehiculo];
       console.log(vector);
       
       res.json({
@@ -227,6 +227,7 @@ app.post('/p4', (req, res) => {
   let fecha_final = fecha_hora_recientes[1]|| '2023-04-08';
   const hora_inicio = fecha_hora_recientes[2] || '00:00:01';
   const hora_final = fecha_hora_recientes[3] || '23:59:59';
+  const vehiculo = fecha_hora_recientes[4] || '0';
   
   if (fecha_hora_recientes[0]=='2023-02-09'){
     console.log('LIMPIADO');
@@ -248,7 +249,7 @@ app.post('/p4', (req, res) => {
                   - radians(${longitud})) 
                   + sin(radians(${latitud})) 
                   * sin(radians(Latitud)))) AS distance 
-                  FROM datos_gps WHERE Fecha BETWEEN '${fecha_inicio}' AND '${fecha_final}' AND ((Fecha = '${fecha_inicio}' AND Hora >= '${hora_inicio}') OR (Fecha > '${fecha_inicio}' AND Fecha < '${fecha_final}') OR (Fecha = '${fecha_final}' AND Hora <= '${hora_final}'))  
+                  FROM datos_gps WHERE Fecha BETWEEN '${fecha_inicio}' AND '${fecha_final}' AND ((Fecha = '${fecha_inicio}' AND Hora >= '${hora_inicio}') OR (Fecha > '${fecha_inicio}' AND Fecha < '${fecha_final}') OR (Fecha = '${fecha_final}' AND Hora <= '${hora_final}')) AND iden = '${vehiculo}'  
                  HAVING distance <= 500
                  ORDER BY id DESC`;
 

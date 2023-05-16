@@ -44,16 +44,24 @@
           <div class="start-dates-div">
             <label for="fecha_inicio">Fecha inicial:</label>
             <input type="date" id="fecha_inicio" name="fecha_inicio" min="2023-03-01" max="2023-05-16">
-            <label for="fecha_final">Fecha inicial:</label>
+            <label for="fecha_final">Fecha final:</label>
             <input type="date" id="fecha_final" name="fecha_final" min="2023-03-01" max="2023-05-16">
           </div>
           <div class="end-dates-div">
-            <label for="hora_inicio">Fecha inicial:</label>
+            <label for="hora_inicio">Hora inicial:</label>
             <input type="time" id="hora_inicio" name="hora_inicio">
-            <label for="hora_final">Fecha inicial:</label>
+            <label for="hora_final">Hora final:</label>
             <input type="time" id="hora_final" name="hora_final">
           </div>
+          <div class="vehicle-select">
+            <label for="vehicle">Vehiculo:</label>
+            <select id="vehicle" name="vehicle">
+              <option value="1">Vehiculo 1</option>
+              <option value="2">Vehiculo 2</option>
+            </select>
+          </div>
         </div>
+        
           <script src="Dom_elements.js"></script>
           <button id="cons_button" type="button" onclick="consultar()">Consultar</button>
           <button id="clear_button" type="button" onclick="limpiar()">Limpiar</button>
