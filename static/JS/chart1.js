@@ -10,7 +10,7 @@ let myChart = new Chart(ctx, {
       borderColor: 'rgba(255, 99, 132, 1)',
       borderWidth: 1
     },{
-      label: 'Producción por hora de un Ser humano (KG/CO2)',
+      label: 'Producción de 12 personas (KG/CO2)',
       data: [0],
       backgroundColor: 'rgba(54, 162, 235, 0.2)',
       borderColor: 'rgba(54, 162, 235, 1)',
