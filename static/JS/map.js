@@ -114,7 +114,7 @@ setInterval(() => {
       console.log(data);
       updateMarkerAndPolyline(data.rows);
     });
-}, 10000);
+}, 6000);
 
 setInterval(()=> {
   fetch('/id')
