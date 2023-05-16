@@ -44,13 +44,13 @@ function updateData() {
     fetch('/huella1')
     .then(response => response.json())
     .then(data => {
-      if (i==0){
+      if (j==0){
   totalhuella1=0;
   }
   else {
   totalhuella1+=data.huella;
   }
-      data6Span.textContent = totalhuella.toFixed(7);
+      data6Span.textContent = totalhuella1.toFixed(7);
   j=j+1;
     })
     .catch(error => {
