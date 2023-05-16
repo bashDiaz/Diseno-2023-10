@@ -37,14 +37,16 @@ let myChart = new Chart(ctx, {
 totalhuella=0;
 totalhuella1=0;
 s=0.4;
-myChart.data.datasets[1].data[0] = s; 
-myChart.update();
+
+
 setInterval(() => {
+  s+=0.002;
+  myChart.data.datasets[1].data[0] = s; 
+  myChart.update();
   fetch('/huella')
     .then(response => response.json())
     .then(data => {
       totalhuella+=data.huella;
-      s+=1;
       myChart.data.datasets[0].data[0] = totalhuella; 
       
       // actualizamos los datos del primer dataset
