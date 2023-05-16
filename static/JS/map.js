@@ -55,14 +55,14 @@ function updateMarkerAndPolyline(rows) {
     marker1.setLatLng(latlng); // actualiza la posición del marcador
     app1Positions.push(latlng); // agrega la posición al arreglo de puntos de la app 1
     polyline1.setLatLngs(app1Positions); // actualiza la polilínea con los nuevos puntos
-    mymap.setView(latlng, mymap.getZoom()); // ajusta el zoom para que se vea toda la polilínea
+    // ajusta el zoom para que se vea toda la polilínea
   } else if (id == 2) {
     const latestData = rows[rows.length - 1]; // obtiene la última posición
     const latlng = L.latLng(latestData[0], latestData[1]); // crea un objeto LatLng con la posición
     marker2.setLatLng(latlng); // actualiza la posición del marcador
     app2Positions.push(latlng); // agrega la posición al arreglo de puntos de la app 2
     polyline2.setLatLngs(app2Positions); // actualiza la polilínea con los nuevos puntos
-    mymap.setView(latlng, mymap.getZoom()); // ajusta el zoom para que se vea toda la polilínea
+     // ajusta el zoom para que se vea toda la polilínea
   }
 }
 
@@ -114,7 +114,7 @@ setInterval(() => {
       console.log(data);
       updateMarkerAndPolyline(data.rows);
     });
-}, 6000);
+}, 4000);
 
 setInterval(()=> {
   fetch('/id')
@@ -123,7 +123,7 @@ setInterval(()=> {
     console.log(data);
     id = data.id;
   });
-}, 6000);
+}, 3000);
 
 
 function updatePolyline(rows) {
