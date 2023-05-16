@@ -36,11 +36,13 @@ let myChart = new Chart(ctx, {
 });
 totalhuella=0;
 totalhuella1=0;
-s=0.04;
+s=0.02;
 
 
 setInterval(() => {
- 
+  s+=0.002;
+  myChart.data.datasets[1].data[0] = s; 
+  myChart.update();
   fetch('/huella')
     .then(response => response.json())
     .then(data => {
