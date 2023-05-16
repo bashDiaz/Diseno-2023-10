@@ -57,7 +57,7 @@ setInterval(() => {
       updatePolyline(data.rows);
       //updateMarker(data.rows);
 });
-}, 5000);
+}, 1000);
 const zoomc = document.getElementById("sli");
 const actzoom= mymap.getZoom();
 const circle = L.circle([data1, data2], {
