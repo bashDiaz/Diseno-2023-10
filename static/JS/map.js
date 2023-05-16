@@ -108,22 +108,20 @@ setInterval(() => {
 
 // Hace una petición a la API cada 10 segundos
 setInterval(() => {
-  fetch('/last')
-    .then(response => response.json())
-    .then(data => {
-      console.log(data);
-      updateMarkerAndPolyline(data.rows);
-    });
-}, 5000);
-
-setInterval(()=> {
   fetch('/id')
   .then(response => response.json())
   .then(data => {
     console.log(data);
     id = data.id;
   });
+  fetch('/last')
+    .then(response => response.json())
+    .then(data => {
+      console.log(data);
+      updateMarkerAndPolyline(data.rows);
+    });
 }, 2000);
+
 
 
 function updatePolyline(rows) {
