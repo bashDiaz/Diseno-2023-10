@@ -1,0 +1,27 @@
+.section_content_right_text li{
+    list-style-type: none;
+    margin: 10px;  
+}
+#who{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 10px;
+  left: 0;
+}
+#loc1{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 10px;
+  float: right;
+}
+#formula{
+  width: 500px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 10px;
+}

@@ -1,0 +1,74 @@
+.range{
+  position: relative;
+    height: 40px;
+    width: 100%;
+    background: white;
+    border-radius: 10px;
+    padding: 0 65px 0 45px;
+    box-shadow: 2px 4px 8px rgba(0,0,0,0.1);
+  }
+  .sliderValue{
+    position: absolute;
+    height: 45px;
+    width: 45px;
+    transform: translateX(-70%) scale(0);
+    font-weight: 500;
+    top: -40px;
+    line-height: 55px;
+    z-index: 2;
+    color: #ddd;
+    transition: transform 0.3s ease;
+  }
+  .sliderValue span.show{
+    transform: translateX(-70%) scale(1);
+  }
+  .sliderValue span:after{
+    position: absolute;
+    content: "";
+    height: 100%;
+    width: 100%;
+    background: #292440;
+    border: 3px solid white;
+    z-index: -1;
+    left: 50%;
+    transform: translateX(-50%) rotate(45deg);
+    border-bottom-left-radius: 50%;
+    box-shadow: 0 0 8px rgba(0,0,0,0.1);
+    border-top-left-radius: 50%;
+    border-top-right-radius: 50%;
+  }
+  .field .value{
+    position: absolute;
+    font-size: 18px;
+    color: #292440;
+    font-weight: 600;
+  }
+  .field .value.left{
+    left: -22px;
+  }
+  .field .value.right{
+    right: -43px;
+  }
+  .range input{
+    
+    width: 100%;
+    height: 3px;
+    border-radius: 5px;
+    background: #ddd;
+    outline: none;
+    opacity: 0.7;
+    border:none;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+  }
+  .range input::-webkit-slider-thumb{
+    -webkit-appearance: none;
+    appearance: none;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: lightblue;
+    cursor: pointer;
+    border: 3px solid white;
+    box-shadow: 0 0 8px rgba(0,0,0,0.1);
+  }

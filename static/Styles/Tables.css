@@ -1,0 +1,138 @@
+/*Real time data table */
+.table{
+    position: relative;
+    left: 30px;
+    top: 10px;
+    width: 25%;
+    height: 100%;
+    padding: 10px;
+    display: column;
+    justify-items: center;
+  }
+.table-historico{
+  position: relative;
+  left: 8px;
+  top: 40px;
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+  display: column;
+  justify-items: center;
+}
+.table-div{
+  width: 100%;
+  height: 60px;
+  display: column;
+  background-color: #2C3E50 ;
+  border-radius: 15px;
+  margin: 10px;
+  padding: 10px;
+  border: solid 10px #ddd;
+}
+.table-div-header{
+  height: 20px;
+  border-radius: 5px;
+  background-color: #ECECEC;
+  display: column;
+  padding-top: 5px;
+  color: black;
+}
+.table-div span{
+  position: absolute;
+  width: 95%;
+  margin-top: 10px;
+  border-radius:5px;
+  background-color: #ECECEC;
+}
+
+.vehicle-select {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.vehicle-select label {
+  font-weight: bold;
+  margin-right: 5px;
+}
+
+.vehicle-select select {
+  width: 100px;
+}
+.Lateral-Bar{
+  width: 30%;
+}
+.grafico{
+  position: relative;
+  bottom: 0%;
+  width: 100%;
+  height: 100%;
+  margin-top: 80px;
+  margin-left:40px ;
+  display: column;
+  justify-items: center;
+}
+
+@media screen and (max-width: 700px){
+  .table{
+    position: relative;
+    left: 30px;
+    top: 10px;
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+    display: column;
+    justify-items: center;
+  }
+  .table-div{
+    position:absolute;
+    width: 100%;
+    height: 60px;
+    display: column;
+    background-color: #2C3E50 ;
+    border-radius: 15px;
+    margin: 10px;
+    padding: 10px;
+    border: solid 10px #ddd;
+    left: 0;
+  }
+  .table-div-header{
+    height: 20px;
+    border-radius: 5px;
+    background-color: #ECECEC;
+    display: column;
+    padding-top: 5px;
+    color: black;
+  }
+  .table-div span{
+    position: absolute;
+    width: 95%;
+    margin-top: 10px;
+    border-radius:5px;
+    background-color: #ECECEC;
+  }
+  .table-historico{
+    position: relative;
+    left: 8px;
+    top: 40px;
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+    display: column;
+    justify-items: center;
+  }
+  .vehicle-select {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  .vehicle-select label {
+    font-weight: bold;
+    margin-right: 5px;
+  }
+  .vehicle-select select {
+    width: 100%;
+  }
+}

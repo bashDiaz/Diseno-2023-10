@@ -1,0 +1,85 @@
+.time{
+    margin: 10px;
+    align-items: center;
+}
+/*Calendary parameters*/
+#Cal{
+    position: relative;
+    top: 20px;
+    left: 30px;
+    width: 100%;
+    height: 100%;
+    padding: 5px;
+    border-radius: 5px;
+    background-color: #ddd;
+    align-items: center;
+}
+.start-dates-div{
+    background-color: #2C3E50;
+    margin: 10px;
+    padding: 10px;
+    border-radius: 5px;
+}
+.start-dates-div label{
+    display: block;
+    width: 100%;
+    color: #ECECEC;
+}
+.start-dates-div input{
+    display: block;
+    width: 95%;
+    border-radius: 5px;
+}
+.end-dates-div{
+    background-color: #2C3E50;
+    margin: 10px;
+    padding: 10px;
+    border-radius: 5px;
+}
+.end-dates-div label{
+    display: block;
+    width: 100%;
+    color: #ECECEC;
+}
+.end-dates-div input{
+    display: block;
+    width: 95%;
+    border-radius: 5px;
+}
+#cons_button{
+    margin-top:20px ;
+    left: 20%;
+    position: absolute;
+    border-radius: 20px ;
+    color:#ECECEC; 
+    background-color: #2C3E50;
+}
+#clear_button{
+    margin-top:20px ;
+    left: 10%;
+    position: absolute;
+    border-radius: 20px ;
+    color:#ECECEC; 
+    background-color: #2C3E50;
+}
+@media screen and (max-width: 700px){
+    .end-dates-div{
+        width: 93%;
+    }
+    .start-dates-div{
+        width: 93%;
+    }
+    #Cal{
+        width: 100%;
+        left: 0px;
+
+    }
+    #cons_button{
+        left: 30%;
+    }
+    #clear_button{
+        left: 5%;
+    }
+    
+
+  }

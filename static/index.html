@@ -4,7 +4,9 @@
     <script src="servidor.js"></script>
     <meta charset="UTF-8">
     <title>WEBSERVER</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="./Styles/Main.css">
+    <link rel="stylesheet" href="./Styles/Contact.css">
+    <link rel="stylesheet" href="./Styles/Footer.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
     integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
     crossorigin=""/>
@@ -14,15 +16,13 @@
     <header>
       
       <div class="logo">
-        <img src="Logo.png" alt="Logo de la empresa">
+        <img src="./img/Logo.png" alt="Logo de la empresa">
         <h2 class="name"> SSJMAP Location Service</h2>
       </div>
       <nav>
-        <a href="index.html">HOME</a>
-        <a href="treal.html">TIEMPO REAL</a>
-        <a href="historico.html">HISTÓRICOS POR FECHA</a>
-        <a href="historico1.html">HISTÓRICOS POR LUGAR</a>
-        <a href="#">CONTACTO</a>
+        <a href="treal.html">Tiempo real</a>
+        <a href="historico.html">Historicos</a>
+        <a href="index.html">Contato</a>
       </nav>
     </header>
     <main>
@@ -33,15 +33,18 @@
               <h1>SSJMAP Location Service</h1>
               <p id="who">SSJMAP Location Service es una empresa que se dedica a la localización de vehiculos en tiempo real y a la gestión de datos históricos de localización de los mismos directo hasta tu celular desde el 2023.</p>
             </div>
-            <img id="loc1" src="img1.png" alt="loc1">
+            <img id="loc1" src="./img/img1.png" alt="loc1">
             <div class="section_content">
               <div class="section_content_left">
                 <div class="section_content_left_title">
                   <h2>¿Qué es SSJMAP Location Service?</h2>
                 </div>
                 <div class="section_content_left_text">
-                  <p>SSJMAP Location Service es una empresa que se dedica a la localización de vehiculos en tiempo real y a la gestión de datos históricos de localización de los mismos en base a unos parametrtos introducidos por el usuario</p>
-
+                  <p>SSJMAP Location Service es una empresa que se dedica a la
+                    localización de vehiculos en tiempo real y a la gestión de datos
+                    históricos de localización de los mismos en base a unos parametros 
+                    introducidos por el usuario
+                  </p>
                 </div>
               </div>
               <div class="section_content_right">
@@ -54,6 +57,17 @@
                     <li>Consulta de historicos de la posicion del vehiculo respecto a una ventana de tiempo.</li>
                     <li>Consulta la venta de tiempo por donde estuvo el vehiculo con respecto a un area.</li>
                 </div>
+              </div>
+              <div class="section_content_left">
+                <div class="section_content_left_title">
+                  <h2>¿Qué es la huella de carbono de un vehículo?</h2>
+                </div>
+               <p> La huella de carbono en vehículos se define como la cantidad de emisiones de gases de efecto invernadero (principalmente dióxido de carbono, CO2) producidas durante el ciclo de vida de un vehículo, desde la fabricación hasta su uso y eventual eliminación.
+                Las emisiones de gases de efecto invernadero son una importante contribución al cambio climático y la huella de carbono de un vehículo es una forma de medir su impacto ambiental. La huella de carbono se expresa típicamente en toneladas de CO2 equivalente (tCO2e). La huella de carbono de un vehículo puede variar dependiendo de varios factores los cuales explicaremos a continuación:
+                Para realizar una correcta estimación de la huella de carbono de un vehículo, se toman en cuenta factores comoel modelo del carro, su eficiencia en el consumo de combustible, la cantidad de kilómetros recorridos por año, y la fuente de combustible utilizado. Estos factores permiten expresar la huella de carbono mediante la siguiente fórmula:</p>
+                <img id="formula" src="./img/Huella_carbono.png" alt="Logo de la empresa">
+                <p>En el que se multilplica los kilómetros recorridos por el vehículo al año, las emisiones de CO2 por cada kilómetro, y el factor de emisión (fe) del combustible. Este último depende del tipo utilizado (gasolina, diésel, eléctrico, etc.) junto a la eficiencia por parte del mismo teniendo en cuenta la fabricación y el tipo de uso del vehículo. 
+                Reducir la huella de carbono de los vehículos es una parte importante de los esfuerzos globales para mitigar el cambio climático y promover la sostenibilidad ambiental. Esto se puede lograr a través de medidas como la mejora de la eficiencia de combustible, la promoción de vehículos eléctricos y la reducción del uso de automóviles a favor del transporte público, la bicicleta o caminar.</p>
               </div>
             </div>
           </div>
@@ -112,10 +126,10 @@
             <div class='sb_footer-links_div'>
               <h4>Coming soon on</h4>
               <div class='socialmedia'>
-                <p><img src='fb.png' alt=''></p>
-                <p><img src='twitter.png' alt=''></p>
-                <p><img src='ig.png' alt=''></p>
-                <p><img src='linkedin.png' alt=''></p>
+                <p><img src='./img/fb.png' alt=''></p>
+                <p><img src='./img/twitter.png' alt=''></p>
+                <p><img src='./img/ig.png' alt=''></p>
+                <p><img src='./img/linkedin.png' alt=''></p>
               </div>
             </div>
           </div>
