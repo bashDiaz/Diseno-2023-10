@@ -40,7 +40,7 @@ s=0.0001;
 
 
 setInterval(() => {
-  s+=0.0017583;
+  s+=0.0014583;
   myChart.data.datasets[1].data[0] = s; 
   myChart.update();
   fetch('/huella')
