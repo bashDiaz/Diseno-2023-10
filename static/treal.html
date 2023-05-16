@@ -3,6 +3,7 @@
   <head>
     <script src="servidor.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
     <meta charset="UTF-8">
     <title>WEBSERVER</title>
     <link rel="stylesheet" href="./Styles/Main.css">
@@ -38,19 +39,19 @@
         </div>
         <div class="table-div">
           <div class="table-div-header">FECHA</div>
-          <span id="data3">Waiting for new data...</span>
+          <span id="data3">2023-05-16</span>
         </div>
         <div class="table-div">
           <div class="table-div-header">HORA</div>
-          <span id="data4">Waiting for new data...</span>
+          <span id="data4"></span>
         </div>
         <div class="table-div">
           <div class="table-div-header">HUELLA CARBONO Vehiculo 1 KgCO2</div>
-          <span id="data5">Waiting for new data...</span>
+          <span id="data5">0.0000000</span>
         </div>
         <div class="table-div">
           <div class="table-div-header">HUELLA CARBONO Vehiculo 2 KgCO2</div>
-          <span id="data6">Waiting for new data...</span>
+          <span id="data6">0.0000000</span>
         </div>
         <div class="vehicle-select">
           <label for="vehicle">Vehiculo:</label>
@@ -70,7 +71,7 @@
         <div id="map"></div>
       </div>
       <!--Calls all the .JS-->
-      
+      <script src="./JS/hora.js"></script>
       <script src="./JS/map.js"></script>
       <script src="./JS/udp.js"></script>
       <script src="./JS/vehiculo.js"></script>
