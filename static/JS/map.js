@@ -120,7 +120,7 @@ setInterval(() => {
       console.log(data);
       updateMarkerAndPolyline(data.rows);
     });
-}, 2000);
+}, 8000);
 
 
 
