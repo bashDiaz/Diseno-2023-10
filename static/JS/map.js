@@ -58,18 +58,17 @@ function updateMarkerAndPolyline(rows) {
       const distance = latlng.distanceTo(lastPosition);
 
       // Verificar si la distancia es mayor a 800 metros (ajusta este valor según tus necesidades)
-      if (distance > 800) {
+      if (distance < 800) {
         marker1.setLatLng(latlng);
         app1Positions.push(latlng);
         polyline1.setLatLngs(app1Positions);
-        mymap.fitBounds(polyline1.getBounds());
+        
       }
     } else {
       // No hay posiciones registradas, agregar la posición inicial
       marker1.setLatLng(latlng);
       app1Positions.push(latlng);
       polyline1.setLatLngs(app1Positions);
-      mymap.fitBounds(polyline1.getBounds());
     }
   } else if (id == 2) {
     const latestData = rows[rows.length - 1];
@@ -80,18 +79,18 @@ function updateMarkerAndPolyline(rows) {
       const distance = latlng.distanceTo(lastPosition);
 
       // Verificar si la distancia es mayor a 800 metros (ajusta este valor según tus necesidades)
-      if (distance > 800) {
+      if (distance < 800) {
         marker2.setLatLng(latlng);
         app2Positions.push(latlng);
         polyline2.setLatLngs(app2Positions);
-        mymap.fitBounds(polyline2.getBounds());
+        
       }
     } else {
       // No hay posiciones registradas, agregar la posición inicial
       marker2.setLatLng(latlng);
       app2Positions.push(latlng);
       polyline2.setLatLngs(app2Positions);
-      mymap.fitBounds(polyline2.getBounds());
+      
     }
   }
 }
