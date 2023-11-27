@@ -1,4 +1,3 @@
-// Insert all const that server needs including express, socket and mysql
 const express = require('express');
 const dgram = require('dgram');
 const app = express();
@@ -11,19 +10,16 @@ const axios = require('axios');
 app.use(bodyParser.json());
 app.use(cookieParser());
 
-// Variable data empty is inserted
 let data1, data2, data3, data4, data5;
 
-// Other files that are complement of index are located in static
 app.use(express.static(__dirname + "/static"));
 
-// The server is listening and sending information to console
 server.on('listening', () => {
   const address = server.address();
   console.log(`UDP server listening on ${address.address}:${address.port}`);
 });
 
-// A specific port is assigned
+
 server.bind(1234);
 
 app.listen(80, () => {
@@ -143,7 +139,6 @@ app.get("/consultar", (req, res) => {
   const vehiculo = req.query.vehicle;
   const vector = [fecha_inicio, fecha_final, hora_inicio, hora_final];
 
-  // Crear la consulta SQL con los parámetros de fecha y hora
   const query = `SELECT Latitud, Longitud FROM datos_gps WHERE Fecha BETWEEN '${fecha_inicio}' AND '${fecha_final}' AND ((Fecha = '${fecha_inicio}' AND Hora >= '${hora_inicio}') OR (Fecha > '${fecha_inicio}' AND Fecha < '${fecha_final}') OR (Fecha = '${fecha_final}' AND Hora <= '${hora_final}')) AND iden = '${vehiculo}'ORDER BY id DESC`;
 
   connection.query(query, (error, rows) => {
@@ -313,7 +308,7 @@ connection.connect((error) => {
   console.log('Connected to MySQL database with id ' + connection.threadId);
 });
 
-// The server is on and it receive messages that are separated into splits.
+
   server.on('message', (msg) => {
   const data = msg.toString('utf-8').split(';');
   data1 = parseFloat(data[0]);
@@ -323,7 +318,6 @@ connection.connect((error) => {
   data5 = data[4]
   console.log(`Data received: ${data1}, ${data2}, ${data3}, ${data4}, ${data5} `);
 
-  // insert data to database
   const sql = "INSERT INTO datos_gps (Latitud, Longitud, Fecha, Hora, iden) VALUES (?, ?, ?, ?, ?)";
   const values = [data1, data2, data3, data4, data5];
   connection.query(sql, values, (error, results, fields) => {
@@ -354,16 +348,15 @@ connection.connect((error) => {
 
 
 app.get('/v1', (req, res) => {
-  const vehiculo = req.query.vehiculo; // Obtener el valor del parámetro "vehiculo" de la solicitud
+  const vehiculo = req.query.vehiculo; 
 
   console.log(vehiculo);
 
-  // Enviar el valor del vehículo a la otra API en formato JSON
   axios
-    .post('/carro', { vehiculo }) // Reemplaza "http://localhost:3000" con la URL correcta de la otra API
+    .post('/carro', { vehiculo }) 
     .then((response) => {
       console.log('Respuesta de la otra API:', response.data);
-      res.cookie('ultimoValor', vehiculo); // Almacenar el último valor en una cookie
+      res.cookie('ultimoValor', vehiculo); 
       res.json({ valor: vehiculo });
     })
     .catch((error) => {
@@ -375,10 +368,9 @@ let ultimoValor=0;
 app.post('/carro', (req, res) => {
   const vehiculo = req.body.vehiculo;
 
-  // Actualizar el último valor recibido
+
   ultimoValor = vehiculo;
 
-  // Realiza cualquier operación adicional que necesites con el valor del vehículo
 
   res.json({ ultimoValor });
 });
@@ -388,9 +380,9 @@ app.post('/ultimoValor', (req, res) => {
   const vehiculo = req.body.vehiculo;
 
   if (vehiculo) {
-    // Actualizar el último valor recibido
+    
     ultimoValor = vehiculo;
-    res.cookie('ultimoValor', ultimoValor); // Almacenar el último valor en una cookie
+    res.cookie('ultimoValor', ultimoValor); 
   }
 
   if (ultimoValorCookie) {
@@ -400,7 +392,7 @@ app.post('/ultimoValor', (req, res) => {
   }
 });
 
-// The changes are inserted in index
+
 app.get('/', (req, res) => {
   res.sendFile(__dirname + '/index.html');
 });
@@ -417,7 +409,7 @@ app.get('/treal.html', (req, res) => {
   res.sendFile(__dirname + '/treal.html');
 });
 
-// This endpoint will return the latest values of data1, data2, data3, and data4 as a JSON object
+
 app.get('/data', (req, res) => {
   if (data1 && data2 && data3 && data4) {
     const myData = [data1, data2, data3, data4];
